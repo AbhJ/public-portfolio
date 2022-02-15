@@ -1,28 +1,41 @@
-<!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:visibility="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml">
+<!DOCTYPE HTML>
+<html xmlns:fb="https://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#" xmlns:th="http://www.thymeleaf.org" xmlns:visibility="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta content="width = device-width, initial-scale = 1, shrink-to-fit = no" name="viewport">
-		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"></link>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta name="description" content="AbJ Portfolio">
-		<meta name="author" content="Abhijay Mitra (AbJ)">
-		<title>AbJ Portfolio</title>
-		<meta property="og:title" content="Abhijay Mitra">
-		<meta property="og:type" content="profile">
-		<meta property="og:description" content="Welcome to my portfolio page">
-		<meta property="og:image" content="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj_macbook.png">
-		<!-- Favicon-->
-		<link rel="icon" type="image/x-icon" href="https://toppng.com/uploads/preview/letter-a-png-11552941435fskk9pyn7o.png" />
-		<!-- Font Awesome icons (free version)-->
-		<script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
-		<!-- Google fonts-->
-		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-		<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-		<!-- Core theme CSS (includes Bootstrap)-->
-		<link href="templates/css/styles.css" rel="stylesheet" /> </head>
+			<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"/>
+			<meta charset="utf-8">
+				<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+					<meta content="AbJ Portfolio" name="description">
+						<meta content="Abhijay Mitra (AbJ)" name="author">
+							<title>
+								AbJ Portfolio
+							</title>
+							<meta content="Abhijay Mitra" property="og:title">
+								<meta content="profile" property="og:type">
+									<meta content="Welcome to my portfolio page" property="og:description">
+										<meta content="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj_macbook.png" property="og:image">
+											<!-- Favicon-->
+											<link href="https://toppng.com/uploads/preview/letter-a-png-11552941435fskk9pyn7o.png" rel="icon" type="image/x-icon"/>
+											<!-- Font Awesome icons (free version)-->
+											<script crossorigin="anonymous" src="https://use.fontawesome.com/releases/v5.13.0/js/all.js">
+											</script>
+											<!-- Google fonts-->
+											<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+											<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+											<!-- Core theme CSS (includes Bootstrap)-->
+											<link href="templates/css/styles.css" rel="stylesheet"/>
+										</meta>
+									</meta>
+								</meta>
+							</meta>
+						</meta>
+					</meta>
+				</meta>
+			</meta>
+		</meta>
+	</head>
 	<style>
-@charset "UTF-8";
+		@charset "UTF-8";
 html {
 	scroll-behavior: smooth
 }
@@ -10347,7 +10360,7 @@ html {
 			scroll-margin-top: 100px;
 		}
 
-		#repos {
+		#youtube {
 			scroll-margin-top: 100px;
 		}
 
@@ -10462,6 +10475,27 @@ html {
 		form .row:first-child .floating-label-form-group {
 			border-top: 1px solid #e9ecef;
 		}
+		.div-only-mobile {
+			display: none;
+		}
+
+		.div-no-mobile {
+		}
+
+		@media screen and (max-width: 849px) {
+			.div-no-mobile {
+				display:none;
+			}
+			.div-only-mobile {
+				display: block;
+			}
+		}
+
+		.line {
+			overflow: hidden;
+			position: relative;
+		}
+
 
 		.footer {
 			padding-top: 5rem;
@@ -10474,7 +10508,6 @@ html {
 			background-color: #000000;
 		}
 	</style>
-
 	<body id="page-top">
 		<script>
 			(function($) {
@@ -10539,15 +10572,42 @@ html {
 			}
 		</script>
 		<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
-			<div class="container"> <a class="navbar-brand js-scroll-trigger" href="#page-top">Abhijay Mitra (AbJ)</a>
-				<button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Options <i class="fas fa-bars"></i></button>
+			<div class="container">
+				<a class="navbar-brand js-scroll-trigger" href="#page-top">
+					Abhijay Mitra (AbJ)
+				</a>
+				<button aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" data-target="#navbarResponsive" data-toggle="collapse" type="button">
+					Options
+					<i class="fas fa-bars">
+					</i>
+				</button>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">What do I do?</a></li>
-						<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Resume</a></li>
-						<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#codeTime">Code Stats</a></li>
-						<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#blog">Blog</a></li>
-						<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#repos">Repos</a></li>
+						<li class="nav-item mx-0 mx-lg-1">
+							<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">
+								What do I do?
+							</a>
+						</li>
+						<li class="nav-item mx-0 mx-lg-1">
+							<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">
+								Resume
+							</a>
+						</li>
+						<li class="nav-item mx-0 mx-lg-1">
+							<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#codeTime">
+								Code Stats
+							</a>
+						</li>
+						<li class="nav-item mx-0 mx-lg-1">
+							<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#blog">
+								Blog
+							</a>
+						</li>
+						<li class="nav-item mx-0 mx-lg-1">
+							<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#youtube">
+								Youtube
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -10555,74 +10615,123 @@ html {
 		<!-- Masthead-->
 		<header class="masthead text-white text-center" style="background-color: #3d0099;">
 			<div class="container d-flex align-items-center flex-column">
-				<!-- Masthead Avatar Image--><img class="masthead-avatar mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj_macbook.png" alt="" />
+				<!-- Masthead Avatar Image-->
+				<img alt="" class="masthead-avatar mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj_macbook.png"/>
 				<!-- Masthead Heading-->
-				<h1 class="masthead-heading text-uppercase mb-0">My Portfolio</h1>
+				<h1 class="masthead-heading text-uppercase mb-0">
+					My Portfolio
+				</h1>
 				<!-- Icon Divider-->
 				<div class="divider-custom divider-light">
-					<div class="divider-custom-line"></div>
-					<div class="divider-custom-icon"><i class="fas fa-laptop"></i></div>
-					<div class="divider-custom-line"></div>
+					<div class="divider-custom-line">
+					</div>
+					<div class="divider-custom-icon">
+						<i class="fas fa-laptop">
+						</i>
+					</div>
+					<div class="divider-custom-line">
+					</div>
 				</div>
 				<!-- Masthead Subheading-->
-				<p class="masthead-subheading font-weight-light mb-0">SWE Intern @ Salesforce - Competitive Programmer</p>
-				<p class="masthead-subheading font-weight-light mb-0">Final Year Undergraduate of Electrical Engineering @ IIT Kharagpur </p>
+				<p class="masthead-subheading font-weight-light mb-0">
+					SWE Intern @ Salesforce - Competitive Programmer
+				</p>
+				<p class="masthead-subheading font-weight-light mb-0">
+					Final Year Undergraduate of Electrical Engineering @ IIT Kharagpur
+				</p>
 			</div>
 		</header>
 		<!-- Portfolio Section-->
 		<section class="page-section portfolio" id="portfolio">
 			<div class="container">
 				<!-- Portfolio Section Heading-->
-				<h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">What have I been upto?</h2>
+				<h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">
+					What have I been upto?
+				</h2>
 				<!-- Icon Divider-->
 				<div class="divider-custom">
-					<div class="divider-custom-line"></div>
-					<div class="divider-custom-icon"><i class="fas fa-globe"></i></div>
-					<div class="divider-custom-line"></div>
+					<div class="divider-custom-line">
+					</div>
+					<div class="divider-custom-icon">
+						<i class="fas fa-globe">
+						</i>
+					</div>
+					<div class="divider-custom-line">
+					</div>
 				</div>
 				<!-- Portfolio Grid Items-->
 				<div class="row">
 					<!-- Portfolio Item 1-->
 					<div class="col-md-6 col-lg-4 mb-5">
-						<div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1">
+						<div class="portfolio-item mx-auto" data-target="#portfolioModal1" data-toggle="modal">
 							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-								<div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-							</div> <img class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/salesforce.jpg" alt="" /> </div>
+								<div class="portfolio-item-caption-content text-center text-white">
+									<i class="fas fa-plus fa-3x">
+									</i>
+								</div>
+							</div>
+							<img alt="" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/salesforce.jpg"/>
+						</div>
 					</div>
 					<!-- Portfolio Item 2-->
 					<div class="col-md-6 col-lg-4 mb-5">
-						<div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal2">
+						<div class="portfolio-item mx-auto" data-target="#portfolioModal2" data-toggle="modal">
 							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-								<div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-							</div> <img class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/force.png" alt="" /> </div>
+								<div class="portfolio-item-caption-content text-center text-white">
+									<i class="fas fa-plus fa-3x">
+									</i>
+								</div>
+							</div>
+							<img alt="" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/force.png"/>
+						</div>
 					</div>
 					<!-- Portfolio Item 3-->
 					<div class="col-md-6 col-lg-4 mb-5">
-						<div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal3">
+						<div class="portfolio-item mx-auto" data-target="#portfolioModal3" data-toggle="modal">
 							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-								<div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-							</div> <img class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/chef.jpeg" alt="" /> </div>
+								<div class="portfolio-item-caption-content text-center text-white">
+									<i class="fas fa-plus fa-3x">
+									</i>
+								</div>
+							</div>
+							<img alt="" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/chef.jpeg"/>
+						</div>
 					</div>
 					<!-- Portfolio Item 4-->
 					<div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
-						<div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal4">
+						<div class="portfolio-item mx-auto" data-target="#portfolioModal4" data-toggle="modal">
 							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-								<div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-							</div> <img class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/s.png" alt="" style="padding-left: 60px;" /> </div>
+								<div class="portfolio-item-caption-content text-center text-white">
+									<i class="fas fa-plus fa-3x">
+									</i>
+								</div>
+							</div>
+							<img alt="" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/s.png" style="padding-left: 60px;"/>
+						</div>
 					</div>
 					<!-- Portfolio Item 5-->
 					<div class="col-md-6 col-lg-4 mb-5 mb-md-0">
-						<div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal5">
+						<div class="portfolio-item mx-auto" data-target="#portfolioModal5" data-toggle="modal">
 							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-								<div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-							</div> <img class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/quora.png" alt="" style="padding-left: 15px;" /> </div>
+								<div class="portfolio-item-caption-content text-center text-white">
+									<i class="fas fa-plus fa-3x">
+									</i>
+								</div>
+							</div>
+							<img alt="" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/quora.png" style="padding-left: 15px;"/>
+						</div>
 					</div>
 					<!-- Portfolio Item 6-->
 					<div class="col-md-6 col-lg-4">
-						<div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal6">
+						<div class="portfolio-item mx-auto" data-target="#portfolioModal6" data-toggle="modal">
 							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-								<div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-							</div> <img class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/p.png" alt="" style="padding-left: 60px;" /> </div>
+								<div class="portfolio-item-caption-content text-center text-white">
+									<i class="fas fa-plus fa-3x">
+									</i>
+								</div>
+							</div>
+							<img alt="" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/p.png" style="padding-left: 60px;"/>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -10631,105 +10740,166 @@ html {
 		<section class="page-section text-white mb-0" id="about" style="background-color: #663300;">
 			<div class="container">
 				<!-- About Section Heading-->
-				<h2 class="page-section-heading text-center text-uppercase text-white">My Resume!</h2>
+				<h2 class="page-section-heading text-center text-uppercase text-white">
+					My Resume!
+				</h2>
 				<!-- Icon Divider-->
 				<div class="divider-custom divider-light">
-					<div class="divider-custom-line"></div>
-					<div class="divider-custom-icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></div>
-					<div class="divider-custom-line"></div>
+					<div class="divider-custom-line">
+					</div>
+					<div class="divider-custom-icon">
+						<i aria-hidden="true" class="fas fa-file-pdf">
+						</i>
+					</div>
+					<div class="divider-custom-line">
+					</div>
 				</div>
 				<!-- About Section Content-->
 				<div class="row">
 					<div class="col-lg-4 ml-auto">
-						<p class="lead">I am quite passionate about Competitive Programming . A quick learner, a chess lover, and an avid reader I believe, my best ability is adaptability. Apart from software and math, stuff I enjoy are watching loads of anime, reading manga, listening to David Guetta and watching documentaries for hours.</p>
+						<p class="lead">
+							I am quite passionate about Competitive Programming . A quick learner, a chess lover, and an avid reader I believe, my best ability is adaptability. Apart from software and math, stuff I enjoy are watching loads of anime, reading manga, listening to David Guetta and watching documentaries for hours.
+						</p>
 					</div>
 					<div class="col-lg-4 mr-auto">
-						<p class="lead">I have some amount of experience in Software Enginnering, Full Stack Development, Artificial Intelligence and Computer Vision. I exhibit an entrepreneurial mentality and am eager to learn and adapt to different environments. I try to explore all possibilities before sticking to one. My resume is at your disposal. </p>
+						<p class="lead">
+							I have some amount of experience in Software Enginnering, Full Stack Development, Artificial Intelligence and Computer Vision. I exhibit an entrepreneurial mentality and am eager to learn and adapt to different environments. I try to explore all possibilities before sticking to one. My resume is at your disposal.
+						</p>
 					</div>
 				</div>
 				<!-- About Section Button-->
 				<div class="text-center mt-4">
-					<embed src="https://drive.google.com/viewerng/
-					viewer?embedded=true&url=https://raw.githubusercontent.com/AbhJ/abhj/master/image/resume-abhj.pdf" width="100%" height="750px" alt = "You may reload the page if the pdf fails to show up here.">
-					</embed>
+					<div class="div-no-mobile">
+						<embed alt="You may reload the page if the pdf fails to show up here." height="750px" src="https://drive.google.com/viewerng/
+					viewer?embedded=true&url=https://raw.githubusercontent.com/AbhJ/abhj/master/image/resume-abhj.pdf" width="75.5%">
+						</embed>
+					</div>
+					<div class="div-only-mobile">
+						<embed alt="You may reload the page if the pdf fails to show up here." src="https://drive.google.com/viewerng/
+					viewer?embedded=true&url=https://raw.githubusercontent.com/AbhJ/abhj/master/image/resume-abhj.pdf" width='100%"'>
+						</embed>
+					</div>
 					<br/>
-					<br/> <a class="btn btn-xl btn-outline-light" href="https://raw.githubusercontent.com/AbhJ/abhj/master/image/resume-abhj.pdf"><span class="fas fa-download mr-2"></span>Download</a> 
+					<br/>
+					<a class="btn btn-xl btn-outline-light" href="https://raw.githubusercontent.com/AbhJ/abhj/master/image/resume-abhj.pdf">
+						<span class="fas fa-download mr-2">
+						</span>
+						Download
+					</a>
 				</div>
 			</div>
 		</section>
 		<section class="page-section text-white mb-0" id="codeTime" style="background-color: #222F38;">
 			<div class="container">
 				<!-- About Section Heading-->
-				<h2 class="page-section-heading text-center text-uppercase text-white">Code Stats!</h2>
+				<h2 class="page-section-heading text-center text-uppercase text-white">
+					Code Stats!
+				</h2>
 				<!-- Icon Divider-->
 				<div class="divider-custom divider-light">
-					<div class="divider-custom-line"></div>
-					<div class="divider-custom-icon"><i class="fas fa-code" aria-hidden="true"></i></div>
-					<div class="divider-custom-line"></div>
+					<div class="divider-custom-line">
+					</div>
+					<div class="divider-custom-icon">
+						<i aria-hidden="true" class="fas fa-code">
+						</i>
+					</div>
+					<div class="divider-custom-line">
+					</div>
 				</div>
 				<!-- About Section Content-->
 				<center>
-					<p class="lead"> "One day you'll leave this world behind. So live a life you will remember" - Avicii in "The Nights"
+					<p class="lead">
+						"One day you'll leave this world behind. So live a life you will remember" - Avicii in "The Nights"
 						<!-- Wondering how much I have I have been working lately? Well, I don't really discriminate between "the boring days" and "the weekends". -->
 					</p>
 					<br/>
 					<figure style="width: 60%;">
-						<embed src="https://wakatime.com/share/@abhj/712ff1ee-4a32-4627-ab72-4f302b109b36.svg"></embed>
+						<embed src="https://wakatime.com/share/@abhj/712ff1ee-4a32-4627-ab72-4f302b109b36.svg">
+						</embed>
 					</figure>
-					<p class="lead"> "When you gaze into the darkness the darkness gazes back into you" - Kentaro Miura in "Berserk"
+					<p class="lead">
+						"When you gaze into the darkness the darkness gazes back into you" - Kentaro Miura in "Berserk"
 						<!-- Among text editors, I mainly use Neo-Vim and Sublime-Text. Pertaining to IDE's I am really flexible and use one according to my immediate needs. -->
 					</p>
 					<br/>
 					<figure style="width: 60%;">
-						<embed src="https://wakatime.com/share/@abhj/7281f6fe-9693-4265-a902-1431ac20648c.svg"></embed>
+						<embed src="https://wakatime.com/share/@abhj/7281f6fe-9693-4265-a902-1431ac20648c.svg">
+						</embed>
 					</figure>
 				</center>
 			</div>
 		</section>
-
 		<!-- working on abj blogs -->
-
 		<section class="page-section text-white mb-0" id="blog" style="background-color: #D7DBB9;">
 			<div class="container" style="background-color: #D7DBB9;">
 				<!-- About Section Heading-->
-				<h2 class="page-section-heading text-center text-uppercase" style="color: black">ABJ Blogs!</h2>
+				<h2 class="page-section-heading text-center text-uppercase" style="color: black">
+					ABJ Blogs!
+				</h2>
 				<!-- Icon Divider-->
 				<div class="divider-custom divider-dark">
-					<div class="divider-custom-line"></div>
-					<div class="divider-custom-icon"><i class="fas fa-pen" aria-hidden="true"></i></div>
-					<div class="divider-custom-line"></div>
+					<div class="divider-custom-line">
+					</div>
+					<div class="divider-custom-icon">
+						<i aria-hidden="true" class="fas fa-pen">
+						</i>
+					</div>
+					<div class="divider-custom-line">
+					</div>
 				</div>
 				<!-- About Section Content-->
 				<center>
 					<p class="lead" style="color: black">
-						Welcome to my brand new minimalistic themed blogs page!!! <br/> Click the icon to visit ABJ Blogs.
+						Welcome to my brand new minimalistic themed blogs page!!!
+						<br/>
+						Click the icon to visit ABJ Blogs.
+						<br/>
+						<br/>
 					</p>
 					<a href="https://abhj.github.io/abj-blogs/">
-						<img class="img-fluid rounded" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj-blog.png" alt="" />
+						<img alt="" class="img-fluid rounded" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj-blog.png" width="70%"/>
 					</a>
 				</center>
 			</div>
 		</section>
-
-		<section class="page-section text-white mb-0" id="repos" style="background-color: #66CCCC;">
+		<section class="page-section text-white mb-0" id="youtube" style="background-color: #66CCCC;">
 			<div class="container" style="background-color: #66CCCC;">
 				<!-- About Section Heading-->
-				<h2 class="page-section-heading text-center text-uppercase text-white">My Repos!</h2>
+				<h2 class="page-section-heading text-center text-uppercase text-white">
+					My Youtube Content!
+				</h2>
 				<!-- Icon Divider-->
 				<div class="divider-custom divider-light">
-					<div class="divider-custom-line"></div>
-					<div class="divider-custom-icon"><i class="fas fa-code" aria-hidden="true"></i></div>
-					<div class="divider-custom-line"></div>
+					<div class="divider-custom-line">
+					</div>
+					<div class="divider-custom-icon">
+						<i aria-hidden="true" class="fas fa-code">
+						</i>
+					</div>
+					<div class="divider-custom-line">
+					</div>
 				</div>
 				<!-- About Section Content-->
 				<center>
-					<div class="github-card" data-github="abhj" data-width="80%" data-height="" data-theme="default">
+					<div class="div-only-mobile">
+						<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPTvyk_IQwn6YeywxVPf-qym" title="YouTube video player" width="560">
+						</iframe>
+						<br/>
+						<br/>
+						<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPRaCCiBNFAI341YA85FNdQc" title="YouTube video player" width="560">
+						</iframe>
 					</div>
-					<script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+					<div class="div-no-mobile">
+						<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="505" src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPTvyk_IQwn6YeywxVPf-qym" title="YouTube video player" width="853">
+						</iframe>
+						<br/>
+						<br/>
+						<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="505" src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPRaCCiBNFAI341YA85FNdQc" title="YouTube video player" width="853">
+						</iframe>
+					</div>
 				</center>
 			</div>
 		</section>
-
 		<!-- Contact Section-->
 		<!-- Footer-->
 		<footer class="footer text-center">
@@ -10737,25 +10907,57 @@ html {
 				<div class="row">
 					<!-- Footer Location-->
 					<div class="col-lg-4 mb-5 mb-lg-0">
-						<h4 class="text-uppercase mb-4">Email</h4>
-						<p class="lead mb-0"><a href="mailto:abhijay.mitra@iitkgp.ac.in">abhijay.mitra@iitkgp.ac.in</a>
-							<br/> <a href="mailto:mitraabhijay@gmail.com">mitraabhijay@gmail.com</a></p>
+						<h4 class="text-uppercase mb-4">
+							Email
+						</h4>
+						<p class="lead mb-0">
+							<a href="mailto:abhijay.mitra@iitkgp.ac.in">
+								abhijay.mitra@iitkgp.ac.in
+							</a>
+							<br/>
+							<a href="mailto:abhijaymitraofficial@gmail.com">
+								abhijaymitraofficial@gmail.com
+							</a>
+						</p>
 					</div>
 					<!-- Footer Social Icons-->
 					<div class="col-lg-4 mb-5 mb-lg-0">
-						<h4 class="text-uppercase mb-4">Connect with me</h4> <a class="btn btn-outline-light btn-social mx-1" href="https://twitter.com/abjkgp"><i
-																											class="fab fa-fw fa-twitter"></i></a><a class="btn btn-outline-light btn-social mx-1" href="https://github.com/AbhJ"><i
-																												 class="fab fa-fw fa-github"></i></a><a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/abhj/"><i
-																												  class="fab fa-fw fa-linkedin-in"></i></a><a class="btn btn-outline-light btn-social mx-1" href="https://www.instagram.com/abjkgp"><i
-																														class="fab fa-fw fa-instagram"></i></a> </div>
+						<h4 class="text-uppercase mb-4">
+							Connect with me
+						</h4>
+						<a class="btn btn-outline-light btn-social mx-1" href="https://twitter.com/abjkgp">
+							<i class="fab fa-fw fa-twitter">
+							</i>
+						</a>
+						<a class="btn btn-outline-light btn-social mx-1" href="https://github.com/AbhJ">
+							<i class="fab fa-fw fa-github">
+							</i>
+						</a>
+						<a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/abhj/">
+							<i class="fab fa-fw fa-linkedin-in">
+							</i>
+						</a>
+						<a class="btn btn-outline-light btn-social mx-1" href="https://www.tnstagram.com/abjkgp">
+							<i class="fab fa-fw fa-instagram">
+							</i>
+						</a>
+						<a class="btn btn-outline-light btn-social mx-1" href="https://www.youtube.com/channel/UC48s7RmRZUXT1fpVULeUAOw">
+							<i class="fab fa-fw fa-youtube">
+							</i>
+						</a>
+					</div>
 					<!-- Footer About Text-->
 					<div class="col-lg-4">
-						<h4 class="text-uppercase mb-4">Thank You</h4>
-						<p class="lead mb-0">I feel delighted to have you as a visitor of this page. Thank you!!! <!-- hitwebcounter Code START -->
+						<h4 class="text-uppercase mb-4">
+							Thank You
+						</h4>
+						<p class="lead mb-0">
+							I feel delighted to have you as a visitor of this page. Thank you!!!
+							<!-- hitwebcounter Code START -->
 							<br/>
 							<a href="https://www.hitwebcounter.com" target="_blank">
-								<img src="https://hitwebcounter.com/counter/counter.php?page=7855540&style=0006&nbdigits=4&type=page&initCount=500" title="Free Counter" Alt="web counter"   border="0" />
-							</a> 
+								<img alt="web counter" border="0" src="https://hitwebcounter.com/counter/counter.php?page=7855540&style=0006&nbdigits=4&type=page&initCount=500" title="Free Counter"/>
+							</a>
 						</p>
 					</div>
 				</div>
@@ -10763,11 +10965,19 @@ html {
 		</footer>
 		<!-- Copyright Section-->
 		<div class="copyright py-4 text-center text-white">
-			<div class="container"><small>Copyright © AbJ August 2021</small></div>
+			<div class="container">
+				<small>
+					Copyright © AbJ February 2022
+				</small>
+			</div>
 		</div>
 		<!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
-		<div class="scroll-to-top d-lg-none position-fixed"> <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i
-																														   class="fa fa-chevron-up"></i></a> </div>
+		<div class="scroll-to-top d-lg-none position-fixed">
+			<a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+				<i class="fa fa-chevron-up">
+				</i>
+			</a>
+		</div>
 		<!-- 1. Salesforce ok-->
 		<!-- 2. Codeforces ok -->
 		<!-- 3. Codechef ok -->
@@ -10775,116 +10985,47 @@ html {
 		<!-- 5. Quora ok -->
 		<!-- 6. Proficient Vision ok -->
 		<!-- Portfolio Modal 1-->
-		<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-labelledby="portfolioModal1Label" aria-hidden="true">
+		<div aria-hidden="true" aria-labelledby="portfolioModal1Label" class="portfolio-modal modal fade" id="portfolioModal1" role="dialog" tabindex="-1">
 			<div class="modal-dialog modal-xl" role="document">
 				<div class="modal-content">
-					<button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true"><i class="fas fa-times"></i></span> </button>
+					<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+						<span aria-hidden="true">
+							<i class="fas fa-times">
+							</i>
+						</span>
+					</button>
 					<div class="modal-body text-center">
 						<div class="container">
 							<div class="row justify-content-center">
 								<div class="col-lg-8">
 									<!-- Portfolio Modal - Title-->
-									<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal1Label">Salesforce</h2>
+									<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal1Label">
+										Salesforce
+									</h2>
 									<!-- Icon Divider-->
 									<div class="divider-custom">
-										<div class="divider-custom-line"></div>
-										<div class="divider-custom-icon"><i class="fas fa-cloud"></i></div>
-										<div class="divider-custom-line"></div>
+										<div class="divider-custom-line">
+										</div>
+										<div class="divider-custom-icon">
+											<i class="fas fa-cloud">
+											</i>
+										</div>
+										<div class="divider-custom-line">
+										</div>
 									</div>
 									<a href="https://www.salesforce.com/">
-										<!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/salesforce.jpg" alt="" /></a>
-									<!-- Portfolio Modal - Text-->
-									<p class="mb-5">I interned as a Software Engineer at Salesforce in the summer of 2021. My project was aimed at recognising, analysing and storing data automatically, directly from medical conversations. I also managed to win the hackathon organised by Salesforce for its interns, alongside 3 teammates, and yes, I also bagged a returning offer to Salesforce Hyderabad 😎!!!</p>
-									<button class="btn btn-primary" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close </button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		</div>
-		<!-- Portfolio Modal 2-->
-		<div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-labelledby="portfolioModal2Label" aria-hidden="true">
-			<div class="modal-dialog modal-xl" role="document">
-				<div class="modal-content">
-					<button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true"><i class="fas fa-times"></i></span> </button>
-					<div class="modal-body text-center">
-						<div class="container">
-							<div class="row justify-content-center">
-								<div class="col-lg-8">
-									<!-- Portfolio Modal - Title-->
-									<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal2Label">My Codeforces Profile</h2>
-									<!-- Icon Divider-->
-									<div class="divider-custom">
-										<div class="divider-custom-line"></div>
-										<div class="divider-custom-icon"><i class="fas fa-code"></i></div>
-										<div class="divider-custom-line"></div>
-									</div>
-									<a href="https://codeforces.com/profile/abhj">
-										<!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/force.png" alt="" /></a>
-									<!-- Portfolio Modal - Text-->
-									<p class="mb-5">I have been using Codeforces since the end of 2019 and peaked at 1877 (expert), so close to candidate master (😢), which hopefully I'll reach soon. I have been very active on this platform for the last few months. To view my progress click on the logo above. </p>
-									<button class="btn btn-primary" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close </button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Portfolio Modal 3-->
-		<div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-labelledby="portfolioModal3Label" aria-hidden="true">
-			<div class="modal-dialog modal-xl" role="document">
-				<div class="modal-content">
-					<button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true"><i class="fas fa-times"></i></span> </button>
-					<div class="modal-body text-center">
-						<div class="container">
-							<div class="row justify-content-center">
-								<div class="col-lg-8">
-									<!-- Portfolio Modal - Title-->
-									<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal3Label">My Codechef Profile</h2>
-									<!-- Icon Divider-->
-									<div class="divider-custom">
-										<div class="divider-custom-line"></div>
-										<div class="divider-custom-icon"><i class="fas fa-code"></i></div>
-										<div class="divider-custom-line"></div>
-									</div>
-									<!-- Portfolio Modal - Image-->
-									<a href="https://www.codechef.com/users/abhj"><img class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/chef.jpeg" alt="" />
-										<!-- Portfolio Modal - Text-->
+										<!-- Portfolio Modal - Image-->
+										<img alt="" class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/salesforce.jpg"/>
 									</a>
-									<p class="mb-5"> I have been actively participating in codechef contests since 2019 and am currently a "5-star coder" (sounds cool right? 😉). To view my progress click on the logo above. </p>
-									<button class="btn btn-primary" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close </button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Portfolio Modal 4-->
-		<div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-labelledby="portfolioModal4Label" aria-hidden="true">
-			<div class="modal-dialog modal-xl" role="document">
-				<div class="modal-content">
-					<button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true"><i class="fas fa-times"></i></span> </button>
-					<div class="modal-body text-center">
-						<div class="container">
-							<div class="row justify-content-center">
-								<div class="col-lg-8">
-									<!-- Portfolio Modal - Title-->
-									<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal4Label">My StopStalk Profile</h2>
-									<!-- Icon Divider-->
-									<div class="divider-custom">
-										<div class="divider-custom-line"></div>
-										<div class="divider-custom-icon"><i class="fas fa-code"></i></div>
-										<div class="divider-custom-line"></div>
-									</div>
-									<a href="https://www.stopstalk.com/user/profile/abj">
-										<!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/s.png" alt="" /></a>
 									<!-- Portfolio Modal - Text-->
-									<p class="mb-5">Stopstalk has been one of my primary boosters in competitive programming. I have been #1 on IIT Kharagpur Stopstalk Leaderboard for over 2 years (from 2019). To view my progress click on the logo above. </p>
-									<button class="btn btn-primary" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close </button>
+									<p class="mb-5">
+										I interned as a Software Engineer at Salesforce in the summer of 2021. My project was aimed at recognising, analysing and storing data automatically, directly from medical conversations. I also managed to win the hackathon organised by Salesforce for its interns, alongside 3 teammates, and yes, I also bagged a returning offer to Salesforce Hyderabad 😎!!!
+									</p>
+									<button class="btn btn-primary" data-dismiss="modal">
+										<i class="fas fa-times fa-fw">
+										</i>
+										Close
+									</button>
 								</div>
 							</div>
 						</div>
@@ -10892,74 +11033,268 @@ html {
 				</div>
 			</div>
 		</div>
-		<!-- Portfolio Modal 5-->
-		<div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-labelledby="portfolioModal5Label" aria-hidden="true">
-			<div class="modal-dialog modal-xl" role="document">
-				<div class="modal-content">
-					<button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true"><i class="fas fa-times"></i></span> </button>
-					<div class="modal-body text-center">
-						<div class="container">
-							<div class="row justify-content-center">
-								<div class="col-lg-8">
-									<!-- Portfolio Modal - Title-->
-									<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal5Label">Quora</h2>
-									<!-- Icon Divider-->
-									<div class="divider-custom">
-										<div class="divider-custom-line"></div>
-										<div class="divider-custom-icon"><i class="fa fa-pen"></i></div>
-										<div class="divider-custom-line"></div>
-									</div>
-									<a href="https://www.quora.com/profile/Abhijay-Mitra">
-										<!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/quora.png" alt="" /></a>
-									<!-- Portfolio Modal - Text-->
-									<p class="mb-5">Apart from the boring (umm... not so much though) stuff, I have a few hobbies as well. I am an avid reader, especially self help books, a chess player, and I quite often write answers on Quora. I also watch a lot of TV series'.</p>
-									<button class="btn btn-primary" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close </button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Portfolio Modal 6-->
-		<div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-labelledby="portfolioModal6Label" aria-hidden="true">
-			<div class="modal-dialog modal-xl" role="document">
-				<div class="modal-content">
-					<button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true"><i class="fas fa-times"></i></span> </button>
-					<div class="modal-body text-center">
-						<div class="container">
-							<div class="row justify-content-center">
-								<div class="col-lg-8">
-									<!-- Portfolio Modal - Title-->
-									<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal6Label">Proficient Vision Solutions Private Limited</h2>
-									<!-- Icon Divider-->
-									<div class="divider-custom">
-										<div class="divider-custom-line"></div>
-										<div class="divider-custom-icon"><i class="fas fa-eye"></i></div>
-										<div class="divider-custom-line"></div>
-									</div>
-									<a href="https://www.linkedin.com/company/proficient-vision-solutions/">
-										<!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/p.png" alt="" /></a>
-									<!-- Portfolio Modal - Text-->
-									<p class="mb-5">In my Second year winter break, I worked as an intern in Proficient Vision Solutions Private Limited, an image processing based startup co-founded by an IIT Kharagpur professor. This was my first intern and I learned quite a bit of cryptography and computer vision during this period.</p>
-									<button class="btn btn-primary" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close </button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Bootstrap core JS-->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
-		<!-- Third party plugin JS-->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-		<!-- Contact form JS-->
-		<script src="assets/mail/jqBootstrapValidation.js"></script>
-		<script src="assets/mail/contact_me.js"></script>
-		<!-- Core theme JS-->
-		<script src="templates/js/scripts.js"></script>
 	</body>
-
 </html>
+<!-- Portfolio Modal 2-->
+<div aria-hidden="true" aria-labelledby="portfolioModal2Label" class="portfolio-modal modal fade" id="portfolioModal2" role="dialog" tabindex="-1">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+				<span aria-hidden="true">
+					<i class="fas fa-times">
+					</i>
+				</span>
+			</button>
+			<div class="modal-body text-center">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-8">
+							<!-- Portfolio Modal - Title-->
+							<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal2Label">
+								My Codeforces Profile
+							</h2>
+							<!-- Icon Divider-->
+							<div class="divider-custom">
+								<div class="divider-custom-line">
+								</div>
+								<div class="divider-custom-icon">
+									<i class="fas fa-code">
+									</i>
+								</div>
+								<div class="divider-custom-line">
+								</div>
+							</div>
+							<a href="https://codeforces.com/profile/abhj">
+								<!-- Portfolio Modal - Image-->
+								<img alt="" class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/force.png"/>
+							</a>
+							<!-- Portfolio Modal - Text-->
+							<p class="mb-5">
+								I have been using Codeforces since the end of 2019 and peaked at 1877 (expert), so close to candidate master (😢), which hopefully I'll reach soon. I have been very active on this platform for the last few months. To view my progress click on the logo above.
+							</p>
+							<button class="btn btn-primary" data-dismiss="modal">
+								<i class="fas fa-times fa-fw">
+								</i>
+								Close
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Portfolio Modal 3-->
+<div aria-hidden="true" aria-labelledby="portfolioModal3Label" class="portfolio-modal modal fade" id="portfolioModal3" role="dialog" tabindex="-1">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+				<span aria-hidden="true">
+					<i class="fas fa-times">
+					</i>
+				</span>
+			</button>
+			<div class="modal-body text-center">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-8">
+							<!-- Portfolio Modal - Title-->
+							<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal3Label">
+								My Codechef Profile
+							</h2>
+							<!-- Icon Divider-->
+							<div class="divider-custom">
+								<div class="divider-custom-line">
+								</div>
+								<div class="divider-custom-icon">
+									<i class="fas fa-code">
+									</i>
+								</div>
+								<div class="divider-custom-line">
+								</div>
+							</div>
+							<!-- Portfolio Modal - Image-->
+							<a href="https://www.codechef.com/users/abhj">
+								<img alt="" class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/chef.jpeg"/>
+								<!-- Portfolio Modal - Text-->
+							</a>
+							<p class="mb-5">
+								I have been actively participating in codechef contests since 2019 and am currently a "5-star coder" (sounds cool right? 😉). To view my progress click on the logo above.
+							</p>
+							<button class="btn btn-primary" data-dismiss="modal">
+								<i class="fas fa-times fa-fw">
+								</i>
+								Close
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Portfolio Modal 4-->
+<div aria-hidden="true" aria-labelledby="portfolioModal4Label" class="portfolio-modal modal fade" id="portfolioModal4" role="dialog" tabindex="-1">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+				<span aria-hidden="true">
+					<i class="fas fa-times">
+					</i>
+				</span>
+			</button>
+			<div class="modal-body text-center">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-8">
+							<!-- Portfolio Modal - Title-->
+							<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal4Label">
+								My StopStalk Profile
+							</h2>
+							<!-- Icon Divider-->
+							<div class="divider-custom">
+								<div class="divider-custom-line">
+								</div>
+								<div class="divider-custom-icon">
+									<i class="fas fa-code">
+									</i>
+								</div>
+								<div class="divider-custom-line">
+								</div>
+							</div>
+							<a href="https://www.stopstalk.com/user/profile/abj">
+								<!-- Portfolio Modal - Image-->
+								<img alt="" class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/s.png"/>
+							</a>
+							<!-- Portfolio Modal - Text-->
+							<p class="mb-5">
+								Stopstalk has been one of my primary boosters in competitive programming. I have been #1 on IIT Kharagpur Stopstalk Leaderboard for over 2 years (from 2019). To view my progress click on the logo above.
+							</p>
+							<button class="btn btn-primary" data-dismiss="modal">
+								<i class="fas fa-times fa-fw">
+								</i>
+								Close
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Portfolio Modal 5-->
+<div aria-hidden="true" aria-labelledby="portfolioModal5Label" class="portfolio-modal modal fade" id="portfolioModal5" role="dialog" tabindex="-1">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+				<span aria-hidden="true">
+					<i class="fas fa-times">
+					</i>
+				</span>
+			</button>
+			<div class="modal-body text-center">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-8">
+							<!-- Portfolio Modal - Title-->
+							<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal5Label">
+								Quora
+							</h2>
+							<!-- Icon Divider-->
+							<div class="divider-custom">
+								<div class="divider-custom-line">
+								</div>
+								<div class="divider-custom-icon">
+									<i class="fa fa-pen">
+									</i>
+								</div>
+								<div class="divider-custom-line">
+								</div>
+							</div>
+							<a href="https://www.quora.com/profile/Abhijay-Mitra">
+								<!-- Portfolio Modal - Image-->
+								<img alt="" class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/quora.png"/>
+							</a>
+							<!-- Portfolio Modal - Text-->
+							<p class="mb-5">
+								Apart from the boring (umm... not so much though) stuff, I have a few hobbies as well. I am an avid reader, especially self help books, a chess player, and I quite often write answers on Quora. I also watch a lot of TV series'.
+							</p>
+							<button class="btn btn-primary" data-dismiss="modal">
+								<i class="fas fa-times fa-fw">
+								</i>
+								Close
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Portfolio Modal 6-->
+<div aria-hidden="true" aria-labelledby="portfolioModal6Label" class="portfolio-modal modal fade" id="portfolioModal6" role="dialog" tabindex="-1">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+				<span aria-hidden="true">
+					<i class="fas fa-times">
+					</i>
+				</span>
+			</button>
+			<div class="modal-body text-center">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-8">
+							<!-- Portfolio Modal - Title-->
+							<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal6Label">
+								Proficient Vision Solutions Private Limited
+							</h2>
+							<!-- Icon Divider-->
+							<div class="divider-custom">
+								<div class="divider-custom-line">
+								</div>
+								<div class="divider-custom-icon">
+									<i class="fas fa-eye">
+									</i>
+								</div>
+								<div class="divider-custom-line">
+								</div>
+							</div>
+							<a href="https://www.linkedin.com/company/proficient-vision-solutions/">
+								<!-- Portfolio Modal - Image-->
+								<img alt="" class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/p.png"/>
+							</a>
+							<!-- Portfolio Modal - Text-->
+							<p class="mb-5">
+								In my Second year winter break, I worked as an intern in Proficient Vision Solutions Private Limited, an image processing based startup co-founded by an IIT Kharagpur professor. This was my first intern and I learned quite a bit of cryptography and computer vision during this period.
+							</p>
+							<button class="btn btn-primary" data-dismiss="modal">
+								<i class="fas fa-times fa-fw">
+								</i>
+								Close
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Bootstrap core JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js">
+</script>
+<!-- Third party plugin JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js">
+</script>
+<!-- Contact form JS-->
+<script src="assets/mail/jqBootstrapValidation.js">
+</script>
+<script src="assets/mail/contact_me.js">
+</script>
+<!-- Core theme JS-->
+<script src="templates/js/scripts.js">
+</script>
+<script src="https://apis.google.com/js/platform.js">
+</script>
