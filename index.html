@@ -35,6 +35,45 @@
 		</meta>
 	</head>
 	<style>
+/***** Global Slide *****/
+.slide-right, .slide-left {
+}
+
+/***** Slide Right *****/
+.slide-right {
+  animation: 2s slide-right;
+}
+@keyframes slide-right {
+  from {
+    margin-left: -100%;
+  }
+  to {
+    margin-left: 0%;
+  }
+}
+/***** Slide Left *****/
+.slide-left {
+  animation: 2s slide-left;
+}
+@keyframes slide-left {
+  from {
+    margin-left: 100%;
+  }
+  to {
+    margin-left: 0%;
+  }
+}
+.fade-in {
+  animation: fadeIn ease 2s;
+}
+@keyframes fadeIn{
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
 		@charset "UTF-8";
 	html {
 		scroll-behavior: smooth
@@ -5078,7 +5117,6 @@
 				display: inline-block;
 				padding-right: 0.5rem;
 				color: #6c757d;
-				content: "/";
 			   }
 
 			   .breadcrumb-item + .breadcrumb-item:hover::before {
@@ -10365,7 +10403,7 @@
 					scroll-margin-top: 100px;
 				}
 
-				#about {
+				#resume {
 					scroll-margin-top: 100px;
 				}
 
@@ -10551,7 +10589,7 @@
 						target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
 						if(target.length) {
 							$('html, body').animate({
-								scrollTop: (target.offset().top - 71)
+animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 							}, 1000, "easeInOutExpo");
 							return false;
 						}
@@ -10621,7 +10659,7 @@
 							</a>
 						</li>
 						<li class="nav-item mx-0 mx-lg-1">
-							<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">
+							<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#resume">
 								Resume
 							</a>
 						</li>
@@ -10648,9 +10686,9 @@
 		<header class="masthead text-white text-center" style="background-color: #3d0099;">
 			<div class="container d-flex align-items-center flex-column">
 				<!-- Masthead Avatar Image-->
-				<img alt="" class="masthead-avatar mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj_macbook.png"/>
+				<img alt="" class="masthead-avatar mb-5 fade-in" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj_macbook.png"/>
 				<!-- Masthead Heading-->
-				<h1 class="masthead-heading text-uppercase mb-0">
+				<h1 class="masthead-heading fade-in text-uppercase mb-0">
 					My Portfolio
 				</h1>
 				<!-- Icon Divider-->
@@ -10665,10 +10703,10 @@
 					</div>
 				</div>
 				<!-- Masthead Subheading-->
-				<p class="masthead-subheading font-weight-light mb-0">
+				<p class="masthead-subheading font-weight-light mb-0 slide-right">
 					SWE Intern @ Salesforce - Competitive Programmer
 				</p>
-				<p class="masthead-subheading font-weight-light mb-0">
+				<p class="masthead-subheading font-weight-light mb-0 slide-right">
 					Final Year Undergraduate of Electrical Engineering @ IIT Kharagpur
 				</p>
 			</div>
@@ -10677,7 +10715,7 @@
 		<section class="page-section portfolio" id="portfolio">
 			<div class="container">
 				<!-- Portfolio Section Heading-->
-				<h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">
+				<h2 class="page-section-heading masthead-heading fade-in text-center text-uppercase text-secondary mb-0">
 					What have I been upto?
 				</h2>
 				<!-- Icon Divider-->
@@ -10769,7 +10807,7 @@
 			</div>
 		</section>
 		<!-- About Section-->
-		<section class="page-section text-white mb-0" id="about" style="background-color: #663300;">
+		<section class="page-section text-white mb-0" id="resume" style="background-color: #663300;">
 			<div class="container">
 				<!-- About Section Heading-->
 				<h2 class="page-section-heading text-center text-uppercase text-white">
@@ -10787,7 +10825,7 @@
 					</div>
 				</div>
 				<!-- About Section Content-->
-				<div class="row">
+				<div class="row slide-right">
 					<div class="col-lg-4 ml-auto">
 						<p class="lead">
 							I am quite passionate about Competitive Programming . A quick learner, a chess lover, and an avid reader I believe, my best ability is adaptability. Apart from software and math, stuff I enjoy are watching loads of anime, reading manga, listening to David Guetta and watching documentaries for hours.
@@ -10795,7 +10833,7 @@
 					</div>
 					<div class="col-lg-4 mr-auto">
 						<p class="lead">
-							I have some amount of experience in Software Enginnering, Full Stack Development, Artificial Intelligence and Computer Vision. I exhibit an entrepreneurial mentality and am eager to learn and adapt to different environments. I try to explore all possibilities before sticking to one. My resume is at your disposal.
+							I have some amount of experience in Software Engineering, Full Stack Development, Artificial Intelligence and Computer Vision. I exhibit an entrepreneurial mentality and am eager to learn and adapt to different environments. I try to explore all possibilities before sticking to one. My resume is at your disposal.
 						</p>
 					</div>
 				</div>
@@ -10823,7 +10861,7 @@
 		<section class="page-section text-white mb-0" id="codeTime" style="background-color: #222F38;">
 			<div class="container">
 				<!-- About Section Heading-->
-				<h2 class="page-section-heading text-center text-uppercase text-white">
+				<h2 class="masthead-heading fade-in text-center text-uppercase text-white">
 					Code Stats!
 				</h2>
 				<!-- Icon Divider-->
@@ -10839,7 +10877,7 @@
 				</div>
 				<!-- About Section Content-->
 				<center>
-					<p class="lead">
+					<p class="lead slide-right">
 						"One day you'll leave this world behind. So live a life you will remember" - Avicii in "The Nights"
 						<!-- Wondering how much I have I have been working lately? Well, I don't really discriminate between "the boring days" and "the weekends". -->
 					</p>
@@ -10848,7 +10886,7 @@
 						<embed src="https://wakatime.com/share/@abhj/712ff1ee-4a32-4627-ab72-4f302b109b36.svg">
 						</embed>
 					</figure>
-					<p class="lead">
+					<p class="lead slide-right">
 						"When you gaze into the darkness the darkness gazes back into you" - Kentaro Miura in "Berserk"
 						<!-- Among text editors, I mainly use Neo-Vim and Sublime-Text. Pertaining to IDE's I am really flexible and use one according to my immediate needs. -->
 					</p>
@@ -10864,7 +10902,7 @@
 		<section class="page-section text-white mb-0" id="blog" style="background-color: #D7DBB9;">
 			<div class="container" style="background-color: #D7DBB9;">
 				<!-- About Section Heading-->
-				<h2 class="page-section-heading text-center text-uppercase" style="color: black">
+				<h2 class="masthead-heading fade-in text-center text-uppercase" style="color: black">
 					ABJ Blogs!
 				</h2>
 				<!-- Icon Divider-->
@@ -10880,7 +10918,7 @@
 				</div>
 				<!-- About Section Content-->
 				<center>
-					<p class="lead" style="color: black">
+					<p class="lead slide-right" style="color: black">
 						Welcome to my minimalistic themed blogs page where I write about Tech and Software!!!
 						<br/>
 						Click the icon to visit ABJ Blogs.
