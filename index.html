@@ -22,6 +22,7 @@
 											<!-- Google fonts-->
 											<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
 											<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+											  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 											<!-- Core theme CSS (includes Bootstrap)-->
 											<link href="templates/css/styles.css" rel="stylesheet"/>
 										</meta>
@@ -41,7 +42,7 @@
 
 /***** Slide Right *****/
 .slide-right {
-  animation: 2s slide-right;
+  animation: 3s slide-right;
 }
 @keyframes slide-right {
   from {
@@ -53,7 +54,7 @@
 }
 /***** Slide Left *****/
 .slide-left {
-  animation: 2s slide-left;
+  animation: 3s slide-left;
 }
 @keyframes slide-left {
   from {
@@ -63,8 +64,8 @@
     margin-left: 0%;
   }
 }
-.fade-in {
-  animation: fadeIn ease 2s;
+/*.fade-in {
+  animation: fadeIn ease 3s;
 }
 @keyframes fadeIn{
   0% {
@@ -72,7 +73,7 @@
   }
   100% {
     opacity:1;
-  }
+  }*/
 }
 		@charset "UTF-8";
 	html {
@@ -10682,13 +10683,14 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 				</div>
 			</div>
 		</nav>
+		<main>
 		<!-- Masthead-->
 		<header class="masthead text-white text-center" style="background-color: #3d0099;">
 			<div class="container d-flex align-items-center flex-column">
 				<!-- Masthead Avatar Image-->
-				<img alt="" class="masthead-avatar mb-5 fade-in" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj_macbook.png"/>
+				<img alt="" class="masthead-avatar mb-5 fade-in" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj_macbook.png" width="28%"/>
 				<!-- Masthead Heading-->
-				<h1 class="masthead-heading fade-in text-uppercase mb-0">
+				<h1 class="masthead-heading text-uppercase mb-0" data-aos="flip-down">
 					My Portfolio
 				</h1>
 				<!-- Icon Divider-->
@@ -10703,10 +10705,10 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 					</div>
 				</div>
 				<!-- Masthead Subheading-->
-				<p class="masthead-subheading font-weight-light mb-0 slide-right">
+				<p class="masthead-subheading font-weight-light mb-0" data-aos="flip-up">
 					SWE Intern @ Salesforce - Competitive Programmer
 				</p>
-				<p class="masthead-subheading font-weight-light mb-0 slide-right">
+				<p class="masthead-subheading font-weight-light mb-0" data-aos="flip-up">
 					Final Year Undergraduate of Electrical Engineering @ IIT Kharagpur
 				</p>
 			</div>
@@ -10715,7 +10717,7 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 		<section class="page-section portfolio" id="portfolio">
 			<div class="container">
 				<!-- Portfolio Section Heading-->
-				<h2 class="page-section-heading masthead-heading fade-in text-center text-uppercase text-secondary mb-0">
+				<h2 class="page-section-heading masthead-heading text-center text-uppercase text-secondary mb-0" data-aos="zoom-in-down">
 					What have I been upto?
 				</h2>
 				<!-- Icon Divider-->
@@ -10732,7 +10734,7 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 				<!-- Portfolio Grid Items-->
 				<div class="row">
 					<!-- Portfolio Item 1-->
-					<div class="col-md-6 col-lg-4 mb-5">
+					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-left" data-aos-easing="ease-in-sine">
 						<div class="portfolio-item mx-auto" data-target="#portfolioModal1" data-toggle="modal">
 							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
 								<div class="portfolio-item-caption-content text-center text-white">
@@ -10744,7 +10746,7 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 						</div>
 					</div>
 					<!-- Portfolio Item 2-->
-					<div class="col-md-6 col-lg-4 mb-5">
+					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-right" data-aos-easing="ease-in-sine">
 						<div class="portfolio-item mx-auto" data-target="#portfolioModal2" data-toggle="modal">
 							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
 								<div class="portfolio-item-caption-content text-center text-white">
@@ -10756,7 +10758,7 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 						</div>
 					</div>
 					<!-- Portfolio Item 3-->
-					<div class="col-md-6 col-lg-4 mb-5">
+					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-left" data-aos-easing="ease-in-sine">
 						<div class="portfolio-item mx-auto" data-target="#portfolioModal3" data-toggle="modal">
 							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
 								<div class="portfolio-item-caption-content text-center text-white">
@@ -10768,7 +10770,7 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 						</div>
 					</div>
 					<!-- Portfolio Item 4-->
-					<div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
+					<div class="col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade-right" data-aos-easing="ease-in-sine">
 						<div class="portfolio-item mx-auto" data-target="#portfolioModal4" data-toggle="modal">
 							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
 								<div class="portfolio-item-caption-content text-center text-white">
@@ -10780,7 +10782,7 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 						</div>
 					</div>
 					<!-- Portfolio Item 5-->
-					<div class="col-md-6 col-lg-4 mb-5 mb-md-0">
+					<div class="col-md-6 col-lg-4 mb-5 mb-md-0" data-aos="fade-left" data-aos-easing="ease-in-sine">
 						<div class="portfolio-item mx-auto" data-target="#portfolioModal5" data-toggle="modal">
 							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
 								<div class="portfolio-item-caption-content text-center text-white">
@@ -10792,7 +10794,7 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 						</div>
 					</div>
 					<!-- Portfolio Item 6-->
-					<div class="col-md-6 col-lg-4">
+					<div class="col-md-6 col-lg-4" data-aos="fade-right" data-aos-easing="ease-in-sine">
 						<div class="portfolio-item mx-auto" data-target="#portfolioModal6" data-toggle="modal">
 							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
 								<div class="portfolio-item-caption-content text-center text-white">
@@ -10810,7 +10812,7 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 		<section class="page-section text-white mb-0" id="resume" style="background-color: #663300;">
 			<div class="container">
 				<!-- About Section Heading-->
-				<h2 class="page-section-heading text-center text-uppercase text-white">
+				<h2 class="page-section-heading text-center text-uppercase text-white" data-aos="fade-down">
 					My Resume!
 				</h2>
 				<!-- Icon Divider-->
@@ -10826,21 +10828,21 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 				</div>
 				<!-- About Section Content-->
 				<div class="row slide-right">
-					<div class="col-lg-4 ml-auto">
+					<div class="col-lg-4 ml-auto" data-aos="zoom-out-up" width="100%">
 						<p class="lead">
-							I am quite passionate about Competitive Programming . A quick learner, a chess lover, and an avid reader I believe, my best ability is adaptability. Apart from software and math, stuff I enjoy are watching loads of anime, reading manga, listening to David Guetta and watching documentaries for hours.
+							I am very passionate about Competitive Programming . A quick learner, a chess lover, and an avid reader I believe, my best ability is adaptability. Apart from software and math, stuff I enjoy are watching loads of anime, reading manga, listening to David Guetta and watching documentaries for hours.
 						</p>
 					</div>
-					<div class="col-lg-4 mr-auto">
+					<div class="col-lg-4 mr-auto" data-aos="zoom-in-down" width="100%">
 						<p class="lead">
-							I have some amount of experience in Software Engineering, Full Stack Development, Artificial Intelligence and Computer Vision. I exhibit an entrepreneurial mentality and am eager to learn and adapt to different environments. I try to explore all possibilities before sticking to one. My resume is at your disposal.
+							I am experienced in Software Engineering, Full Stack Development, Machine Learning, Artificial Intelligence and Computer Vision. I exhibit an entrepreneurial mindset and am eager to learn and adapt to different environments. I try to explore all possibilities before sticking to one. My resume is at your disposal.
 						</p>
 					</div>
 				</div>
 				<!-- About Section Button-->
 				<div class="text-center mt-4">
 					<div class="div-no-mobile">
-						<embed alt="You may reload the page if the pdf fails to show up here." height="750px" src="resume-abhj.pdf#toolbar=0&zoom=100" width="75.5%">
+						<embed alt="You may reload the page if the pdf fails to show up here." height="750px" src="resume-abhj.pdf#toolbar=0&zoom=100" width="75.5%" data-aos="flip-up">
 						</embed>
 					</div>
 					<!-- <div class="div-only-mobile"> -->
@@ -10861,7 +10863,7 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 		<section class="page-section text-white mb-0" id="codeTime" style="background-color: #222F38;">
 			<div class="container">
 				<!-- About Section Heading-->
-				<h2 class="masthead-heading fade-in text-center text-uppercase text-white">
+				<h2 class="masthead-heading fade-in text-center text-uppercase text-white" data-aos="flip-up">
 					Code Stats!
 				</h2>
 				<!-- Icon Divider-->
@@ -10877,21 +10879,21 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 				</div>
 				<!-- About Section Content-->
 				<center>
-					<p class="lead slide-right">
+					<p class="lead" data-aos="zoom-in">
 						"One day you'll leave this world behind. So live a life you will remember" - Avicii in "The Nights"
 						<!-- Wondering how much I have I have been working lately? Well, I don't really discriminate between "the boring days" and "the weekends". -->
 					</p>
 					<br/>
-					<figure style="width: 70%;">
+					<figure style="width: 70%;" data-aos="zoom-out">
 						<embed src="https://wakatime.com/share/@abhj/712ff1ee-4a32-4627-ab72-4f302b109b36.svg">
 						</embed>
 					</figure>
-					<p class="lead slide-right">
+					<p class="lead" data-aos="zoom-out">
 						"When you gaze into the darkness the darkness gazes back into you" - Kentaro Miura in "Berserk"
 						<!-- Among text editors, I mainly use Neo-Vim and Sublime-Text. Pertaining to IDE's I am really flexible and use one according to my immediate needs. -->
 					</p>
 					<br/>
-					<figure style="width: 70%;">
+					<figure style="width: 70%;" data-aos="zoom-in">
 						<embed src="https://wakatime.com/share/@abhj/7281f6fe-9693-4265-a902-1431ac20648c.svg">
 						</embed>
 					</figure>
@@ -10902,7 +10904,7 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 		<section class="page-section text-white mb-0" id="blog" style="background-color: #D7DBB9;">
 			<div class="container" style="background-color: #D7DBB9;">
 				<!-- About Section Heading-->
-				<h2 class="masthead-heading fade-in text-center text-uppercase" style="color: black">
+				<h2 class="masthead-heading fade-in text-center text-uppercase" style="color: black" data-aos="fade-up">
 					ABJ Blogs!
 				</h2>
 				<!-- Icon Divider-->
@@ -10918,15 +10920,15 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 				</div>
 				<!-- About Section Content-->
 				<center>
-					<p class="lead slide-right" style="color: black">
+					<div class="lead" style="color: black" data-aos="zoom-out-up">
+						<p>
 						Welcome to my minimalistic themed blogs page where I write about Tech and Software!!!
-						<br/>
+						</p><p>
 						Click the icon to visit ABJ Blogs.
-						<br/>
-						<br/>
 					</p>
+				</div>
 					<a href="https://abhj.github.io/abj-blogs">
-						<img alt="" class="img-fluid rounded" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj-blog.png" width="70%"/>
+						<img alt="" class="img-fluid rounded" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj-blog.png" width="40%" data-aos="zoom-out-down"/>
 					</a>
 				</center>
 			</div>
@@ -10934,7 +10936,7 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 		<section class="page-section text-white mb-0" id="youtube" style="background-color: #66CCCC;">
 			<div class="container" style="background-color: #66CCCC;">
 				<!-- About Section Heading-->
-				<h2 class="page-section-heading text-center text-uppercase text-white">
+				<h2 class="page-section-heading text-center text-uppercase text-white" data-aos="zoom-in">
 					My Youtube Content!
 				</h2>
 				<!-- Icon Divider-->
@@ -10952,13 +10954,13 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 				<center class="video-embed-div">
 					<div class="div-only-mobile">
 						<div class="video-container">
-							<iframe allowfullscreen="" class="video" src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPTvyk_IQwn6YeywxVPf-qym">
+							<iframe allowfullscreen="" class="video" src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPTvyk_IQwn6YeywxVPf-qym" loading="lazy" data-aos="zoom-out-left">
 							</iframe>
 						</div>
 					</div>
 					<div class="div-no-mobile">
 						<div class="video-container">
-							<iframe allowfullscreen="" class="video" src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPRaCCiBNFAI341YA85FNdQc">
+							<iframe allowfullscreen="" class="video" src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPRaCCiBNFAI341YA85FNdQc" loading="lazy" data-aos="zoom-out-right">
 							</iframe>
 						</div>
 					</div>
@@ -10966,13 +10968,13 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 <center class="video-embed-div">
 					<div class="div-no-mobile">
 						<div class="video-container">
-							<iframe allowfullscreen="" class="video" src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPTvyk_IQwn6YeywxVPf-qym">
+							<iframe allowfullscreen="" class="video" src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPTvyk_IQwn6YeywxVPf-qym" loading="lazy" data-aos="zoom-out-left">
 							</iframe>
 						</div>
 					</div>
 					<div class="div-only-mobile">
 						<div class="video-container">
-							<iframe allowfullscreen="" class="video" src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPRaCCiBNFAI341YA85FNdQc">
+							<iframe allowfullscreen="" class="video" src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPRaCCiBNFAI341YA85FNdQc" loading="lazy"  data-aos="zoom-out-right">
 							</iframe>
 						</div>
 					</div>
@@ -11033,10 +11035,10 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 						<p class="lead mb-0">
 							I feel delighted to have you as a visitor of this page. Thank you!!!
 							<!-- hitwebcounter Code START -->
-							<br/>
+							<!-- <br/>
 							<a href="https://www.hitwebcounter.com" target="_blank">
-								<img alt="web counter" border="0" src="https://hitwebcounter.com/counter/counter.php?page=7855540&style=0006&nbdigits=4&type=page&initCount=500" title="Free Counter"/>
-							</a>
+								<img alt="web counter" border="0" src="https://hitwebcounter.com/counter/counter.php?page=7855540&style=0006&nbdigits=4&type=page&initCount=500" title="Free Counter" loading="lazy"/>
+							</a> -->
 						</p>
 					</div>
 				</div>
@@ -11112,8 +11114,6 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 				</div>
 			</div>
 		</div>
-	</body>
-</html>
 <!-- Portfolio Modal 2-->
 <div aria-hidden="true" aria-labelledby="portfolioModal2Label" class="portfolio-modal modal fade" id="portfolioModal2" role="dialog" tabindex="-1">
 	<div class="modal-dialog modal-xl" role="document">
@@ -11359,7 +11359,14 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 		</div>
 	</div>
 </div>
+</main>
 <!-- Bootstrap core JS-->
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init({
+    	duration: 2000
+    });
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js">
 </script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js">
@@ -11377,3 +11384,5 @@ animation: fadeIn ease 3s;				scrollTop: (target.offset().top - 71)
 </script>
 <script src="https://apis.google.com/js/platform.js">
 </script>
+</body>
+</html>
