@@ -3,15 +3,15 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="AbJ Portfolio">
-	<meta name="author" content="Abhijay (AbJ)">
-	<title>AbJ Portfolio</title>
+	<meta name="description" content="AbJ — Software Engineer at Salesforce | Portfolio">
+	<meta name="author" content="Abhijay Mitra (AbJ)">
+	<title>AbJ — Software Engineer</title>
 
 	<!-- Open Graph -->
-	<meta property="og:title" content="Abhijay Mitra">
+	<meta property="og:title" content="AbJ — Software Engineer">
 	<meta property="og:type" content="profile">
-	<meta property="og:description" content="Welcome to my portfolio page">
-	<meta property="og:image" content="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj-grad.jpg">
+	<meta property="og:description" content="MTS (SWE 2) at Salesforce | Building enterprise software at scale | IIT Kharagpur '22">
+	<meta property="og:image" content="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/abj_new_dp.jpg">
 
 	<!-- Favicon -->
 	<link href="https://toppng.com/uploads/preview/letter-a-png-11552941435fskk9pyn7o.png" rel="icon" type="image/x-icon">
@@ -20,8 +20,7 @@
 	<script crossorigin="anonymous" src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
 
 	<!-- Google Fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
 	<!-- AOS Animations -->
 	<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
@@ -34,188 +33,653 @@
 </head>
 <body id="page-top">
 
+	<!-- Loading Screen -->
+	<div id="preloader">
+		<div class="preloader-inner">
+			<div class="preloader-spinner"></div>
+			<p class="preloader-text">AbJ</p>
+		</div>
+	</div>
+
+	<!-- Animated Background Particles -->
+	<canvas id="particles"></canvas>
+
 	<!-- Navbar -->
-	<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+	<nav class="navbar navbar-expand-lg text-uppercase fixed-top" id="mainNav">
 		<div class="container">
-			<a class="navbar-brand js-scroll-trigger" href="#page-top">Abhijay (AbJ)</a>
-			<button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-				Options <i class="fas fa-bars"></i>
+			<a class="navbar-brand js-scroll-trigger" href="#page-top">AbJ</a>
+			<button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<i class="fas fa-bars"></i>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">What do I do?</a></li>
-					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#resume">Resume</a></li>
-					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#codeTime">Code Stats</a></li>
-					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#blog">Blog</a></li>
-					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#youtube">Youtube</a></li>
+					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-2 rounded js-scroll-trigger" href="#experience">Experience</a></li>
+					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-2 rounded js-scroll-trigger" href="#education">Education</a></li>
+					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-2 rounded js-scroll-trigger" href="#portfolio">Highlights</a></li>
+					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-2 rounded js-scroll-trigger" href="#leetcode">LeetCode</a></li>
+					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-2 rounded js-scroll-trigger" href="#github">GitHub</a></li>
+					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-2 rounded js-scroll-trigger" href="#resume">Resume</a></li>
+					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-2 rounded js-scroll-trigger" href="#codeTime">Code Stats</a></li>
+					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-2 rounded js-scroll-trigger" href="#blog">Blog</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 
 	<main>
-		<!-- Masthead -->
-		<section class="masthead text-white text-center" style="background-color: #3d0099;">
+		<!-- Hero / Masthead -->
+		<section class="masthead text-white text-center">
 			<div class="container d-flex align-items-center flex-column">
-				<div class="div-no-mobile"><img alt="" class="masthead-avatar mb-5 fade-in" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj-grad.jpg" height="420" width="465"></div>
-				<div class="div-only-mobile"><img alt="" class="masthead-avatar mb-5 fade-in" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj-grad.jpg" height="300" width="340"></div>
-				<h1 class="masthead-heading text-uppercase mb-0" data-aos="flip-down">My Portfolio</h1>
+				<div class="div-no-mobile"><img alt="Abhijay Mitra" class="masthead-avatar mb-5" src="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/abj_new_dp.jpg" height="420" width="465"></div>
+				<div class="div-only-mobile"><img alt="Abhijay Mitra" class="masthead-avatar mb-5" src="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/abj_new_dp.jpg" height="300" width="340"></div>
+				<h1 class="masthead-heading text-uppercase mb-0" data-aos="fade-down">Abhijay Mitra (AbJ)</h1>
 				<div class="divider-custom divider-light">
 					<div class="divider-custom-line"></div>
-					<div class="divider-custom-icon"><i class="fas fa-laptop"></i></div>
+					<div class="divider-custom-icon"><i class="fas fa-rocket"></i></div>
 					<div class="divider-custom-line"></div>
 				</div>
-				<p class="masthead-subheading font-weight-light mb-0" data-aos="flip-up">SWE Intern @ Salesforce - Competitive Programmer</p>
-				<p class="masthead-subheading font-weight-light mb-0" data-aos="flip-up">Final Year Undergraduate of Electrical Engineering @ IIT Kharagpur</p>
+				<p class="masthead-subheading font-weight-light mb-2" data-aos="fade-up" data-aos-delay="200">Member of Technical Staff (SWE 2) @ <strong>Salesforce</strong></p>
+				<p class="masthead-subheading font-weight-light mb-2" data-aos="fade-up" data-aos-delay="400">Building enterprise-grade software at scale on Financial Services Cloud</p>
+				<p class="masthead-subheading font-weight-light mb-0" data-aos="fade-up" data-aos-delay="600">B.Tech Electrical &amp; CS Minor — IIT Kharagpur '22</p>
+				<div class="mt-4" data-aos="fade-up" data-aos-delay="800">
+					<a class="btn btn-outline-light btn-social mx-1" href="https://github.com/AbhJ"><i class="fab fa-fw fa-github"></i></a>
+					<a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/abhj"><i class="fab fa-fw fa-linkedin-in"></i></a>
+					<a class="btn btn-outline-light btn-social mx-1" href="https://twitter.com/abjkgp"><i class="fab fa-fw fa-twitter"></i></a>
+					<a class="btn btn-outline-light btn-social mx-1" href="https://www.youtube.com/channel/UC48s7RmRZUXT1fpVULeUAOw"><i class="fab fa-fw fa-youtube"></i></a>
+					<a class="btn btn-outline-light btn-social mx-1" href="https://www.instagram.com/abjkgp"><i class="fab fa-fw fa-instagram"></i></a>
+				</div>
+			</div>
+		</section>
+
+		<!-- Experience Section -->
+		<section class="page-section" id="experience">
+			<div class="experience-orb-3"></div>
+			<div class="container">
+				<h2 class="page-section-heading text-center text-uppercase mb-0" data-aos="fade-down">Experience</h2>
+				<div class="divider-custom">
+					<div class="divider-custom-line"></div>
+					<div class="divider-custom-icon"><i class="fas fa-briefcase"></i></div>
+					<div class="divider-custom-line"></div>
+				</div>
+
+				<!-- Timeline -->
+				<div class="timeline">
+					<div class="timeline-item" data-aos="fade-right" data-aos-mirror="true">
+						<div class="timeline-badge"><i class="fas fa-cloud"></i></div>
+						<div class="timeline-panel">
+							<div class="timeline-heading">
+								<h4>Member of Technical Staff (SWE 2)</h4>
+								<p class="text-muted"><i class="fas fa-building mr-1"></i> Salesforce (Financial Services Cloud) &middot; 2025 — Present</p>
+							</div>
+							<div class="timeline-body">
+								<ul>
+									<li>Built OOTB <strong>Gen-AI Agentforce features</strong> on top of business entities owned by Financial Services Cloud.</li>
+									<li>Shipped <strong>Flexible Hierarchy</strong> — a multi-object directed-graph data model for corporate ownership, KYC/AML and fund structures. Built the <strong>Graph Viewer</strong> (visual node-and-edge LWC with paginated child loading, inline CRUD), <strong>Grid Viewer</strong> (expandable tree-table, batch-fetching up to 2000 nodes via GraphQL), and the <strong>Connect API</strong> powering both viewers through LDS adapters.</li>
+									<li>Designed &amp; delivered <strong>2 end-to-end tested business entities</strong> (UDD) ensuring company-wide seamless integration.</li>
+									<li>Won the <strong>Industries Gen-AI Hackathon (APAC, 2024)</strong> and received the <strong>T&amp;P All Star Award (2025)</strong>.</li>
+								</ul>
+								<p class="mb-0"><small class="text-muted">Java &middot; JavaScript &middot; LWC &middot; GraphQL &middot; Spring &middot; Bazel &middot; Postgres &middot; SOQL</small></p>
+							</div>
+						</div>
+					</div>
+
+					<div class="timeline-item" data-aos="fade-left" data-aos-mirror="true">
+						<div class="timeline-badge"><i class="fas fa-cloud"></i></div>
+						<div class="timeline-panel">
+							<div class="timeline-heading">
+								<h4>Associate Member of Technical Staff (SWE 1)</h4>
+								<p class="text-muted"><i class="fas fa-building mr-1"></i> Salesforce (Financial Services Cloud) &middot; 2022 — 2024</p>
+							</div>
+							<div class="timeline-body">
+								<ul>
+									<li>Built reusable customer-facing features on business entities owned by <strong>Financial Services Cloud</strong>.</li>
+									<li>Integrated <strong>Enterprise Product Catalog</strong> with <strong>Service Process Studio (SPS)</strong> — exposed Process Definitions as Products with Access Control via junction entities, <strong>reducing Dispute queries by 45%</strong>.</li>
+									<li>Pioneered <strong>validation rules</strong> within SPS — dependency checks, logical sequencing, integrity constraints — <strong>reducing customer gacks by 80%</strong>.</li>
+									<li>Owned bug investigations, test failures and PR reviews across the team under tight release timelines.</li>
+								</ul>
+								<p class="mb-0"><small class="text-muted">Java &middot; JavaScript &middot; Spring &middot; Maven &middot; Bazel &middot; Postgres &middot; MongoDB &middot; SOQL</small></p>
+							</div>
+						</div>
+					</div>
+
+					<div class="timeline-item" data-aos="fade-right" data-aos-mirror="true">
+						<div class="timeline-badge"><i class="fas fa-heartbeat"></i></div>
+						<div class="timeline-panel">
+							<div class="timeline-heading">
+								<h4>Software Engineering Intern</h4>
+								<p class="text-muted"><i class="fas fa-building mr-1"></i> Salesforce (Health Cloud) &middot; 2021</p>
+							</div>
+							<div class="timeline-body">
+								<ul>
+									<li>Built a prototype app for healthcare registrars to <strong>recognize, analyze and store data automatically</strong> from medical voice conversations.</li>
+									<li>Integrated <strong>Google Speech-to-Text</strong> and <strong>Einstein NER APIs</strong> to eliminate manual intervention in patient registration.</li>
+									<li><strong>Won the InTurn Hackathon</strong> organized by Salesforce for its interns.</li>
+								</ul>
+								<p class="mb-0"><small class="text-muted">Java &middot; JavaScript &middot; Spring Boot</small></p>
+							</div>
+						</div>
+					</div>
+
+					<div class="timeline-item" data-aos="fade-left" data-aos-mirror="true">
+						<div class="timeline-badge"><i class="fas fa-eye"></i></div>
+						<div class="timeline-panel">
+							<div class="timeline-heading">
+								<h4>Software Engineering Intern</h4>
+								<p class="text-muted"><i class="fas fa-building mr-1"></i> Proficient Vision Solutions &middot; 2019</p>
+							</div>
+							<div class="timeline-body">
+								<ul>
+									<li>Aimed to remove rain and fog from HD video streams in real time.</li>
+									<li>Developed <strong>license encryption</strong> using RSA algorithm built from scratch.</li>
+									<li>Implemented histogram equalization and stretching in <strong>CUDA C</strong> for multi-fold speed gains.</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+		<!-- Education Section -->
+		<section class="page-section" id="education" style="background-color: #0a0e1a;">
+			<div class="container">
+				<h2 class="page-section-heading text-center text-uppercase text-white mb-0" data-aos="fade-down">Education</h2>
+				<div class="divider-custom divider-light">
+					<div class="divider-custom-line"></div>
+					<div class="divider-custom-icon"><i class="fas fa-graduation-cap"></i></div>
+					<div class="divider-custom-line"></div>
+				</div>
+
+				<div class="education-cards">
+					<div class="row justify-content-center">
+						<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+							<div class="edu-card">
+								<div class="edu-card-accent"></div>
+								<div class="edu-card-body">
+									<div class="edu-card-icon"><i class="fas fa-university"></i></div>
+									<h5>IIT Kharagpur</h5>
+									<p class="edu-degree">B.Tech — Electrical Engineering</p>
+									<p class="edu-minor">Minor in Computer Science &amp; Engineering</p>
+									<p class="edu-detail"><strong>Major CGPA:</strong> 8.83 / 10</p>
+									<p class="edu-detail"><strong>Minor CGPA:</strong> 8.84 / 10</p>
+									<p class="edu-date">2018 — 2022</p>
+									<div class="edu-extras">
+										<span class="edu-extra-tag">NCC Air Squadron</span>
+										<span class="edu-extra-tag">Tech Transfer Group</span>
+										<span class="edu-extra-tag">Kshitij</span>
+										<span class="edu-extra-tag">Chess Team</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+							<div class="edu-card">
+								<div class="edu-card-accent"></div>
+								<div class="edu-card-body">
+									<div class="edu-card-icon"><i class="fas fa-school"></i></div>
+									<h5>DPS Ruby Park, Kolkata</h5>
+									<p class="edu-degree">Senior Secondary (Class XII) — CBSE</p>
+									<p class="edu-detail"><strong>Score:</strong> 84.4%</p>
+									<p class="edu-date">2016 — 2018</p>
+									<div class="edu-extras">
+										<span class="edu-extra-tag">JEE Adv. AIR 2157</span>
+										<span class="edu-extra-tag">JEE Main AIR 5444</span>
+										<span class="edu-extra-tag">WBJEE Rank 92</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+							<div class="edu-card">
+								<div class="edu-card-accent"></div>
+								<div class="edu-card-body">
+									<div class="edu-card-icon"><i class="fas fa-school"></i></div>
+									<h5>South Point High School, Kolkata</h5>
+									<p class="edu-degree">Secondary (Class X) — CBSE</p>
+									<p class="edu-detail"><strong>CGPA:</strong> 10 / 10</p>
+									<p class="edu-date">2003 — 2016</p>
+									<div class="edu-extras">
+										<span class="edu-extra-tag">Perfect Score</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Skills Section -->
+		<section class="page-section" id="skills">
+			<div class="container">
+				<h2 class="page-section-heading text-center text-uppercase text-secondary mb-0" data-aos="fade-down">Skills &amp; Expertise</h2>
+				<div class="divider-custom">
+					<div class="divider-custom-line"></div>
+					<div class="divider-custom-icon"><i class="fas fa-tools"></i></div>
+					<div class="divider-custom-line"></div>
+				</div>
+				<div class="row text-center mt-4">
+					<div class="col-md-3 col-6 mb-4" data-aos="fade-up" data-aos-delay="0">
+						<div class="skill-badge"><i class="fab fa-java fa-2x mb-2"></i><br>Java</div>
+					</div>
+					<div class="col-md-3 col-6 mb-4" data-aos="fade-up" data-aos-delay="50">
+						<div class="skill-badge"><i class="fab fa-js-square fa-2x mb-2"></i><br>JavaScript</div>
+					</div>
+					<div class="col-md-3 col-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+						<div class="skill-badge"><i class="fab fa-python fa-2x mb-2"></i><br>Python</div>
+					</div>
+					<div class="col-md-3 col-6 mb-4" data-aos="fade-up" data-aos-delay="150">
+						<div class="skill-badge"><i class="fab fa-react fa-2x mb-2"></i><br>React</div>
+					</div>
+					<div class="col-md-3 col-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+						<div class="skill-badge"><i class="fas fa-leaf fa-2x mb-2"></i><br>Spring</div>
+					</div>
+					<div class="col-md-3 col-6 mb-4" data-aos="fade-up" data-aos-delay="250">
+						<div class="skill-badge"><i class="fas fa-database fa-2x mb-2"></i><br>PostgreSQL</div>
+					</div>
+					<div class="col-md-3 col-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+						<div class="skill-badge"><i class="fab fa-aws fa-2x mb-2"></i><br>AWS</div>
+					</div>
+					<div class="col-md-3 col-6 mb-4" data-aos="fade-up" data-aos-delay="350">
+						<div class="skill-badge"><i class="fas fa-cloud fa-2x mb-2"></i><br>Salesforce</div>
+					</div>
+				</div>
 			</div>
 		</section>
 
 		<!-- Portfolio Section -->
-		<section class="page-section portfolio" id="portfolio">
+		<section class="page-section portfolio" id="portfolio" style="background-color: #080818;">
 			<div class="container">
-				<h2 class="page-section-heading masthead-heading text-center text-uppercase text-secondary mb-0" data-aos="zoom-in-down">What have I been upto?</h2>
-				<div class="divider-custom">
+				<h2 class="page-section-heading masthead-heading text-center text-uppercase text-white mb-0" data-aos="zoom-in-down">Highlights</h2>
+				<div class="divider-custom divider-light">
 					<div class="divider-custom-line"></div>
 					<div class="divider-custom-icon"><i class="fas fa-globe"></i></div>
 					<div class="divider-custom-line"></div>
 				</div>
 				<div class="row">
 					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-easing="ease-in-sine">
-						<div class="portfolio-item mx-auto" data-target="#portfolioModal1" data-toggle="modal">
-							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-								<div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+						<a class="portfolio-card" href="https://www.salesforce.com/" target="_blank" rel="noopener">
+							<div class="portfolio-card-img">
+								<img alt="Salesforce" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/salesforce.jpg">
+								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
 							</div>
-							<img alt="" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/salesforce.jpg">
-						</div>
+							<div class="portfolio-card-body">
+								<h5>Salesforce</h5>
+								<p>Contributed to Gen-AI Agentforce features, Flexible Hierarchy and enterprise business entities on Financial Services Cloud. 4 years of shipping production software at scale.</p>
+								<span class="portfolio-card-tag">Enterprise</span>
+								<span class="portfolio-card-tag">Gen-AI</span>
+								<span class="portfolio-card-tag">Java</span>
+							</div>
+						</a>
 					</div>
-					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-down" data-aos-easing="ease-in-sine">
-						<div class="portfolio-item mx-auto" data-target="#portfolioModal2" data-toggle="modal">
-							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-								<div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="100" data-aos-easing="ease-in-sine">
+						<a class="portfolio-card" href="https://codeforces.com/profile/abhj" target="_blank" rel="noopener">
+							<div class="portfolio-card-img">
+								<img alt="Codeforces" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/force.png">
+								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
 							</div>
-							<img alt="" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/force.png">
-						</div>
+							<div class="portfolio-card-body">
+								<h5>Codeforces</h5>
+								<p>Expert rated (peak 1877) — one step from Candidate Master. Consistently solving across graph theory, DP, number theory and combinatorics since 2019.</p>
+								<span class="portfolio-card-tag">Competitive Programming</span>
+								<span class="portfolio-card-tag">C++</span>
+							</div>
+						</a>
 					</div>
-					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-easing="ease-in-sine">
-						<div class="portfolio-item mx-auto" data-target="#portfolioModal3" data-toggle="modal">
-							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-								<div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="200" data-aos-easing="ease-in-sine">
+						<a class="portfolio-card" href="https://www.codechef.com/users/abhj" target="_blank" rel="noopener">
+							<div class="portfolio-card-img">
+								<img alt="Codechef" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/chef.jpeg">
+								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
 							</div>
-							<img alt="" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/chef.jpeg">
-						</div>
+							<div class="portfolio-card-body">
+								<h5>Codechef</h5>
+								<p>5-star coder with a max rating of 2030. Participated in Long Challenges, Cook-Offs and Lunchtime contests — consistently placing in the top percentile.</p>
+								<span class="portfolio-card-tag">Competitive Programming</span>
+								<span class="portfolio-card-tag">Algorithms</span>
+							</div>
+						</a>
 					</div>
-					<div class="col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade-down" data-aos-easing="ease-in-sine">
-						<div class="portfolio-item mx-auto" data-target="#portfolioModal4" data-toggle="modal">
-							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-								<div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="100" data-aos-easing="ease-in-sine">
+						<a class="portfolio-card" href="https://www.stopstalk.com/user/profile/abj" target="_blank" rel="noopener">
+							<div class="portfolio-card-img">
+								<img alt="StopStalk" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/s.png">
+								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
 							</div>
-							<img alt="" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/s.png" style="padding-left: 60px;">
-						</div>
+							<div class="portfolio-card-body">
+								<h5>StopStalk</h5>
+								<p>Ranked #1 on the IIT Kharagpur StopStalk Leaderboard. A unified competitive programming record across Codeforces, Codechef, SPOJ, and HackerRank.</p>
+								<span class="portfolio-card-tag">Leaderboard #1</span>
+								<span class="portfolio-card-tag">IIT KGP</span>
+							</div>
+						</a>
 					</div>
-					<div class="col-md-6 col-lg-4 mb-5 mb-md-0" data-aos="fade-up" data-aos-easing="ease-in-sine">
-						<div class="portfolio-item mx-auto" data-target="#portfolioModal5" data-toggle="modal">
-							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-								<div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="200" data-aos-easing="ease-in-sine">
+						<a class="portfolio-card" href="https://www.quora.com/profile/Abhijay-Mitra" target="_blank" rel="noopener">
+							<div class="portfolio-card-img">
+								<img alt="Quora" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/quora.png">
+								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
 							</div>
-							<img alt="" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/quora.png" style="padding-left: 15px;">
-						</div>
+							<div class="portfolio-card-body">
+								<h5>Quora</h5>
+								<p>Writing about software engineering, competitive programming, and navigating the tech industry. Answers on IIT, Salesforce, and problem-solving approaches.</p>
+								<span class="portfolio-card-tag">Writing</span>
+								<span class="portfolio-card-tag">Tech</span>
+							</div>
+						</a>
 					</div>
-					<div class="col-md-6 col-lg-4" data-aos="fade-down" data-aos-easing="ease-in-sine">
-						<div class="portfolio-item mx-auto" data-target="#portfolioModal6" data-toggle="modal">
-							<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-								<div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="300" data-aos-easing="ease-in-sine">
+						<a class="portfolio-card" href="https://www.linkedin.com/company/proficient-vision-solutions/" target="_blank" rel="noopener">
+							<div class="portfolio-card-img">
+								<img alt="Proficient Vision" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/p.png">
+								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
 							</div>
-							<img alt="" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/p.png" style="padding-left: 60px;">
-						</div>
+							<div class="portfolio-card-body">
+								<h5>Proficient Vision Solutions</h5>
+								<p>Real-time rain and fog removal from HD video streams. Built RSA encryption from scratch and implemented histogram processing in CUDA C for multi-fold speed gains.</p>
+								<span class="portfolio-card-tag">Computer Vision</span>
+								<span class="portfolio-card-tag">CUDA</span>
+							</div>
+						</a>
 					</div>
 				</div>
 			</div>
 		</section>
 
-		<!-- Resume Section -->
-		<section class="page-section text-white mb-0" id="resume" style="background-color: #663300;">
+		<!-- LeetCode Section -->
+		<section class="page-section text-white" id="leetcode" style="background-color: #0a0e1a;">
 			<div class="container">
-				<h2 class="page-section-heading text-center text-uppercase text-white" data-aos="fade-down">My Resume!</h2>
+				<h2 class="page-section-heading text-center text-uppercase text-white mb-0" data-aos="fade-down">LeetCode</h2>
+				<div class="divider-custom divider-light">
+					<div class="divider-custom-line"></div>
+					<div class="divider-custom-icon"><i class="fas fa-code"></i></div>
+					<div class="divider-custom-line"></div>
+				</div>
+
+				<!-- Stats row -->
+				<div class="row text-center mb-4">
+					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="0">
+						<div class="gh-stat-card">
+							<span class="gh-stat-number" id="lc-total">&mdash;</span>
+							<span class="gh-stat-label">Problems Solved</span>
+						</div>
+					</div>
+					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="100">
+						<div class="gh-stat-card">
+							<span class="gh-stat-number lc-color-easy" id="lc-easy">&mdash;</span>
+							<span class="gh-stat-label">Easy</span>
+						</div>
+					</div>
+					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="200">
+						<div class="gh-stat-card">
+							<span class="gh-stat-number lc-color-medium" id="lc-medium">&mdash;</span>
+							<span class="gh-stat-label">Medium</span>
+						</div>
+					</div>
+					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="300">
+						<div class="gh-stat-card">
+							<span class="gh-stat-number lc-color-hard" id="lc-hard">&mdash;</span>
+							<span class="gh-stat-label">Hard</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Progress bar -->
+				<div class="row justify-content-center mb-4" data-aos="zoom-in">
+					<div class="col-lg-8">
+						<div class="lc-bar">
+							<div class="lc-bar-easy" id="lc-bar-easy" style="width: 0%"></div>
+							<div class="lc-bar-medium" id="lc-bar-medium" style="width: 0%"></div>
+							<div class="lc-bar-hard" id="lc-bar-hard" style="width: 0%"></div>
+						</div>
+						<div class="lc-bar-labels">
+							<span><span class="lc-dot lc-dot-easy"></span> Easy</span>
+							<span><span class="lc-dot lc-dot-medium"></span> Medium</span>
+							<span><span class="lc-dot lc-dot-hard"></span> Hard</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- LeetCode Heatmap -->
+				<div class="text-center mt-4" data-aos="zoom-in">
+					<div id="lc-heatmap-wrap">
+						<canvas id="lc-heatmap"></canvas>
+						<div id="lc-heatmap-tooltip" class="gh-tooltip"></div>
+					</div>
+				</div>
+
+				<div class="text-center mt-3" data-aos="fade-up">
+					<p style="color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-bottom: 1rem;">
+						<span id="lc-streak"></span>
+					</p>
+					<a class="btn btn-outline-light" href="https://leetcode.com/u/abhjkgp" target="_blank" rel="noopener">
+						<i class="fas fa-external-link-alt mr-2"></i> View Profile on LeetCode
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- GitHub Section -->
+		<section class="page-section text-white" id="github" style="background-color: #0d1117;">
+			<div class="container">
+				<h2 class="page-section-heading text-center text-uppercase text-white mb-0" data-aos="fade-down">GitHub</h2>
+				<div class="divider-custom divider-light">
+					<div class="divider-custom-line"></div>
+					<div class="divider-custom-icon"><i class="fab fa-github"></i></div>
+					<div class="divider-custom-line"></div>
+				</div>
+
+				<!-- GitHub Stats Row (populated dynamically) -->
+				<div class="row text-center mb-5">
+					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="0">
+						<div class="gh-stat-card">
+							<span class="gh-stat-number" id="gh-repos">&mdash;</span>
+							<span class="gh-stat-label">Public Repos</span>
+						</div>
+					</div>
+					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="100">
+						<div class="gh-stat-card">
+							<span class="gh-stat-number" id="gh-followers">&mdash;</span>
+							<span class="gh-stat-label">Followers</span>
+						</div>
+					</div>
+					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="200">
+						<div class="gh-stat-card">
+							<span class="gh-stat-number" id="gh-following">&mdash;</span>
+							<span class="gh-stat-label">Following</span>
+						</div>
+					</div>
+					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="300">
+						<div class="gh-stat-card">
+							<span class="gh-stat-number" id="gh-since">&mdash;</span>
+							<span class="gh-stat-label">Since</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Featured Repos -->
+				<h5 class="text-center text-uppercase mb-4" style="letter-spacing: 0.1em; color: rgba(255,255,255,0.5); font-size: 0.85rem;">Featured Repositories</h5>
+				<div class="row">
+					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+						<a class="gh-repo-card" href="https://github.com/AbhJ/some-cp-files-3" target="_blank" rel="noopener">
+							<div class="gh-repo-header">
+								<i class="fas fa-code gh-repo-icon"></i>
+								<span class="gh-repo-name">some-cp-files-3</span>
+							</div>
+							<p class="gh-repo-desc">Most active CP repo — 300+ Codeforces, Codechef and contest solutions. The bulk of my competitive programming work.</p>
+							<div class="gh-repo-footer">
+								<span class="gh-repo-lang"><span class="gh-lang-dot" style="background: #f34b7d;"></span> C++</span>
+								<span class="gh-repo-stars"><i class="fas fa-fire"></i> 318 commits</span>
+							</div>
+						</a>
+					</div>
+					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+						<a class="gh-repo-card" href="https://github.com/AbhJ/abj-blogs" target="_blank" rel="noopener">
+							<div class="gh-repo-header">
+								<i class="fas fa-book-open gh-repo-icon"></i>
+								<span class="gh-repo-name">abj-blogs</span>
+							</div>
+							<p class="gh-repo-desc">Open source blog page — minimalist themed tech and software blog built from scratch.</p>
+							<div class="gh-repo-footer">
+								<span class="gh-repo-lang"><span class="gh-lang-dot" style="background: #f1e05a;"></span> JavaScript</span>
+								<span class="gh-repo-stars"><i class="fas fa-star"></i> 2</span>
+							</div>
+						</a>
+					</div>
+					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+						<a class="gh-repo-card" href="https://github.com/AbhJ/cp" target="_blank" rel="noopener">
+							<div class="gh-repo-header">
+								<i class="fas fa-terminal gh-repo-icon"></i>
+								<span class="gh-repo-name">cp</span>
+							</div>
+							<p class="gh-repo-desc">Competitive programming archive — Codeforces, Codechef and contest solutions across graph theory, DP and number theory.</p>
+							<div class="gh-repo-footer">
+								<span class="gh-repo-lang"><span class="gh-lang-dot" style="background: #f34b7d;"></span> C++</span>
+								<span class="gh-repo-stars"><i class="fas fa-fire"></i> 1000+ files</span>
+							</div>
+						</a>
+					</div>
+					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+						<a class="gh-repo-card" href="https://github.com/AbhJ/public-portfolio" target="_blank" rel="noopener">
+							<div class="gh-repo-header">
+								<i class="fas fa-user-circle gh-repo-icon"></i>
+								<span class="gh-repo-name">public-portfolio</span>
+							</div>
+							<p class="gh-repo-desc">This portfolio — responsive, animated, Apple-inspired personal site with particle effects and aurora backgrounds.</p>
+							<div class="gh-repo-footer">
+								<span class="gh-repo-lang"><span class="gh-lang-dot" style="background: #e34c26;"></span> HTML</span>
+								<span class="gh-repo-stars"><i class="fas fa-code-branch"></i> Active</span>
+							</div>
+						</a>
+					</div>
+					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+						<a class="gh-repo-card" href="https://github.com/AbhJ/Machine-Learning-Spring-22-IIT-Kharagpur-Solutions" target="_blank" rel="noopener">
+							<div class="gh-repo-header">
+								<i class="fas fa-brain gh-repo-icon"></i>
+								<span class="gh-repo-name">ML-IIT-KGP-Solutions</span>
+							</div>
+							<p class="gh-repo-desc">Machine Learning CS60050 solutions — Prof. Pabitra Mitra, IIT Kharagpur. Regression, classification, neural networks.</p>
+							<div class="gh-repo-footer">
+								<span class="gh-repo-lang"><span class="gh-lang-dot" style="background: #3572A5;"></span> Python</span>
+								<span class="gh-repo-stars"><i class="fas fa-star"></i> 1</span>
+							</div>
+						</a>
+					</div>
+					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+						<a class="gh-repo-card" href="https://github.com/AbhJ/Natural-Language-Processing-Autumn-21-IIT-Kharagpur-Solutions" target="_blank" rel="noopener">
+							<div class="gh-repo-header">
+								<i class="fas fa-language gh-repo-icon"></i>
+								<span class="gh-repo-name">NLP-IIT-KGP-Solutions</span>
+							</div>
+							<p class="gh-repo-desc">NLP CS60075 solutions — Prof. Sudeshna Sarkar, IIT Kharagpur. Text processing, transformers, sequence models.</p>
+							<div class="gh-repo-footer">
+								<span class="gh-repo-lang"><span class="gh-lang-dot" style="background: #DA5B0B;"></span> Jupyter</span>
+								<span class="gh-repo-stars"><i class="fas fa-university"></i> IIT KGP</span>
+							</div>
+						</a>
+					</div>
+				</div>
+
+				<!-- Contribution Heatmap — scraped from GitHub's real contribution graph -->
+				<div class="text-center mt-4" data-aos="zoom-in">
+					<div id="gh-heatmap-wrap">
+						<canvas id="gh-heatmap"></canvas>
+						<div id="gh-heatmap-tooltip" class="gh-tooltip"></div>
+					</div>
+					<p class="mt-3" style="color: rgba(255,255,255,0.4); font-size: 0.85rem;">
+						Contribution activity — <a href="https://github.com/AbhJ" target="_blank" style="color: var(--primary);">github.com/AbhJ</a>
+						<span id="gh-heatmap-status" style="margin-left: 0.5rem;"></span>
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Resume Section -->
+		<section class="page-section text-white mb-0" id="resume" style="background-color: #0e1a2e;">
+			<div class="container">
+				<h2 class="page-section-heading text-center text-uppercase text-white" data-aos="fade-down">Resume</h2>
 				<div class="divider-custom divider-light">
 					<div class="divider-custom-line"></div>
 					<div class="divider-custom-icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></div>
 					<div class="divider-custom-line"></div>
 				</div>
-				<div class="row slide-right">
-					<div class="col-lg-4 ml-auto" data-aos="zoom-in-up">
-						<p class="lead">I am very passionate about Competitive Programming. A quick learner, a chess lover, and an avid reader I believe, my best ability is adaptability. Apart from software and math, stuff I enjoy are watching loads of anime, reading manga, listening to David Guetta and watching documentaries for hours.</p>
+				<div class="row">
+					<div class="col-lg-5 ml-auto" data-aos="zoom-in-up">
+						<p class="lead">Software engineer with 4+ years at Salesforce, building enterprise-grade platform features on Financial Services Cloud. Deep experience in backend systems, API design, and graph-based data modelling — delivered at the scale of one of the world's largest SaaS platforms.</p>
 					</div>
-					<div class="col-lg-4 mr-auto" data-aos="zoom-in-down">
-						<p class="lead">I am experienced in Software Engineering, Full Stack Development, Machine Learning, Artificial Intelligence and Computer Vision. I exhibit an entrepreneurial mindset and am eager to learn and adapt to different environments. I try to explore all possibilities before sticking to one. My resume is at your disposal.</p>
+					<div class="col-lg-5 mr-auto" data-aos="zoom-in-down">
+						<p class="lead">Strong foundations in algorithms and data structures from competitive programming (Expert on Codeforces, 5-star on Codechef). IIT Kharagpur graduate with a minor in Computer Science. When I'm not writing code, I'm usually playing chess, reading, or exploring new music.</p>
 					</div>
 				</div>
 				<div class="text-center mt-4">
 					<div class="div-no-mobile">
-						<embed alt="Resume PDF" height="750px" src="resume-abhj.pdf#toolbar=0&zoom=100" width="75.5%" data-aos="flip-up">
+						<embed src="resume-abhj.pdf#toolbar=0&zoom=100" type="application/pdf" width="75.5%" height="750px" style="border: none; border-radius: 8px;" data-aos="flip-up">
 					</div>
 					<br><br>
 					<a class="btn btn-xl btn-outline-light" href="https://raw.githubusercontent.com/AbhJ/abhj/master/image/resume-abhj.pdf">
-						<span class="fas fa-download mr-2"></span> Download
+						<span class="fas fa-download mr-2"></span> Download Resume
 					</a>
 				</div>
 			</div>
 		</section>
 
 		<!-- Code Stats Section -->
-		<section class="page-section text-white mb-0" id="codeTime" style="background-color: #222F38;">
+		<section class="page-section text-white mb-0" id="codeTime" style="background-color: #101820;">
 			<div class="container">
-				<h2 class="masthead-heading fade-in text-center text-uppercase text-white" data-aos="flip-up">Code Stats!</h2>
+				<h2 class="masthead-heading fade-in text-center text-uppercase text-white" data-aos="flip-up">Code Stats</h2>
 				<div class="divider-custom divider-light">
 					<div class="divider-custom-line"></div>
 					<div class="divider-custom-icon"><i class="fas fa-code" aria-hidden="true"></i></div>
 					<div class="divider-custom-line"></div>
 				</div>
-				<center>
-					<p class="lead" data-aos="zoom-in">"One day you'll leave this world behind. So live a life you will remember" - Avicii in "The Nights"</p>
-					<br>
-					<figure style="width: 70%;" data-aos="zoom-in">
-						<embed src="https://wakatime.com/share/@abhj/712ff1ee-4a32-4627-ab72-4f302b109b36.svg">
+				<div class="text-center">
+					<figure class="wakatime-card" data-aos="zoom-in">
+						<img src="https://wakatime.com/share/@abhj/88bb3b86-cc49-4284-ab0c-f79130413f96.svg" alt="WakaTime Languages">
 					</figure>
-					<p class="lead" data-aos="zoom-in">"When you gaze into the darkness the darkness gazes back into you" - Kentaro Miura in "Berserk"</p>
-					<br>
-					<figure style="width: 70%;" data-aos="zoom-in">
-						<embed src="https://wakatime.com/share/@abhj/7281f6fe-9693-4265-a902-1431ac20648c.svg">
+					<figure class="wakatime-card" data-aos="zoom-in">
+						<img src="https://wakatime.com/share/@abhj/3e8ba326-54f6-40f7-b53d-872d029c3e25.svg" alt="WakaTime Editors">
 					</figure>
-				</center>
+					<figure class="wakatime-card" data-aos="zoom-in">
+						<img src="https://wakatime.com/share/@abhj/38cd03a8-4664-4676-bde8-f75495a93663.svg" alt="WakaTime Coding Activity">
+					</figure>
+					<figure class="wakatime-card" data-aos="zoom-in">
+						<img src="https://wakatime.com/share/@abhj/be2d0598-92a9-414e-b0d1-8ff4b984dd6f.svg" alt="WakaTime Operating Systems">
+					</figure>
+				</div>
 			</div>
 		</section>
 
 		<!-- Blog Section -->
-		<section class="page-section text-white mb-0" id="blog" style="background-color: #D7DBB9;">
+		<section class="page-section text-white mb-0" id="blog" style="background-color: #0b1120;">
 			<div class="container">
-				<h2 class="masthead-heading fade-in text-center text-uppercase" style="color: black" data-aos="fade-up">ABJ Blogs!</h2>
-				<div class="divider-custom divider-dark">
+				<h2 class="masthead-heading text-center text-uppercase text-white" data-aos="fade-up">ABJ Blogs</h2>
+				<div class="divider-custom divider-light">
 					<div class="divider-custom-line"></div>
 					<div class="divider-custom-icon"><i class="fas fa-pen" aria-hidden="true"></i></div>
 					<div class="divider-custom-line"></div>
 				</div>
-				<center>
-					<div class="lead" style="color: black" data-aos="zoom-in-up">
-						<p>Welcome to my minimalistic themed blogs page where I write about Tech and Software!!!</p>
-						<p>Click the icon to visit ABJ Blogs.</p>
+				<div class="text-center">
+					<div class="lead mb-4" data-aos="zoom-in-up">
+						<p>Occasional writing on software engineering, system design, and things I find worth sharing.</p>
 					</div>
 					<a href="https://abhj.github.io/abj-blogs">
-						<img alt="" class="img-fluid rounded" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj-blog.png" width="40%" data-aos="zoom-in-down">
+						<img alt="ABJ Blogs" class="img-fluid rounded" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj-blog.png" width="40%" data-aos="zoom-in-down">
 					</a>
-				</center>
+				</div>
 			</div>
 		</section>
 
 		<!-- YouTube Section -->
-		<section class="page-section text-white mb-0" id="youtube" style="background-color: #66CCCC;">
+		<section class="page-section text-white mb-0" id="youtube" style="background-color: #090e18;">
 			<div class="container">
-				<h2 class="page-section-heading text-center text-uppercase text-white" data-aos="zoom-in">My Youtube Content!</h2>
+				<h2 class="page-section-heading text-center text-uppercase text-white" data-aos="zoom-in">YouTube</h2>
 				<div class="divider-custom divider-light">
 					<div class="divider-custom-line"></div>
-					<div class="divider-custom-icon"><i class="fas fa-code" aria-hidden="true"></i></div>
+					<div class="divider-custom-icon"><i class="fab fa-youtube" aria-hidden="true"></i></div>
 					<div class="divider-custom-line"></div>
 				</div>
-				<center class="video-embed-div">
+				<div class="text-center video-embed-div">
 					<div class="div-only-mobile">
 						<div class="video-container">
 							<iframe allowfullscreen class="video" src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPTvyk_IQwn6YeywxVPf-qym" loading="lazy" data-aos="zoom-in-down"></iframe>
@@ -226,8 +690,8 @@
 							<iframe allowfullscreen class="video" src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPRaCCiBNFAI341YA85FNdQc" loading="lazy" data-aos="zoom-in-right"></iframe>
 						</div>
 					</div>
-				</center>
-				<center class="video-embed-div">
+				</div>
+				<div class="text-center video-embed-div">
 					<div class="div-no-mobile">
 						<div class="video-container">
 							<iframe allowfullscreen class="video" src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPTvyk_IQwn6YeywxVPf-qym" loading="lazy" data-aos="zoom-in-left"></iframe>
@@ -238,7 +702,7 @@
 							<iframe allowfullscreen class="video" src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPRaCCiBNFAI341YA85FNdQc" loading="lazy" data-aos="zoom-in-up"></iframe>
 						</div>
 					</div>
-				</center>
+				</div>
 			</div>
 		</section>
 
@@ -249,22 +713,22 @@
 					<div class="col-lg-4 mb-5 mb-lg-0">
 						<h4 class="text-uppercase mb-4">Email</h4>
 						<p class="lead mb-0">
-							<a href="mailto:abhijay.mitra@iitkgp.ac.in">abhijay.mitra@iitkgp.ac.in</a><br>
+							<a href="mailto:abhijay.mitra@iitkgp.ac.in">abhijay.mitra@iitkgp.ac.in</a>
+							<br>
 							<a href="mailto:abhijaymitraofficial@gmail.com">abhijaymitraofficial@gmail.com</a>
 						</p>
 					</div>
 					<div class="col-lg-4 mb-5 mb-lg-0">
-						<h4 class="text-uppercase mb-4">Connect with me</h4>
-						<a class="btn btn-outline-light btn-social mx-1" href="https://twitter.com/abjkgp"><i class="fab fa-fw fa-twitter"></i></a>
+						<h4 class="text-uppercase mb-4">Connect</h4>
 						<a class="btn btn-outline-light btn-social mx-1" href="https://github.com/AbhJ"><i class="fab fa-fw fa-github"></i></a>
-						<a class="btn btn-outline-light btn-social mx-1" href="https://www.youtube.com/channel/UC48s7RmRZUXT1fpVULeUAOw"><i class="fab fa-fw fa-youtube"></i></a>
 						<a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/abhj"><i class="fab fa-fw fa-linkedin-in"></i></a>
+						<a class="btn btn-outline-light btn-social mx-1" href="https://twitter.com/abjkgp"><i class="fab fa-fw fa-twitter"></i></a>
+						<a class="btn btn-outline-light btn-social mx-1" href="https://www.youtube.com/channel/UC48s7RmRZUXT1fpVULeUAOw"><i class="fab fa-fw fa-youtube"></i></a>
 						<a class="btn btn-outline-light btn-social mx-1" href="https://www.instagram.com/abjkgp"><i class="fab fa-fw fa-instagram"></i></a>
 					</div>
 					<div class="col-lg-4">
-						<h4 class="text-uppercase mb-4">Thank You</h4>
+						<h4 class="text-uppercase mb-4">Visitors</h4>
 						<p class="lead mb-0">
-							I feel delighted to have you as a visitor of this page. Thank you!!!<br>
 							<a href="https://www.hitwebcounter.com" target="_blank">
 								<img alt="web counter" border="0" src="https://hitwebcounter.com/counter/counter.php?page=7855540&style=0006&nbdigits=4&type=page&initCount=500" title="Free Counter" loading="lazy">
 							</a>
@@ -278,6 +742,8 @@
 		<div class="copyright py-4 text-center text-white">
 			<div class="container">
 				<small>Copyright &copy; AbJ <span id="month"></span> <span id="year"></span></small>
+				<br>
+				<a href="legacy.html" class="legacy-link">View the old portfolio &rarr;</a>
 			</div>
 		</div>
 
@@ -288,157 +754,6 @@
 			</a>
 		</div>
 	</main>
-
-	<!-- Portfolio Modals -->
-	<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-labelledby="portfolioModal1Label" aria-hidden="true">
-		<div class="modal-dialog modal-xl" role="document">
-			<div class="modal-content">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fas fa-times"></i></span></button>
-				<div class="modal-body text-center">
-					<div class="container">
-						<div class="row justify-content-center">
-							<div class="col-lg-8">
-								<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal1Label">Salesforce</h2>
-								<div class="divider-custom">
-									<div class="divider-custom-line"></div>
-									<div class="divider-custom-icon"><i class="fas fa-cloud"></i></div>
-									<div class="divider-custom-line"></div>
-								</div>
-								<a href="https://www.salesforce.com/"><img alt="" class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/salesforce.jpg"></a>
-								<p class="mb-5">I interned as a Software Engineer at Salesforce in the summer of 2021. My project was aimed at recognising, analysing and storing data automatically, directly from medical conversations. I also managed to win the hackathon organised by Salesforce for its interns, alongside 3 teammates, and yes, I also bagged a returning offer to Salesforce Hyderabad!</p>
-								<button class="btn btn-primary" data-dismiss="modal"><i class="fas fa-times fa-fw"></i> Close</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-labelledby="portfolioModal2Label" aria-hidden="true">
-		<div class="modal-dialog modal-xl" role="document">
-			<div class="modal-content">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fas fa-times"></i></span></button>
-				<div class="modal-body text-center">
-					<div class="container">
-						<div class="row justify-content-center">
-							<div class="col-lg-8">
-								<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal2Label">My Codeforces Profile</h2>
-								<div class="divider-custom">
-									<div class="divider-custom-line"></div>
-									<div class="divider-custom-icon"><i class="fas fa-code"></i></div>
-									<div class="divider-custom-line"></div>
-								</div>
-								<a href="https://codeforces.com/profile/abhj"><img alt="" class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/force.png"></a>
-								<p class="mb-5">I have been using Codeforces since the end of 2019 and peaked at 1877 (expert), so close to candidate master, which hopefully I'll reach soon. I have been very active on this platform for the last few months. To view my progress click on the logo above.</p>
-								<button class="btn btn-primary" data-dismiss="modal"><i class="fas fa-times fa-fw"></i> Close</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-labelledby="portfolioModal3Label" aria-hidden="true">
-		<div class="modal-dialog modal-xl" role="document">
-			<div class="modal-content">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fas fa-times"></i></span></button>
-				<div class="modal-body text-center">
-					<div class="container">
-						<div class="row justify-content-center">
-							<div class="col-lg-8">
-								<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal3Label">My Codechef Profile</h2>
-								<div class="divider-custom">
-									<div class="divider-custom-line"></div>
-									<div class="divider-custom-icon"><i class="fas fa-code"></i></div>
-									<div class="divider-custom-line"></div>
-								</div>
-								<a href="https://www.codechef.com/users/abhj"><img alt="" class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/chef.jpeg"></a>
-								<p class="mb-5">I have been actively participating in codechef contests since 2019 and am currently a "5-star coder" (sounds cool right?). To view my progress click on the logo above.</p>
-								<button class="btn btn-primary" data-dismiss="modal"><i class="fas fa-times fa-fw"></i> Close</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-labelledby="portfolioModal4Label" aria-hidden="true">
-		<div class="modal-dialog modal-xl" role="document">
-			<div class="modal-content">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fas fa-times"></i></span></button>
-				<div class="modal-body text-center">
-					<div class="container">
-						<div class="row justify-content-center">
-							<div class="col-lg-8">
-								<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal4Label">My StopStalk Profile</h2>
-								<div class="divider-custom">
-									<div class="divider-custom-line"></div>
-									<div class="divider-custom-icon"><i class="fas fa-code"></i></div>
-									<div class="divider-custom-line"></div>
-								</div>
-								<a href="https://www.stopstalk.com/user/profile/abj"><img alt="" class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/s.png"></a>
-								<p class="mb-5">Stopstalk has been one of my primary boosters in competitive programming. I have been #1 on IIT Kharagpur Stopstalk Leaderboard for over 2 years (from 2019). To view my progress click on the logo above.</p>
-								<button class="btn btn-primary" data-dismiss="modal"><i class="fas fa-times fa-fw"></i> Close</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-labelledby="portfolioModal5Label" aria-hidden="true">
-		<div class="modal-dialog modal-xl" role="document">
-			<div class="modal-content">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fas fa-times"></i></span></button>
-				<div class="modal-body text-center">
-					<div class="container">
-						<div class="row justify-content-center">
-							<div class="col-lg-8">
-								<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal5Label">Quora</h2>
-								<div class="divider-custom">
-									<div class="divider-custom-line"></div>
-									<div class="divider-custom-icon"><i class="fa fa-pen"></i></div>
-									<div class="divider-custom-line"></div>
-								</div>
-								<a href="https://www.quora.com/profile/Abhijay-Mitra"><img alt="" class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/quora.png"></a>
-								<p class="mb-5">Apart from the boring (umm... not so much though) stuff, I have a few hobbies as well. I am an avid reader, especially self help books, a chess player, and I quite often write answers on Quora. I also watch a lot of TV series'.</p>
-								<button class="btn btn-primary" data-dismiss="modal"><i class="fas fa-times fa-fw"></i> Close</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-labelledby="portfolioModal6Label" aria-hidden="true">
-		<div class="modal-dialog modal-xl" role="document">
-			<div class="modal-content">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fas fa-times"></i></span></button>
-				<div class="modal-body text-center">
-					<div class="container">
-						<div class="row justify-content-center">
-							<div class="col-lg-8">
-								<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal6Label">Proficient Vision Solutions Private Limited</h2>
-								<div class="divider-custom">
-									<div class="divider-custom-line"></div>
-									<div class="divider-custom-icon"><i class="fas fa-eye"></i></div>
-									<div class="divider-custom-line"></div>
-								</div>
-								<a href="https://www.linkedin.com/company/proficient-vision-solutions/"><img alt="" class="img-fluid rounded mb-5" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/p.png"></a>
-								<p class="mb-5">In my Second year winter break, I worked as an intern in Proficient Vision Solutions Private Limited, an image processing based startup co-founded by an IIT Kharagpur professor. This was my first intern and I learned quite a bit of cryptography and computer vision during this period.</p>
-								<button class="btn btn-primary" data-dismiss="modal"><i class="fas fa-times fa-fw"></i> Close</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<!-- Scripts -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
