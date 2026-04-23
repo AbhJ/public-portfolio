@@ -228,9 +228,263 @@ h1, h2, h3, h4, h5, h6,
 #portfolio,
 #github,
 #codeTime,
-#youtube {
+#leetcode,
+#beyond {
 	scroll-margin-top: 80px;
 }
+
+/* ===== Section Backgrounds — aurora gradients ===== */
+
+#education,
+#skills,
+#portfolio,
+#leetcode,
+#github,
+#resume,
+#codeTime,
+#blog,
+#beyond {
+	position: relative;
+	overflow: hidden;
+}
+
+#education > .container,
+#skills > .container,
+#portfolio > .container,
+#leetcode > .container,
+#github > .container,
+#resume > .container,
+#codeTime > .container,
+#blog > .container,
+#beyond > .container {
+	position: relative;
+	z-index: 2;
+}
+
+:root {
+	--aurora-hue: 0deg;
+}
+
+#education::before, #education::after,
+#skills::before,
+#portfolio::before, #portfolio::after,
+#leetcode::before, #leetcode::after,
+#github::before, #github::after,
+#resume::before,
+#codeTime::before, #codeTime::after,
+#blog::before,
+#beyond::before, #beyond::after {
+	content: '';
+	position: absolute;
+	border-radius: 50%;
+	filter: blur(100px) hue-rotate(var(--aurora-hue));
+	pointer-events: none;
+	transition: filter 0.3s ease;
+}
+
+#education {
+	background: linear-gradient(160deg, #0a0e1a 0%, #0e1428 30%, #0c1a30 60%, #08101e 100%);
+}
+#education::before {
+	width: 450px; height: 450px;
+	background: radial-gradient(circle, rgba(66, 170, 245, 0.3), rgba(100, 120, 255, 0.15), transparent 70%);
+	top: 15%; right: -5%;
+	animation: orb-float-2 16s ease-in-out infinite;
+	opacity: 0.35;
+}
+#education::after {
+	width: 350px; height: 350px;
+	background: radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 70%);
+	bottom: 10%; left: -3%;
+	animation: orb-float-1 20s ease-in-out infinite;
+	opacity: 0.3;
+}
+
+#skills {
+	background: linear-gradient(150deg, #0e0e24 0%, #141430 40%, #0f1128 70%, #0b0b20 100%);
+}
+#skills::before {
+	width: 400px; height: 400px;
+	background: radial-gradient(circle, rgba(168, 85, 247, 0.3), rgba(66, 170, 245, 0.15), transparent 70%);
+	top: 20%; left: -8%;
+	animation: orb-float-3 18s ease-in-out infinite;
+	opacity: 0.3;
+}
+
+#portfolio {
+	background: linear-gradient(145deg, #080818 0%, #0c0e28 35%, #0a1020 65%, #060614 100%);
+}
+#portfolio::before {
+	width: 500px; height: 500px;
+	background: radial-gradient(circle, rgba(66, 170, 245, 0.25), rgba(0, 200, 180, 0.1), transparent 70%);
+	top: 5%; left: -6%;
+	animation: orb-float-1 15s ease-in-out infinite;
+	opacity: 0.35;
+}
+#portfolio::after {
+	width: 400px; height: 400px;
+	background: radial-gradient(circle, rgba(233, 69, 96, 0.2), rgba(168, 85, 247, 0.1), transparent 70%);
+	bottom: 8%; right: -5%;
+	animation: orb-float-2 22s ease-in-out infinite;
+	opacity: 0.3;
+}
+
+#leetcode {
+	background: linear-gradient(155deg, #0a0e1a 0%, #10152a 30%, #0e1225 55%, #0a0c18 100%);
+}
+#leetcode::before {
+	width: 450px; height: 450px;
+	background: radial-gradient(circle, rgba(255, 161, 22, 0.25), rgba(255, 200, 50, 0.1), transparent 70%);
+	top: 10%; right: -4%;
+	animation: orb-float-2 17s ease-in-out infinite;
+	opacity: 0.35;
+}
+#leetcode::after {
+	width: 350px; height: 350px;
+	background: radial-gradient(circle, rgba(255, 120, 0, 0.2), transparent 70%);
+	bottom: 15%; left: -5%;
+	animation: orb-float-3 21s ease-in-out infinite;
+	opacity: 0.25;
+}
+
+#github {
+	background: linear-gradient(165deg, #0d1117 0%, #0f1926 30%, #0c1620 60%, #0a0f18 100%);
+}
+#github::before {
+	width: 500px; height: 500px;
+	background: radial-gradient(circle, rgba(66, 170, 245, 0.3), rgba(100, 200, 255, 0.1), transparent 70%);
+	top: 8%; left: -6%;
+	animation: orb-float-1 16s ease-in-out infinite;
+	opacity: 0.35;
+}
+#github::after {
+	width: 400px; height: 400px;
+	background: radial-gradient(circle, rgba(0, 255, 213, 0.2), rgba(66, 170, 245, 0.1), transparent 70%);
+	bottom: 5%; right: -8%;
+	animation: orb-float-3 19s ease-in-out infinite;
+	opacity: 0.3;
+}
+
+#resume {
+	background: linear-gradient(140deg, #0e1a2e 0%, #111e36 35%, #0d1828 65%, #0a1220 100%);
+}
+#resume::before {
+	width: 450px; height: 450px;
+	background: radial-gradient(circle, rgba(168, 85, 247, 0.3), rgba(66, 170, 245, 0.15), transparent 70%);
+	top: 12%; right: -5%;
+	animation: orb-float-2 18s ease-in-out infinite;
+	opacity: 0.3;
+}
+
+#codeTime {
+	background: linear-gradient(170deg, #101820 0%, #0e1a28 30%, #121e2e 60%, #0c1520 100%);
+}
+#codeTime::before {
+	width: 400px; height: 400px;
+	background: radial-gradient(circle, rgba(0, 200, 180, 0.25), rgba(66, 170, 245, 0.15), transparent 70%);
+	top: 15%; left: -5%;
+	animation: orb-float-3 15s ease-in-out infinite;
+	opacity: 0.35;
+}
+#codeTime::after {
+	width: 350px; height: 350px;
+	background: radial-gradient(circle, rgba(168, 85, 247, 0.2), transparent 70%);
+	bottom: 10%; right: -4%;
+	animation: orb-float-1 20s ease-in-out infinite;
+	opacity: 0.25;
+}
+
+#blog {
+	background: linear-gradient(135deg, #0b1120 0%, #0e1630 35%, #0a1228 65%, #08101c 100%);
+}
+
+.blog-preview-card {
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	background: #1a1a2e;
+	transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.blog-browser-bar {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 10px 14px;
+	background: rgba(255, 255, 255, 0.05);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.browser-dot {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.15);
+}
+
+.browser-dot:nth-child(1) { background: #ff5f57; }
+.browser-dot:nth-child(2) { background: #febc2e; }
+.browser-dot:nth-child(3) { background: #28c840; }
+
+.browser-url {
+	font-size: 0.65rem;
+	color: rgba(255, 255, 255, 0.3);
+	margin-left: 8px;
+	letter-spacing: 0.02em;
+	font-family: -apple-system, BlinkMacSystemFont, 'SF Mono', monospace;
+}
+
+.blog-preview-img {
+	max-height: 280px;
+	overflow: hidden;
+}
+
+.blog-preview-img img {
+	width: 100%;
+	display: block;
+	object-fit: cover;
+	object-position: top;
+}
+
+.blog-preview-link:hover .blog-preview-card {
+	transform: translateY(-6px);
+	box-shadow: 0 16px 40px rgba(66, 170, 245, 0.15);
+}
+
+.blog-desc {
+	font-size: 1.05rem;
+	color: rgba(255, 255, 255, 0.6);
+	line-height: 1.7;
+	margin-bottom: 1.5rem;
+}
+#blog::before {
+	width: 400px; height: 400px;
+	background: radial-gradient(circle, rgba(233, 69, 96, 0.25), rgba(255, 120, 80, 0.1), transparent 70%);
+	top: 10%; right: -6%;
+	animation: orb-float-1 17s ease-in-out infinite;
+	opacity: 0.3;
+}
+
+#beyond {
+	background: linear-gradient(155deg, #0c0a1e 0%, #12102a 30%, #0e0c24 55%, #0a0818 100%);
+}
+#beyond::before {
+	width: 500px; height: 500px;
+	background: radial-gradient(circle, rgba(168, 85, 247, 0.3), rgba(233, 69, 96, 0.12), transparent 70%);
+	top: 8%; left: -5%;
+	animation: orb-float-1 17s ease-in-out infinite;
+	opacity: 0.35;
+}
+#beyond::after {
+	width: 400px; height: 400px;
+	background: radial-gradient(circle, rgba(66, 170, 245, 0.25), rgba(0, 200, 180, 0.1), transparent 70%);
+	bottom: 10%; right: -6%;
+	animation: orb-float-3 21s ease-in-out infinite;
+	opacity: 0.3;
+}
+
+/* YouTube is now merged into #beyond section */
 
 /* ===== Dividers ===== */
 
@@ -465,33 +719,29 @@ a.text-secondary:focus {
 .masthead {
 	padding-top: calc(4rem + 74px);
 	padding-bottom: 3rem;
-	min-height: 100vh;
-	min-height: 100dvh;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	background: linear-gradient(135deg, #0a0a23 0%, #1a1a2e 40%, #16213e 100%);
 	position: relative;
-	overflow: hidden;
 }
 
 /* Parallax layer behind hero */
 .masthead > .container {
 	position: relative;
 	z-index: 2;
-	transform: translateY(var(--parallax-y, 0));
+}
+
+.masthead-content {
+	will-change: opacity, transform;
+	transform-origin: center top;
 }
 
 .masthead::before {
 	content: '';
 	position: absolute;
-	top: -50%;
-	left: -50%;
-	width: 200%;
-	height: 200%;
+	inset: 0;
 	background: radial-gradient(circle at 30% 50%, rgba(66, 170, 245, 0.08) 0%, transparent 50%),
 	            radial-gradient(circle at 70% 80%, rgba(233, 69, 96, 0.06) 0%, transparent 50%);
 	animation: float 8s ease-in-out infinite;
+	pointer-events: none;
 }
 
 .masthead .masthead-heading {
@@ -561,9 +811,10 @@ a.text-secondary:focus {
 	content: '';
 	position: absolute;
 	border-radius: 50%;
-	filter: blur(100px);
+	filter: blur(100px) hue-rotate(var(--aurora-hue));
 	opacity: 0.35;
 	pointer-events: none;
+	transition: filter 0.3s ease;
 }
 
 #experience::before {
@@ -724,6 +975,55 @@ a.text-secondary:focus {
 	color: rgba(255, 255, 255, 0.4) !important;
 }
 
+/* Timeline highlight chips — opposite side of each panel */
+.timeline-highlight {
+	position: absolute;
+	top: 1.2rem;
+}
+
+/* Odd items: panel is left → highlight goes right */
+.timeline-item:nth-child(odd) .timeline-highlight {
+	left: calc(100% + 3rem);
+	text-align: left;
+}
+
+/* Even items: panel is right → highlight goes left */
+.timeline-item:nth-child(even) .timeline-highlight {
+	right: calc(100% + 3rem);
+	text-align: right;
+}
+
+.highlight-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.45rem 1rem;
+	border-radius: 50px;
+	background: linear-gradient(135deg, rgba(66, 170, 245, 0.15), rgba(168, 85, 247, 0.12));
+	border: 1px solid rgba(66, 170, 245, 0.25);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	white-space: nowrap;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.highlight-chip:hover {
+	transform: scale(1.05);
+	box-shadow: 0 4px 20px rgba(66, 170, 245, 0.2);
+}
+
+.highlight-chip i {
+	font-size: 0.75rem;
+	color: #fbbf24;
+}
+
+.highlight-chip span {
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.8);
+	letter-spacing: 0.02em;
+}
+
 @media (max-width: 768px) {
 	.timeline::before {
 		left: 25px;
@@ -747,15 +1047,22 @@ a.text-secondary:focus {
 		left: 0;
 		right: auto;
 	}
+	/* On mobile, highlights tuck below the panel */
+	.timeline-highlight,
+	.timeline-item:nth-child(odd) .timeline-highlight,
+	.timeline-item:nth-child(even) .timeline-highlight {
+		position: relative;
+		top: auto;
+		left: auto;
+		right: auto;
+		margin-top: 0.8rem;
+		text-align: left;
+	}
 }
 
 /* ===== Award Cards ===== */
 
 /* ===== Skills Section ===== */
-
-#skills {
-	background-color: #111122;
-}
 
 #skills .page-section-heading {
 	color: #fff !important;
@@ -1272,11 +1579,26 @@ a.gh-repo-card:focus {
 	opacity: 1;
 }
 
+/* ===== Resume PDF Embed ===== */
+.resume-iframe {
+	display: block;
+	width: 100%;
+	height: 90vh;
+	border: none;
+	border-radius: 8px;
+}
+
 /* ===== WakaTime Embed Cards ===== */
+.wakatime-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+	max-width: 900px;
+	margin: 0 auto;
+}
+
 .wakatime-card {
-	width: 70%;
-	margin: 0 auto 1.5rem;
-	border-radius: 12px;
+	border-radius: 10px;
 	overflow: hidden;
 }
 
@@ -1287,7 +1609,267 @@ a.gh-repo-card:focus {
 }
 
 @media (max-width: 768px) {
-	.wakatime-card {
-		width: 95%;
+	.wakatime-grid {
+		grid-template-columns: 1fr;
+		max-width: 500px;
 	}
+}
+
+/* ===== Beyond Code — Bookshelf ===== */
+
+.bookshelf {
+	position: relative;
+	padding: 1.5rem 0;
+}
+
+.bookshelf-scroll {
+	display: flex;
+	gap: 1.2rem;
+	overflow-x: auto;
+	overflow-y: hidden;
+	padding: 1rem 0.5rem 1.5rem;
+	scroll-snap-type: x mandatory;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: thin;
+	scrollbar-color: rgba(255,255,255,0.15) transparent;
+}
+
+.bookshelf-scroll::-webkit-scrollbar {
+	height: 6px;
+}
+
+.bookshelf-scroll::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.bookshelf-scroll::-webkit-scrollbar-thumb {
+	background: rgba(255,255,255,0.15);
+	border-radius: 3px;
+}
+
+.bookshelf-scroll::-webkit-scrollbar-thumb:hover {
+	background: rgba(255,255,255,0.25);
+}
+
+.book-card {
+	flex-shrink: 0;
+	scroll-snap-align: start;
+	width: 140px;
+	text-align: center;
+	transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+	cursor: pointer;
+	text-decoration: none;
+	color: inherit;
+}
+
+.book-card:hover {
+	transform: translateY(-8px) scale(1.03);
+	text-decoration: none;
+	color: inherit;
+}
+
+.book-cover-wrap {
+	position: relative;
+	width: 120px;
+	height: 180px;
+	margin: 0 auto 0.7rem;
+	border-radius: 6px;
+	overflow: hidden;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.06);
+	background: rgba(255,255,255,0.04);
+}
+
+.book-cover-wrap img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.5s ease;
+}
+
+.book-card:hover .book-cover-wrap img {
+	transform: scale(1.06);
+}
+
+.book-cover-wrap::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, rgba(255,255,255,0.08) 0%, transparent 8%, transparent 92%, rgba(0,0,0,0.15) 100%);
+	pointer-events: none;
+}
+
+.book-title {
+	font-size: 0.72rem;
+	font-weight: 600;
+	color: rgba(255,255,255,0.8);
+	line-height: 1.3;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	margin-bottom: 0.15rem;
+}
+
+.book-author {
+	font-size: 0.65rem;
+	color: rgba(255,255,255,0.35);
+	line-height: 1.2;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+/* Skeleton loader for books */
+.book-skeleton {
+	flex-shrink: 0;
+	width: 140px;
+	text-align: center;
+}
+
+.book-skeleton .book-cover-wrap {
+	background: linear-gradient(110deg, rgba(255,255,255,0.04) 8%, rgba(255,255,255,0.08) 18%, rgba(255,255,255,0.04) 33%);
+	background-size: 200% 100%;
+	animation: shimmer 1.5s linear infinite;
+}
+
+/* ===== Beyond Code — Sub-section headings ===== */
+
+.beyond-sub {
+	letter-spacing: 0.1em;
+	color: rgba(255,255,255,0.5);
+	font-size: 0.85rem;
+}
+
+/* ===== Beyond Code — Apple Music Song Embeds ===== */
+
+.apple-music-song {
+	width: 100%;
+	height: 175px;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.song-label {
+	font-size: 0.78rem;
+	color: rgba(255, 255, 255, 0.35);
+	text-align: center;
+	margin-top: 0.6rem;
+	margin-bottom: 0;
+	letter-spacing: 0.02em;
+}
+
+/* Genre tags in Beyond section */
+#beyond .portfolio-card-tag {
+	margin-bottom: 0.4rem;
+}
+
+/* ===== Beyond Code — Lifestyle Cards ===== */
+
+.lifestyle-card {
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 16px;
+	overflow: hidden;
+	height: 100%;
+	transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.lifestyle-card:hover {
+	transform: translateY(-6px);
+	box-shadow: 0 16px 40px rgba(66, 170, 245, 0.15);
+	border-color: rgba(66, 170, 245, 0.2);
+}
+
+.lifestyle-img {
+	position: relative;
+	aspect-ratio: 3 / 4;
+	overflow: hidden;
+	background: rgba(255, 255, 255, 0.02);
+}
+
+.lifestyle-img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center top;
+	display: block;
+	transition: transform 0.6s ease;
+}
+
+.lifestyle-card:hover .lifestyle-img img {
+	transform: scale(1.06);
+}
+
+.lifestyle-overlay {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(180deg, transparent 40%, rgba(10, 10, 35, 0.7) 100%);
+	opacity: 0;
+	transition: opacity 0.4s ease;
+}
+
+.lifestyle-overlay i {
+	font-size: 2rem;
+	color: rgba(255, 255, 255, 0.8);
+	filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+}
+
+.lifestyle-card:hover .lifestyle-overlay {
+	opacity: 1;
+}
+
+.lifestyle-body {
+	padding: 1.3rem 1.4rem 1.4rem;
+}
+
+.lifestyle-body h5 {
+	font-size: 1rem;
+	color: #fff;
+	margin-bottom: 0.5rem;
+	font-weight: 700;
+}
+
+.lifestyle-body p {
+	font-size: 0.85rem;
+	color: rgba(255, 255, 255, 0.55);
+	line-height: 1.55;
+	margin-bottom: 0.8rem;
+}
+
+.lifestyle-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+}
+
+/* aspect-ratio: 3/4 scales naturally on all screens — no breakpoint override needed */
+
+/* ===== Beyond Code — YouTube Embeds (compact) ===== */
+
+.beyond-video-wrap {
+	position: relative;
+	width: 100%;
+	padding-bottom: 56.25%;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+	background: rgba(255, 255, 255, 0.02);
+}
+
+.beyond-video-wrap iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border: 0;
 }

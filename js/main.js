@@ -22,21 +22,20 @@ setTimeout(revealPage, 4000);
 (function ($) {
 	"use strict";
 
-	// Smooth scrolling
-	$('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function () {
+	// Smooth scrolling — native for speed, jQuery fallback
+	$('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function (e) {
 		if (
 			location.pathname.replace(/^\//, "") === this.pathname.replace(/^\//, "") &&
 			location.hostname === this.hostname
 		) {
-			var target = $(this.hash);
-			target = target.length ? target : $("[name=" + this.hash.slice(1) + "]");
-			if (target.length) {
-				$("html, body").animate(
-					{ scrollTop: target.offset().top - 71 },
-					1000,
-					"easeInOutExpo"
-				);
-				return false;
+			var el = document.querySelector(this.hash);
+			if (!el) {
+				el = document.querySelector("[name=" + this.hash.slice(1) + "]");
+			}
+			if (el) {
+				e.preventDefault();
+				var top = el.getBoundingClientRect().top + window.pageYOffset - 71;
+				window.scrollTo({ top: top, behavior: "smooth" });
 			}
 		}
 	});
@@ -318,30 +317,49 @@ AOS.init({
 	draw();
 })();
 
-// ===== Hero Parallax =====
+// ===== Hero Parallax + Fade =====
 (function () {
 	var hero = document.querySelector(".masthead");
-	if (!hero) return;
+	var content = hero ? hero.querySelector(".masthead-content") : null;
+	if (!hero || !content) return;
+
+	// Staggered entry on load
+	content.style.opacity = "0";
+	content.style.transform = "translateY(30px)";
+	content.style.transition = "opacity 0.8s ease, transform 0.8s ease";
+	setTimeout(function () {
+		content.style.opacity = "1";
+		content.style.transform = "translateY(0)";
+	}, 200);
 
 	window.addEventListener("scroll", function () {
 		var scrollY = window.pageYOffset;
-		if (scrollY < hero.offsetHeight * 1.2) {
+		var h = hero.offsetHeight;
+		if (scrollY < h * 1.2) {
 			hero.style.setProperty("--parallax-y", scrollY * 0.3 + "px");
+			// Fade out as a single unit — starts fading at 20% scroll, gone by 80%
+			var fade = 1 - Math.max(0, Math.min((scrollY - h * 0.1) / (h * 0.5), 1));
+			content.style.opacity = fade;
+			content.style.transform = "translateY(" + (scrollY * 0.15) + "px) scale(" + (0.95 + 0.05 * fade) + ")";
+			content.style.transition = "none";
 		}
 	});
 })();
 
-// ===== Experience Section — scroll-reactive color shift =====
+// ===== Global Aurora Hue Shift — scroll-driven color evolution =====
 (function () {
-	var exp = document.getElementById("experience");
-	if (!exp) return;
+	var docH, winH, lastHue = -1;
+	function measure() { docH = document.body.scrollHeight; winH = window.innerHeight; }
+	measure();
+	window.addEventListener("resize", measure);
 
 	window.addEventListener("scroll", function () {
-		var rect = exp.getBoundingClientRect();
-		var vh = window.innerHeight;
-		if (rect.top < vh && rect.bottom > 0) {
-			var progress = (vh - rect.top) / (vh + rect.height);
-			exp.style.setProperty("--aurora-progress", (progress * 100).toFixed(1) + "%");
+		var scrollPct = window.pageYOffset / (docH - winH || 1);
+		// Full journey maps to 0 → 45 degree hue shift (subtle, not garish)
+		var hue = Math.round(scrollPct * 45);
+		if (hue !== lastHue) {
+			lastHue = hue;
+			document.documentElement.style.setProperty("--aurora-hue", hue + "deg");
 		}
 	});
 })();
@@ -964,5 +982,72 @@ AOS.init({
 	fetchRepoCommits(KEY_REPOS, function (commits) {
 		repoData = commits;
 		mergeAndDraw();
+	});
+})();
+
+// ===== Beyond Code — Bookshelf via Open Library =====
+(function () {
+	var bookshelfGrid = document.getElementById("bookshelf-grid");
+	if (!bookshelfGrid) return;
+
+	// Curated list of books from Goodreads profile — using Open Library edition keys or ISBNs
+	var BOOKS = [
+		{ title: "The Almanack of Naval Ravikant", author: "Eric Jorgenson", isbn: "9781544514215" },
+		{ title: "Atomic Habits", author: "James Clear", isbn: "9780735211292" },
+		{ title: "The Psychology of Money", author: "Morgan Housel", isbn: "9780857197689" },
+		{ title: "Deep Work", author: "Cal Newport", isbn: "9781455586691" },
+		{ title: "Sapiens", author: "Yuval Noah Harari", isbn: "9780062316097" },
+		{ title: "Thinking, Fast and Slow", author: "Daniel Kahneman", isbn: "9780374533557" },
+		{ title: "Clean Code", author: "Robert C. Martin", isbn: "9780132350884" },
+		{ title: "The Lean Startup", author: "Eric Ries", isbn: "9780307887894" },
+		{ title: "Only the Paranoid Survive", author: "Andrew S. Grove", isbn: "9780385483827" },
+		{ title: "Zero to One", author: "Peter Thiel", isbn: "9780804139298" },
+		{ title: "Rita Hayworth and Shawshank Redemption", author: "Stephen King", isbn: "9781982155759" },
+		{ title: "Rich Dad Poor Dad", author: "Robert T. Kiyosaki", isbn: "9781612680194" }
+	];
+
+	// Create placeholder slots with stable data-index so replacement is reliable
+	var slots = [];
+	BOOKS.forEach(function (book, idx) {
+		var placeholder = document.createElement("div");
+		placeholder.className = "book-skeleton";
+		placeholder.setAttribute("data-book-idx", idx);
+		placeholder.innerHTML = '<div class="book-cover-wrap"></div>';
+		bookshelfGrid.appendChild(placeholder);
+		slots.push(placeholder);
+	});
+
+	// Load each book cover and replace its specific slot
+	BOOKS.forEach(function (book, idx) {
+		var coverUrl = "https://covers.openlibrary.org/b/isbn/" + book.isbn + "-M.jpg";
+		var searchUrl = "https://www.google.com/search?q=" + encodeURIComponent(book.title + " " + book.author + " goodreads");
+
+		function buildCard(imgHtml) {
+			var card = document.createElement("a");
+			card.className = "book-card";
+			card.href = searchUrl;
+			card.target = "_blank";
+			card.rel = "noopener";
+			card.setAttribute("data-book-idx", idx);
+			card.innerHTML = imgHtml +
+				'<div class="book-title">' + book.title + '</div>' +
+				'<div class="book-author">' + book.author + '</div>';
+			return card;
+		}
+
+		var img = new Image();
+		img.crossOrigin = "anonymous";
+		img.onload = function () {
+			var card = buildCard('<div class="book-cover-wrap"><img src="' + coverUrl + '" alt="' + book.title.replace(/"/g, '&quot;') + '"></div>');
+			var slot = bookshelfGrid.querySelector('[data-book-idx="' + idx + '"]');
+			if (slot) bookshelfGrid.replaceChild(card, slot);
+		};
+		img.onerror = function () {
+			var card = buildCard('<div class="book-cover-wrap" style="display:flex;align-items:center;justify-content:center;">' +
+				'<i class="fas fa-book" style="font-size:2rem;color:rgba(255,255,255,0.15);"></i></div>');
+			var slot = bookshelfGrid.querySelector('[data-book-idx="' + idx + '"]');
+			if (slot) bookshelfGrid.replaceChild(card, slot);
+		};
+		img.src = coverUrl;
 	});
 })();
