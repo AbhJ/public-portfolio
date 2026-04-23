@@ -465,6 +465,10 @@ a.text-secondary:focus {
 .masthead {
 	padding-top: calc(6rem + 74px);
 	padding-bottom: 6rem;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	background: linear-gradient(135deg, #0a0a23 0%, #1a1a2e 40%, #16213e 100%);
 	position: relative;
 	overflow: hidden;
@@ -501,6 +505,8 @@ a.text-secondary:focus {
 }
 
 .masthead .masthead-avatar {
+	width: 300px;
+	height: 300px;
 	border-radius: 50%;
 	border: 4px solid rgba(66, 170, 245, 0.5);
 	animation: glow 3s ease-in-out infinite;
@@ -508,6 +514,14 @@ a.text-secondary:focus {
 	object-position: center 25%;
 	transform: scale(1.15);
 	transition: transform 0.4s ease;
+}
+
+/* Desktop avatar */
+@media (min-width: 992px) {
+	.masthead .masthead-avatar {
+		width: 420px;
+		height: 420px;
+	}
 }
 
 .masthead .masthead-avatar:hover {
@@ -525,6 +539,25 @@ a.text-secondary:focus {
 	}
 	.masthead .masthead-subheading {
 		font-size: 1.4rem;
+	}
+}
+
+/* Small laptops — 14" screens, ~768-900px viewport height */
+@media (min-width: 992px) and (max-height: 900px) {
+	.masthead {
+		padding-top: calc(4rem + 74px);
+		padding-bottom: 3rem;
+	}
+	.masthead .masthead-avatar {
+		height: 280px;
+		width: 310px;
+	}
+	.masthead .masthead-heading {
+		font-size: 3rem;
+		line-height: 2.8rem;
+	}
+	.masthead .masthead-subheading {
+		font-size: 1.15rem;
 	}
 }
 
