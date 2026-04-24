@@ -1,5 +1,6 @@
 // ===== Page Readiness — preloader control =====
-// Tracks async data sources. Reveals page once all resolve (or after timeout).
+// Spinner stays until EVERY data source resolves or rejects.
+// Each fetch has its own AbortController timeout so nothing hangs.
 var _dataReady = { pending: 0, revealed: false };
 
 function dataSourceStarted() { _dataReady.pending++; }
@@ -13,15 +14,31 @@ function revealPage() {
 	document.body.classList.add("ready");
 	var pre = document.getElementById("preloader");
 	if (pre) pre.classList.add("loaded");
-	// Re-trigger AOS after layout reflow — staggered refreshes to catch all elements
 	if (typeof AOS !== "undefined") {
 		AOS.refreshHard();
 		setTimeout(function () { AOS.refreshHard(); }, 50);
 		setTimeout(function () { AOS.refresh(); }, 200);
 	}
 }
-// Safety: always reveal after 4 seconds no matter what
-setTimeout(revealPage, 4000);
+
+// Safety net: if all per-fetch timeouts somehow fail, force reveal at 10s
+setTimeout(revealPage, 10000);
+
+// Fetch wrapper with per-request timeout (default 6s) — never hangs
+function fetchWithTimeout(url, opts, ms) {
+	if (!ms) ms = 6000;
+	if (typeof AbortController !== "undefined") {
+		var ctrl = new AbortController();
+		var timer = setTimeout(function () { ctrl.abort(); }, ms);
+		opts = Object.assign({}, opts || {}, { signal: ctrl.signal });
+		return fetch(url, opts).finally(function () { clearTimeout(timer); });
+	}
+	// Fallback for old browsers: race with a reject timer
+	return Promise.race([
+		fetch(url, opts),
+		new Promise(function (_, reject) { setTimeout(function () { reject(new Error("Timeout")); }, ms); })
+	]);
+}
 
 (function ($) {
 	"use strict";
@@ -72,17 +89,6 @@ setTimeout(revealPage, 4000);
 	navbarCollapse();
 	$(window).scroll(navbarCollapse);
 
-	// Floating label form groups
-	$("body")
-		.on("input propertychange", ".floating-label-form-group", function (e) {
-			$(this).toggleClass("floating-label-form-group-with-value", !!$(e.target).val());
-		})
-		.on("focus", ".floating-label-form-group", function () {
-			$(this).addClass("floating-label-form-group-with-focus");
-		})
-		.on("blur", ".floating-label-form-group", function () {
-			$(this).removeClass("floating-label-form-group-with-focus");
-		});
 })(jQuery);
 
 // Copyright date
@@ -369,35 +375,119 @@ AOS.init({
 })();
 
 // ===== LeetCode — fully dynamic stats + heatmap =====
+// Multi-strategy: (1) localStorage cache, (2) third-party API, (3) native GraphQL via CORS proxy
 (function () {
 	var LC_USER = "abhjkgp";
-	var API = "https://alfa-leetcode-api.onrender.com/";
+	var LC_GQL = "https://leetcode.com/graphql";
+	var LC_CACHE_KEY = "lc_stats";
+	var LC_CAL_CACHE_KEY = "lc_calendar";
+	var CACHE_TTL = 2 * 60 * 60 * 1000; // 2 hours
+
+	// ---- Third-party API endpoints (no CORS issues, GET-based) ----
+	var LC_API_HOSTS = [
+		"https://alfa-leetcode-api.onrender.com/",
+		"https://leetcode-api-faisalshehbaz.vercel.app/"
+	];
+
+	// ---- CORS proxy for native GraphQL (POST) ----
+	var CORS_PROXIES = [
+		function (u) { return "https://corsproxy.io/?" + encodeURIComponent(u); }
+	];
+
+	function lcGraphQL(query, proxyIdx) {
+		if (proxyIdx === undefined) proxyIdx = 0;
+		if (proxyIdx >= CORS_PROXIES.length) return Promise.reject(new Error("All proxies failed"));
+		var url = CORS_PROXIES[proxyIdx](LC_GQL);
+		return fetchWithTimeout(url, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ query: query })
+		}).then(function (r) {
+			if (!r.ok) throw new Error("Proxy " + proxyIdx + " failed: " + r.status);
+			return r.json();
+		}).then(function (d) {
+			if (!d || !d.data) throw new Error("No data from proxy " + proxyIdx);
+			return d;
+		}).catch(function () {
+			return lcGraphQL(query, proxyIdx + 1);
+		});
+	}
+
+	// ---- Helper: try multiple API hosts sequentially ----
+	function fetchFromHosts(path, hostIdx) {
+		if (hostIdx === undefined) hostIdx = 0;
+		if (hostIdx >= LC_API_HOSTS.length) return Promise.reject(new Error("All API hosts failed"));
+		return fetchWithTimeout(LC_API_HOSTS[hostIdx] + path)
+			.then(function (r) {
+				if (!r.ok) throw new Error("Host " + hostIdx + " returned " + r.status);
+				return r.json();
+			})
+			.then(function (d) {
+				if (!d || (d.errors && d.errors.length)) throw new Error("Bad data from host " + hostIdx);
+				return d;
+			})
+			.catch(function () { return fetchFromHosts(path, hostIdx + 1); });
+	}
+
+	// ---- Helper: cache read/write ----
+	function cacheRead(key) {
+		try {
+			var c = JSON.parse(localStorage.getItem(key));
+			if (c && c.ts && (Date.now() - c.ts) < CACHE_TTL && c.data) return c.data;
+		} catch (e) {}
+		return null;
+	}
+	function cacheWrite(key, data) {
+		try { localStorage.setItem(key, JSON.stringify({ ts: Date.now(), data: data })); } catch (e) {}
+	}
+
+	// ---- Apply stats to DOM ----
+	function applyStats(easy, medium, hard) {
+		var total = easy + medium + hard;
+		var el;
+		if ((el = document.getElementById("lc-total"))) el.textContent = total;
+		if ((el = document.getElementById("lc-easy"))) el.textContent = easy;
+		if ((el = document.getElementById("lc-medium"))) el.textContent = medium;
+		if ((el = document.getElementById("lc-hard"))) el.textContent = hard;
+		if (total > 0) {
+			if ((el = document.getElementById("lc-bar-easy"))) el.style.width = (easy / total * 100).toFixed(1) + "%";
+			if ((el = document.getElementById("lc-bar-medium"))) el.style.width = (medium / total * 100).toFixed(1) + "%";
+			if ((el = document.getElementById("lc-bar-hard"))) el.style.width = (hard / total * 100).toFixed(1) + "%";
+		}
+	}
 
 	// ---- 1. Problem stats ----
 	dataSourceStarted();
-	fetch(API + LC_USER + "/solved")
-		.then(function (r) { return r.json(); })
-		.then(function (d) {
-			var easy = d.easySolved || 0;
-			var medium = d.mediumSolved || 0;
-			var hard = d.hardSolved || 0;
-			var total = d.solvedProblem || (easy + medium + hard);
-
-			var el;
-			if ((el = document.getElementById("lc-total"))) el.textContent = total;
-			if ((el = document.getElementById("lc-easy"))) el.textContent = easy;
-			if ((el = document.getElementById("lc-medium"))) el.textContent = medium;
-			if ((el = document.getElementById("lc-hard"))) el.textContent = hard;
-
-			if (total > 0) {
-				if ((el = document.getElementById("lc-bar-easy"))) el.style.width = (easy / total * 100).toFixed(1) + "%";
-				if ((el = document.getElementById("lc-bar-medium"))) el.style.width = (medium / total * 100).toFixed(1) + "%";
-				if ((el = document.getElementById("lc-bar-hard"))) el.style.width = (hard / total * 100).toFixed(1) + "%";
-			}
-
-			dataSourceDone();
-		})
-		.catch(function () { dataSourceDone(); });
+	var cachedStats = cacheRead(LC_CACHE_KEY);
+	if (cachedStats) {
+		applyStats(cachedStats.easy, cachedStats.medium, cachedStats.hard);
+		dataSourceDone();
+	} else {
+		// Strategy A: third-party API (GET, no CORS issues)
+		fetchFromHosts(LC_USER + "/solved")
+			.then(function (d) {
+				var easy = d.easySolved || 0, medium = d.mediumSolved || 0, hard = d.hardSolved || 0;
+				applyStats(easy, medium, hard);
+				cacheWrite(LC_CACHE_KEY, { easy: easy, medium: medium, hard: hard });
+			})
+			.catch(function () {
+				// Strategy B: native GraphQL via CORS proxy
+				return lcGraphQL('{ matchedUser(username: "' + LC_USER + '") { submitStats { acSubmissionNum { difficulty count } } } }')
+					.then(function (d) {
+						var stats = d.data.matchedUser.submitStats.acSubmissionNum;
+						var easy = 0, medium = 0, hard = 0;
+						stats.forEach(function (s) {
+							if (s.difficulty === "Easy") easy = s.count;
+							else if (s.difficulty === "Medium") medium = s.count;
+							else if (s.difficulty === "Hard") hard = s.count;
+						});
+						applyStats(easy, medium, hard);
+						cacheWrite(LC_CACHE_KEY, { easy: easy, medium: medium, hard: hard });
+					});
+			})
+			.catch(function () {})
+			.finally(dataSourceDone);
+	}
 
 	// ---- 2. Calendar heatmap ----
 	var canvas = document.getElementById("lc-heatmap");
@@ -504,34 +594,62 @@ AOS.init({
 
 	drawGrid(); // empty grid first
 
-	// Fetch calendar data
-	dataSourceStarted();
-	fetch(API + LC_USER + "/calendar")
-		.then(function (r) { return r.json(); })
-		.then(function (d) {
-			var cal = d.submissionCalendar;
-			if (typeof cal === "string") cal = JSON.parse(cal);
-
-			Object.keys(cal).forEach(function (ts) {
-				var dt = new Date(parseInt(ts, 10) * 1000);
-				var key = dt.getFullYear() + "-" +
-					String(dt.getMonth() + 1).padStart(2, "0") + "-" +
-					String(dt.getDate()).padStart(2, "0");
-				if (dateMap.hasOwnProperty(key)) {
-					grid[dateMap[key]].count = cal[ts];
-				}
-			});
-			drawGrid();
-
-			// Update streak text
-			var streakEl = document.getElementById("lc-streak");
-			if (streakEl && d.streak) {
-				streakEl.textContent = d.streak + " day streak · " + d.totalActiveDays + " active days";
-				if (d.streak > 0) streakEl.insertAdjacentHTML("beforebegin", '<i class="fas fa-fire-alt" style="color:#ffa116;margin-right:0.3rem;"></i>');
+	// ---- Apply calendar data to heatmap grid ----
+	function applyCalendar(cal, streak, activeDays) {
+		Object.keys(cal).forEach(function (ts) {
+			var dt = new Date(parseInt(ts, 10) * 1000);
+			var key = dt.getFullYear() + "-" +
+				String(dt.getMonth() + 1).padStart(2, "0") + "-" +
+				String(dt.getDate()).padStart(2, "0");
+			if (dateMap.hasOwnProperty(key)) {
+				grid[dateMap[key]].count = cal[ts];
 			}
-		})
-		.catch(function () {})
-		.finally(dataSourceDone);
+		});
+		drawGrid();
+
+		var streakEl = document.getElementById("lc-streak");
+		if (streakEl && (streak || activeDays)) {
+			var parts = [];
+			if (streak) parts.push(streak + " day streak");
+			if (activeDays) parts.push(activeDays + " active days");
+			streakEl.textContent = parts.join(" · ");
+			if (streak > 0) streakEl.insertAdjacentHTML("beforebegin", '<i class="fas fa-fire-alt" style="color:#ffa116;margin-right:0.3rem;"></i>');
+		}
+	}
+
+	// Fetch calendar: cache → third-party API → native GraphQL
+	dataSourceStarted();
+	var cachedCal = cacheRead(LC_CAL_CACHE_KEY);
+	if (cachedCal && cachedCal.calendar) {
+		applyCalendar(cachedCal.calendar, cachedCal.streak, cachedCal.activeDays);
+		dataSourceDone();
+	} else {
+		// Strategy A: third-party API calendar endpoint
+		fetchFromHosts("userProfile/" + LC_USER)
+			.then(function (d) {
+				// Third-party API returns submissionCalendar as JSON string
+				var cal = d.submissionCalendar;
+				if (typeof cal === "string") cal = JSON.parse(cal);
+				if (!cal || typeof cal !== "object") throw new Error("No calendar data");
+				var streak = d.streak || 0;
+				var activeDays = d.totalActiveDays || 0;
+				applyCalendar(cal, streak, activeDays);
+				cacheWrite(LC_CAL_CACHE_KEY, { calendar: cal, streak: streak, activeDays: activeDays });
+			})
+			.catch(function () {
+				// Strategy B: native GraphQL via CORS proxy
+				return lcGraphQL('{ matchedUser(username: "' + LC_USER + '") { userCalendar { submissionCalendar streak totalActiveDays } } }')
+					.then(function (d) {
+						var uc = d.data.matchedUser.userCalendar;
+						var cal = uc.submissionCalendar;
+						if (typeof cal === "string") cal = JSON.parse(cal);
+						applyCalendar(cal, uc.streak, uc.totalActiveDays);
+						cacheWrite(LC_CAL_CACHE_KEY, { calendar: cal, streak: uc.streak, activeDays: uc.totalActiveDays });
+					});
+			})
+			.catch(function () {})
+			.finally(dataSourceDone);
+	}
 })();
 
 // ===== GitHub Profile Stats — scraped from profile page (no API rate limit) =====
@@ -566,7 +684,7 @@ AOS.init({
 
 	// Primary: scrape profile page via CORS proxy (not rate-limited)
 	var proxyUrl = "https://api.codetabs.com/v1/proxy/?quest=" + encodeURIComponent("https://github.com/" + USERNAME);
-	fetch(proxyUrl)
+	fetchWithTimeout(proxyUrl)
 		.then(function (r) { return r.ok ? r.text() : ""; })
 		.then(function (html) {
 			if (!html || html.length < 1000) throw new Error("Empty");
@@ -593,7 +711,7 @@ AOS.init({
 		})
 		.catch(function () {
 			// Fallback: GitHub REST API (may be rate-limited)
-			return fetch("https://api.github.com/users/" + USERNAME)
+			return fetchWithTimeout("https://api.github.com/users/" + USERNAME)
 				.then(function (r) { return r.ok ? r.json() : null; })
 				.then(function (d) {
 					if (!d || d.message) return;
@@ -839,30 +957,23 @@ AOS.init({
 
 	function fetchContribsViaProxy(proxyIdx, callback) {
 		if (proxyIdx >= CORS_PROXIES.length) {
-			console.warn("[Heatmap] All CORS proxies failed, falling back to GitHub API");
-			callback(null); // All proxies failed
+			callback(null);
 			return;
 		}
 		var proxyUrl = CORS_PROXIES[proxyIdx](GH_CONTRIB_URL);
-		console.log("[Heatmap] Trying proxy " + proxyIdx + ": " + proxyUrl.slice(0, 60) + "...");
-		fetch(proxyUrl)
+		fetchWithTimeout(proxyUrl)
 			.then(function (r) {
 				if (!r.ok) throw new Error("Proxy " + proxyIdx + " returned " + r.status);
 				return r.text();
 			})
 			.then(function (html) {
 				if (!html || html.indexOf("data-date") === -1) {
-					throw new Error("Invalid HTML from proxy " + proxyIdx + " (length=" + (html ? html.length : 0) + ")");
+					throw new Error("Invalid HTML from proxy " + proxyIdx);
 				}
-				console.log("[Heatmap] Proxy " + proxyIdx + " succeeded (" + html.length + " bytes)");
 				var contribs = parseContributionsHTML(html);
-				var nonZero = 0;
-				Object.keys(contribs).forEach(function(k) { if (contribs[k].level > 0) nonZero++; });
-				console.log("[Heatmap] Parsed " + Object.keys(contribs).length + " dates, " + nonZero + " with activity");
 				callback(contribs);
 			})
-			.catch(function (err) {
-				console.warn("[Heatmap] Proxy " + proxyIdx + " failed: " + err.message);
+			.catch(function () {
 				fetchContribsViaProxy(proxyIdx + 1, callback);
 			});
 	}
@@ -880,7 +991,6 @@ AOS.init({
 			if (cached) {
 				var parsed = JSON.parse(cached);
 				if (parsed.ts && (Date.now() - parsed.ts) < CACHE_TTL && parsed.data) {
-					console.log("[Heatmap] Using cached repo commits (" + Object.keys(parsed.data).length + " days)");
 					callback(parsed.data);
 					return;
 				}
@@ -893,7 +1003,7 @@ AOS.init({
 		repos.forEach(function (repo) {
 			var url = "https://api.github.com/repos/" + USERNAME + "/" + repo +
 				"/commits?per_page=100&since=" + startDay.toISOString();
-			fetch(url)
+			fetchWithTimeout(url)
 				.then(function (r) { return r.ok ? r.json() : []; })
 				.then(function (commits) {
 					if (!Array.isArray(commits)) { commits = []; }

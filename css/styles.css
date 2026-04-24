@@ -46,18 +46,24 @@
 	text-transform: uppercase;
 }
 
-/* Hide main content until loaded */
+/* Hide main content and lock scroll until loaded */
+body:not(.ready) {
+	overflow: hidden;
+	height: 100vh;
+}
+
 body:not(.ready) main,
 body:not(.ready) #mainNav,
 body:not(.ready) #particles {
 	opacity: 0;
+	pointer-events: none;
 }
 
 body.ready main,
 body.ready #mainNav,
 body.ready #particles {
 	opacity: 1;
-	transition: opacity 0.4s ease 0.1s;
+	transition: opacity 0.6s ease 0.15s;
 }
 
 html {
@@ -71,7 +77,6 @@ html {
 	--dark: #0f0f23;
 	--font-family-sans-serif: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 	--font-family-heading: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-	--aurora-progress: 50%;
 }
 
 body {
@@ -114,22 +119,6 @@ h1, h2, h3, h4, h5, h6,
 
 /* ===== Animations ===== */
 
-.slide-right {
-	animation: slide-right 3s;
-}
-@keyframes slide-right {
-	from { margin-left: -100%; }
-	to { margin-left: 0; }
-}
-
-.slide-left {
-	animation: slide-left 3s;
-}
-@keyframes slide-left {
-	from { margin-left: 100%; }
-	to { margin-left: 0; }
-}
-
 @keyframes float {
 	0%, 100% { transform: translateY(0); }
 	50% { transform: translateY(-12px); }
@@ -143,13 +132,6 @@ h1, h2, h3, h4, h5, h6,
 @keyframes shimmer {
 	0% { background-position: -200% 0; }
 	100% { background-position: 200% 0; }
-}
-
-@keyframes aurora-drift {
-	0%, 100% { transform: translate(-30%, -30%) rotate(0deg) scale(1); }
-	25% { transform: translate(-25%, -35%) rotate(90deg) scale(1.05); }
-	50% { transform: translate(-35%, -25%) rotate(180deg) scale(1); }
-	75% { transform: translate(-20%, -30%) rotate(270deg) scale(1.05); }
 }
 
 @keyframes orb-float-1 {
@@ -168,35 +150,6 @@ h1, h2, h3, h4, h5, h6,
 	0%, 100% { transform: translate(0, 0) scale(1); }
 	33% { transform: translate(50px, 60px) scale(1.05); }
 	66% { transform: translate(-70px, -40px) scale(0.95); }
-}
-
-@keyframes tileReveal {
-	from { opacity: 0; transform: translateY(40px) scale(0.92); }
-	to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-/* ===== Video Embed ===== */
-
-.video-container {
-	position: relative;
-	width: 100%;
-	padding-bottom: 56.25%;
-}
-
-.video-embed-div {
-	padding-top: 5%;
-}
-
-.video {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	border: 0;
-	border-radius: 12px;
-	overflow: hidden;
-	z-index: 1;
 }
 
 /* ===== Page Sections ===== */
@@ -440,8 +393,6 @@ h1, h2, h3, h4, h5, h6,
 	opacity: 0.3;
 }
 
-/* YouTube is now merged into #beyond section */
-
 /* ===== Dividers ===== */
 
 .divider-custom {
@@ -596,10 +547,11 @@ a.text-secondary:focus {
 	padding-bottom: 1rem;
 	font-family: var(--font-family-heading);
 	font-weight: 700;
-	background-color: rgba(10, 10, 35, 0.95);
-	backdrop-filter: blur(10px);
-	-webkit-backdrop-filter: blur(10px);
-	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+	background-color: rgba(10, 10, 35, 0.55);
+	backdrop-filter: saturate(180%) blur(20px);
+	-webkit-backdrop-filter: saturate(180%) blur(20px);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05), 0 4px 20px rgba(0, 0, 0, 0.25);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 #mainNav .navbar-brand {
@@ -953,31 +905,37 @@ a.text-secondary:focus {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.5rem;
-	padding: 0.45rem 1rem;
+	padding: 0.5rem 1.1rem;
 	border-radius: 50px;
-	background: linear-gradient(135deg, rgba(66, 170, 245, 0.15), rgba(168, 85, 247, 0.12));
-	border: 1px solid rgba(66, 170, 245, 0.25);
-	backdrop-filter: blur(8px);
-	-webkit-backdrop-filter: blur(8px);
+	background: rgba(10, 10, 35, 0.75);
+	border: 1px solid rgba(66, 170, 245, 0.45);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 	white-space: nowrap;
 	transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .highlight-chip:hover {
 	transform: scale(1.05);
-	box-shadow: 0 4px 20px rgba(66, 170, 245, 0.2);
+	box-shadow: 0 4px 20px rgba(66, 170, 245, 0.3);
+	border-color: rgba(66, 170, 245, 0.7);
 }
 
-.highlight-chip i {
-	font-size: 0.75rem;
-	color: #fbbf24;
+.highlight-chip i,
+.highlight-chip svg {
+	font-size: 1rem;
+	width: 1rem;
+	height: 1rem;
+	color: #fff;
+	fill: #fff;
 }
 
 .highlight-chip span {
-	font-size: 0.75rem;
-	font-weight: 600;
-	color: rgba(255, 255, 255, 0.8);
-	letter-spacing: 0.02em;
+	font-size: 0.78rem;
+	font-weight: 700;
+	color: #fff;
+	letter-spacing: 0.03em;
 }
 
 @media (max-width: 768px) {
@@ -1015,8 +973,6 @@ a.text-secondary:focus {
 		text-align: left;
 	}
 }
-
-/* ===== Award Cards ===== */
 
 /* ===== Skills Section ===== */
 
@@ -1165,18 +1121,10 @@ a.portfolio-card:focus {
 }
 
 
-/* ===== Mobile / Desktop Toggle ===== */
-
-.div-only-mobile {
-	display: none;
-}
-
+/* Hide resume embed on small screens */
 @media screen and (max-width: 1200px) {
 	.div-no-mobile {
 		display: none;
-	}
-	.div-only-mobile {
-		display: block;
 	}
 }
 
