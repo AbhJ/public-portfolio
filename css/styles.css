@@ -177,7 +177,6 @@ h1, h2, h3, h4, h5, h6,
 #education,
 #skills,
 #blog,
-#resume,
 #portfolio,
 #codeStats,
 #beyond {
@@ -190,7 +189,6 @@ h1, h2, h3, h4, h5, h6,
 #skills,
 #portfolio,
 #codeStats,
-#resume,
 #blog,
 #beyond {
 	position: relative;
@@ -201,7 +199,6 @@ h1, h2, h3, h4, h5, h6,
 #skills > .container,
 #portfolio > .container,
 #codeStats > .container,
-#resume > .container,
 #blog > .container,
 #beyond > .container {
 	position: relative;
@@ -216,7 +213,6 @@ h1, h2, h3, h4, h5, h6,
 #skills::before,
 #portfolio::before, #portfolio::after,
 #codeStats::before, #codeStats::after,
-#resume::before,
 #blog::before,
 #beyond::before, #beyond::after {
 	content: '';
@@ -292,16 +288,6 @@ h1, h2, h3, h4, h5, h6,
 	opacity: 0.3;
 }
 
-#resume {
-	background: linear-gradient(140deg, #0e1a2e 0%, #111e36 35%, #0d1828 65%, #0a1220 100%);
-}
-#resume::before {
-	width: 450px; height: 450px;
-	background: radial-gradient(circle, rgba(168, 85, 247, 0.3), rgba(66, 170, 245, 0.15), transparent 70%);
-	top: 12%; right: -5%;
-	animation: orb-float-2 18s ease-in-out infinite;
-	opacity: 0.3;
-}
 
 #blog {
 	background: linear-gradient(135deg, #0b1120 0%, #0e1630 35%, #0a1228 65%, #08101c 100%);
@@ -1121,11 +1107,19 @@ a.portfolio-card:focus {
 }
 
 
-/* Hide resume embed on small screens */
-@media screen and (max-width: 1200px) {
-	.div-no-mobile {
-		display: none;
-	}
+/* ===== Resume — inline download button at end of Skills ===== */
+
+.btn-resume {
+	padding: 0.75rem 2rem;
+	font-size: 1rem;
+	border-radius: 50px;
+	letter-spacing: 0.03em;
+	transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.btn-resume:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 6px 20px rgba(66, 170, 245, 0.3);
 }
 
 /* ===== Footer ===== */
@@ -1287,6 +1281,13 @@ a.portfolio-card:focus {
 	border-radius: 12px;
 	background: rgba(255, 255, 255, 0.04);
 	border: 1px solid rgba(255, 255, 255, 0.06);
+	transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.gh-stat-card:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 8px 25px rgba(66, 170, 245, 0.15);
+	border-color: rgba(66, 170, 245, 0.25);
 }
 
 .gh-stat-number {
@@ -1478,14 +1479,6 @@ a.gh-repo-card:focus {
 	opacity: 1;
 }
 
-/* ===== Resume PDF Embed ===== */
-.resume-iframe {
-	display: block;
-	width: 100%;
-	height: 90vh;
-	border: none;
-	border-radius: 8px;
-}
 
 /* ===== WakaTime Embed Cards ===== */
 .wakatime-grid {
