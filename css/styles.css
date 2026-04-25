@@ -917,6 +917,12 @@ a.text-secondary:focus {
 	transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+a.highlight-chip,
+a.highlight-chip:hover,
+a.highlight-chip:focus {
+    text-decoration: none;
+}
+
 .highlight-chip:hover {
 	transform: scale(1.05);
 	box-shadow: 0 4px 20px rgba(66, 170, 245, 0.3);
