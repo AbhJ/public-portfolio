@@ -75,7 +75,7 @@
 					<div class="divider-custom-icon"><i class="fas fa-rocket"></i></div>
 					<div class="divider-custom-line"></div>
 				</div>
-				<p class="masthead-subheading font-weight-light mb-0 hero-rotating" id="hero-rotate">Member of Technical Staff (SWE 2) @ <strong>Salesforce</strong></p>
+				<p class="masthead-subheading font-weight-light mb-0 hero-rotating" id="hero-rotate">Full Stack Software Engineer at <strong>Salesforce</strong></p>
 				<div class="mt-4">
 					<a class="btn btn-outline-light btn-social mx-1" href="https://github.com/AbhJ"><i class="fab fa-fw fa-github"></i></a>
 					<a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/abhj"><i class="fab fa-fw fa-linkedin-in"></i></a>
@@ -84,9 +84,9 @@
 					<a class="btn btn-outline-light btn-social mx-1" href="https://www.instagram.com/abjkgp"><i class="fab fa-fw fa-instagram"></i></a>
 				</div>
 				<div class="mt-4">
-					<a class="btn btn-outline-light btn-resume" href="assets/resume-abhj.pdf" download>
-						<span class="fas fa-download mr-2"></span> Download Resume
-					</a>
+					<button type="button" class="btn btn-outline-light btn-resume" id="openResume">
+						<span class="fas fa-file-alt mr-2"></span> Resume
+					</button>
 				</div>
 			</div>
 		</section>
@@ -118,14 +118,14 @@
 									<li>Designed and delivered <strong>2 end-to-end tested business entities</strong> (UDD) ensuring seamless company-wide integration across dependent clouds.</li>
 									<li>Won the <strong>Industries Gen-AI Hackathon (APAC, 2024)</strong>.</li>
 								</ul>
-								<p class="mb-0"><small class="text-muted">Java &middot; JavaScript &middot; LWC &middot; GraphQL &middot; Spring &middot; Bazel &middot; Postgres &middot; SOQL</small></p>
+								<p class="mb-0"><small class="text-muted">Java &middot; JavaScript &middot; GraphQL &middot; Spring &middot; Bazel &middot; Postgres</small></p>
 							</div>
 						</div>
 						<div class="timeline-highlight" data-aos="fade-left" data-aos-delay="200">
-							<div class="highlight-chip">
+							<a class="highlight-chip highlight-chip--link js-scroll-trigger" href="#allstar-card" aria-label="Jump to T&amp;P All Star Award details">
 								<i class="fas fa-trophy"></i>
 								<span>T&amp;P All Star Award</span>
-							</div>
+							</a>
 						</div>
 					</div>
 
@@ -142,7 +142,7 @@
 									<li>Pioneered <strong>validation rules</strong> in SPS — dependency checks and integrity constraints across the process definition — <strong>cutting customer gacks by 80%</strong>.</li>
 									<li>Owned bug investigations, flaky test triage, and PR reviews across the team, keeping the release cadence unblocked.</li>
 								</ul>
-								<p class="mb-0"><small class="text-muted">Java &middot; JavaScript &middot; Spring &middot; Maven &middot; Bazel &middot; Postgres &middot; MongoDB &middot; SOQL</small></p>
+								<p class="mb-0"><small class="text-muted">Java &middot; JavaScript &middot; Spring &middot; Maven &middot; Bazel &middot; Postgres &middot; MongoDB</small></p>
 							</div>
 						</div>
 						<div class="timeline-highlight" data-aos="fade-right" data-aos-delay="200">
@@ -165,7 +165,7 @@
 									<li>Built a voice-to-record prototype using <strong>Google Speech-to-Text</strong> and <strong>Einstein NER</strong> — parsing clinical conversations into structured patient records, eliminating manual data entry for Health Cloud users.</li>
 									<li><strong>Won the InTurn Hackathon</strong> organized by Salesforce for its intern cohort.</li>
 								</ul>
-								<p class="mb-0"><small class="text-muted">Java &middot; JavaScript &middot; Spring Boot &middot; Google Cloud Platform &middot; Named Entity Recognition</small></p>
+								<p class="mb-0"><small class="text-muted">Java &middot; JavaScript &middot; Spring Boot &middot; Google Cloud Platform</small></p>
 							</div>
 						</div>
 						<div class="timeline-highlight" data-aos="fade-left" data-aos-delay="200">
@@ -248,6 +248,7 @@
 										<span class="edu-extra-tag">JEE Adv. AIR 2157</span>
 										<span class="edu-extra-tag">JEE Main AIR 5444</span>
 										<span class="edu-extra-tag">WBJEE Rank 92</span>
+										<span class="edu-extra-tag">JEE Adv. 99.9%ile</span>
 									</div>
 								</div>
 							</div>
@@ -281,7 +282,7 @@
 					<div class="divider-custom-icon"><i class="fas fa-tools"></i></div>
 					<div class="divider-custom-line"></div>
 				</div>
-				<div class="row text-center mt-4">
+				<div class="row text-center mt-5 skill-grid">
 					<div class="col-lg-3 col-md-4 col-6 mb-4" data-aos="fade-up" data-aos-delay="0">
 						<div class="skill-badge"><i class="fab fa-java fa-2x mb-2"></i><br>Java</div>
 					</div>
@@ -329,11 +330,11 @@
 							</div>
 							<div class="portfolio-card-body">
 								<h5>ABJ Blogs</h5>
-								<p>A personal writing space on software engineering, system design, and reflections from building enterprise software.</p>
+								<p>Essays on software engineering, system design, and reflections from building enterprise software.</p>
 							</div>
 						</a>
 					</div>
-					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="100" data-aos-easing="ease-in-sine">
+					<div class="col-md-6 col-lg-4 mb-5" id="allstar-card" data-aos="fade-up" data-aos-delay="100" data-aos-easing="ease-in-sine">
 						<div class="portfolio-card portfolio-card--split">
 							<button type="button" class="portfolio-card-img portfolio-card-img--portrait portfolio-card-img--button" style="background-image: url('assets/tp-allstar-award.jpg');" data-lightbox-src="assets/tp-allstar-award.jpg" data-lightbox-alt="T&amp;P All Star Award — Abhijay Mitra (AbJ), FY26" aria-label="View full-size award photo">
 								<img alt="T&amp;P All Star Award" class="img-fluid" src="assets/tp-allstar-award.jpg">
@@ -341,7 +342,7 @@
 								<span class="portfolio-card-zoom" aria-hidden="true"><i class="fas fa-expand-arrows-alt"></i></span>
 							</button>
 							<a class="portfolio-card-body portfolio-card-body--link" href="https://engineering.salesforce.com/celebrating-our-technology-and-products-all-stars-4dba20137cb" target="_blank" rel="noopener">
-								<h5>T&amp;P All Star Award '25 <i class="fas fa-external-link-alt fa-xs ml-1" aria-hidden="true"></i></h5>
+								<h5>T&amp;P All Star Award &middot; FY '26 <i class="fas fa-external-link-alt fa-xs ml-1" aria-hidden="true"></i></h5>
 								<p>Salesforce's highest peer-nominated honor for top performers — only 169 chosen across the entire 20,000+ Technology &amp; Product organization, and one of just two MTS-level recipients in the Bangalore office.</p>
 							</a>
 						</div>
@@ -354,7 +355,7 @@
 							</div>
 							<div class="portfolio-card-body">
 								<h5>Codeforces</h5>
-								<p>Competitive programming since 2019 — peaked at Expert (1877), working toward Candidate Master across graph theory, DP, and number theory.</p>
+								<p>Competitive programmer since 2019 — peak rating of 1877 (Expert), working toward Candidate Master.</p>
 							</div>
 						</a>
 					</div>
@@ -366,7 +367,7 @@
 							</div>
 							<div class="portfolio-card-body">
 								<h5>CodeChef</h5>
-								<p>5★ rated coder with a peak rating of 2030 — consistent contest participation and problem solving for over five years.</p>
+								<p>5★ rated with a peak of 2030 — sustained contest participation and problem solving over five years.</p>
 							</div>
 						</a>
 					</div>
@@ -378,7 +379,7 @@
 							</div>
 							<div class="portfolio-card-body">
 								<h5>Quora</h5>
-								<p>Long-form answers on engineering, career, and IITs — sharing experience with a wider technical community.</p>
+								<p>Long-form answers on software engineering, careers, and life at the IITs.</p>
 							</div>
 						</a>
 					</div>
@@ -390,7 +391,7 @@
 							</div>
 							<div class="portfolio-card-body">
 								<h5>StopStalk</h5>
-								<p>Ranked #1 on the IIT Kharagpur StopStalk leaderboard for over two years — aggregated across Codeforces, CodeChef, and more.</p>
+								<p>Held the #1 position on the IIT Kharagpur leaderboard for over two years, aggregated across major CP platforms.</p>
 							</div>
 						</a>
 					</div>
@@ -438,7 +439,7 @@
 					</div>
 				</div>
 
-				<h6 class="text-center text-uppercase mb-4" style="letter-spacing: 0.1em; color: rgba(255,255,255,0.4); font-size: 0.75rem;">Featured Repositories</h6>
+				<h6 class="text-center text-uppercase mt-5 mb-4" style="letter-spacing: 0.22em; color: rgba(255,255,255,0.4); font-size: 0.75rem; font-weight: 500;">Featured Repositories</h6>
 				<div class="row">
 					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
 						<a class="gh-repo-card" href="https://github.com/AbhJ/public-portfolio" target="_blank" rel="noopener">
@@ -520,16 +521,15 @@
 					</div>
 				</div>
 
-				<div class="text-center mt-4" data-aos="zoom-in">
+				<div class="text-center mt-5" data-aos="zoom-in">
 					<div id="gh-heatmap-wrap">
 						<canvas id="gh-heatmap"></canvas>
 						<div id="gh-heatmap-tooltip" class="gh-tooltip"></div>
 					</div>
 				</div>
-				<div class="text-center mb-5" data-aos="fade-up">
-					<p style="margin-bottom: 1rem;"></p>
+				<div class="text-center mt-4 mb-6" data-aos="fade-up">
 					<a class="btn btn-outline-light btn-sm" href="https://github.com/AbhJ" target="_blank" rel="noopener">
-						<i class="fas fa-external-link-alt mr-2"></i> View Profile on GitHub
+						<i class="fab fa-github mr-2"></i> View Profile
 					</a>
 				</div>
 
@@ -584,19 +584,17 @@
 					</div>
 				</div>
 
-				<div class="text-center mt-4 mb-4" data-aos="zoom-in">
+				<div class="text-center mt-5" data-aos="zoom-in">
 					<div id="lc-heatmap-wrap">
 						<canvas id="lc-heatmap"></canvas>
 						<div id="lc-heatmap-tooltip" class="gh-tooltip"></div>
 					</div>
 				</div>
 
-				<div class="text-center mb-5" data-aos="fade-up">
-					<p style="color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-bottom: 1rem;">
-						<span id="lc-streak"></span>
-					</p>
+				<div class="text-center mt-4 mb-6" data-aos="fade-up">
+					<p class="lc-streak-line"><span id="lc-streak"></span></p>
 					<a class="btn btn-outline-light btn-sm" href="https://leetcode.com/u/abhjkgp" target="_blank" rel="noopener">
-						<i class="fas fa-external-link-alt mr-2"></i> View Profile on LeetCode
+						<i class="fas fa-code mr-2"></i> View Profile
 					</a>
 				</div>
 
@@ -640,8 +638,8 @@
 					<div class="divider-custom-line"></div>
 				</div>
 
-				<!-- ─── Lifestyle ─── -->
-				<h5 class="beyond-sub text-center text-uppercase mb-4" data-aos="fade-up"><i class="fas fa-heartbeat mr-2"></i>Lifestyle</h5>
+				<!-- ─── Interests ─── -->
+				<h5 class="beyond-sub text-center text-uppercase mb-4" data-aos="fade-up"><i class="fas fa-compass mr-2"></i>Interests</h5>
 
 				<div class="row justify-content-center mb-5">
 					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
@@ -651,13 +649,8 @@
 								<span class="portfolio-card-zoom" aria-hidden="true"><i class="fas fa-expand-arrows-alt"></i></span>
 							</button>
 							<div class="lifestyle-body">
-								<h5><i class="fas fa-dumbbell mr-2"></i>Gym</h5>
-								<p>Consistent training — pushing limits and building discipline one rep at a time.</p>
-								<div class="lifestyle-tags">
-									<span class="portfolio-card-tag">Strength</span>
-									<span class="portfolio-card-tag">Discipline</span>
-									<span class="portfolio-card-tag">Consistency</span>
-								</div>
+								<h5><i class="fas fa-dumbbell mr-2"></i>Strength Training</h5>
+								<p>A long-standing routine built around consistency, focus, and steady progression.</p>
 							</div>
 						</div>
 					</div>
@@ -669,12 +662,7 @@
 							</button>
 							<div class="lifestyle-body">
 								<h5><i class="fas fa-map-marked-alt mr-2"></i>Travel</h5>
-								<p>Exploring new places, cultures, and perspectives — the best kind of refresh.</p>
-								<div class="lifestyle-tags">
-									<span class="portfolio-card-tag">Adventure</span>
-									<span class="portfolio-card-tag">Culture</span>
-									<span class="portfolio-card-tag">Perspective</span>
-								</div>
+								<p>New places, new conversations, new perspectives — a habit of looking outward.</p>
 							</div>
 						</div>
 					</div>
@@ -685,13 +673,8 @@
 								<span class="portfolio-card-zoom" aria-hidden="true"><i class="fas fa-expand-arrows-alt"></i></span>
 							</button>
 							<div class="lifestyle-body">
-								<h5><i class="fas fa-motorcycle mr-2"></i>Riding</h5>
-								<p>Open roads, clear head — nothing beats the freedom of a good ride.</p>
-								<div class="lifestyle-tags">
-									<span class="portfolio-card-tag">Freedom</span>
-									<span class="portfolio-card-tag">Adrenaline</span>
-									<span class="portfolio-card-tag">Roads</span>
-								</div>
+								<h5><i class="fas fa-motorcycle mr-2"></i>Motorcycling</h5>
+								<p>Long-distance rides as a way to reset — solitude, attention, and open road.</p>
 							</div>
 						</div>
 					</div>
@@ -704,7 +687,7 @@
 					<div class="divider-custom-line"></div>
 				</div>
 
-				<h5 class="beyond-sub text-center text-uppercase mb-4" data-aos="fade-up"><i class="fas fa-book-reader mr-2"></i>What I Read</h5>
+				<h5 class="beyond-sub text-center text-uppercase mb-4" data-aos="fade-up"><i class="fas fa-book-reader mr-2"></i>Reading</h5>
 
 				<div class="row text-center mb-4">
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in">
@@ -739,20 +722,9 @@
 					</div>
 				</div>
 
-				<div class="text-center mt-4 mb-4" data-aos="fade-up">
-					<span class="portfolio-card-tag">Business</span>
-					<span class="portfolio-card-tag">Psychology</span>
-					<span class="portfolio-card-tag">Science</span>
-					<span class="portfolio-card-tag">Self-help</span>
-					<span class="portfolio-card-tag">Thriller</span>
-					<span class="portfolio-card-tag">Crime</span>
-					<span class="portfolio-card-tag">Manga</span>
-					<span class="portfolio-card-tag">Software</span>
-				</div>
-
-				<div class="text-center mb-5" data-aos="fade-up" data-aos-delay="100">
+				<div class="text-center mb-5 mt-4" data-aos="fade-up" data-aos-delay="100">
 					<a class="btn btn-outline-light btn-sm" href="https://www.goodreads.com/user/show/139705685-abhijay-mitra" target="_blank" rel="noopener">
-						<i class="fab fa-goodreads mr-2"></i> Follow on Goodreads
+						<i class="fab fa-goodreads mr-2"></i> View Profile
 					</a>
 				</div>
 
@@ -763,7 +735,7 @@
 					<div class="divider-custom-line"></div>
 				</div>
 
-				<h5 class="beyond-sub text-center text-uppercase mb-4" data-aos="fade-up"><i class="fas fa-music mr-2"></i>What I Listen To</h5>
+				<h5 class="beyond-sub text-center text-uppercase mb-4" data-aos="fade-up"><i class="fas fa-music mr-2"></i>Music</h5>
 				<div class="row justify-content-center mb-4">
 					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
 						<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" class="apple-music-song" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/a-horse-with-no-name/301027593?i=301027918" loading="lazy"></iframe>
@@ -778,9 +750,9 @@
 						<p class="song-label">Against the Wind — Bob Seger</p>
 					</div>
 				</div>
-				<div class="text-center mb-5" data-aos="fade-up" data-aos-delay="100">
+				<div class="text-center mt-4 mb-5" data-aos="fade-up" data-aos-delay="100">
 					<a class="btn btn-outline-light btn-sm" href="https://music.apple.com/profile/abjkgp" target="_blank" rel="noopener">
-						<i class="fab fa-apple mr-2"></i> Follow on Apple Music
+						<i class="fab fa-apple mr-2"></i> View Profile
 					</a>
 				</div>
 
@@ -791,7 +763,7 @@
 					<div class="divider-custom-line"></div>
 				</div>
 
-				<h5 class="beyond-sub text-center text-uppercase mb-4" data-aos="fade-up"><i class="fab fa-youtube mr-2"></i>On YouTube</h5>
+				<h5 class="beyond-sub text-center text-uppercase mb-4" data-aos="fade-up"><i class="fab fa-youtube mr-2"></i>Video</h5>
 				<div class="row justify-content-center">
 					<div class="col-lg-6 col-md-6 mb-4" data-aos="fade-up">
 						<div class="beyond-video-wrap">
@@ -806,7 +778,7 @@
 				</div>
 				<div class="text-center mt-2 mb-3" data-aos="fade-up" data-aos-delay="100">
 					<a class="btn btn-outline-light btn-sm" href="https://www.youtube.com/channel/UC48s7RmRZUXT1fpVULeUAOw" target="_blank" rel="noopener">
-						<i class="fab fa-youtube mr-2"></i> Subscribe on YouTube
+						<i class="fab fa-youtube mr-2"></i> View Channel
 					</a>
 				</div>
 			</div>
@@ -818,9 +790,8 @@
 				<div class="row">
 					<div class="col-lg-4 mb-5 mb-lg-0">
 						<h4 class="text-uppercase mb-4">Email</h4>
-						<p class="lead mb-0">
+						<p class="lead mb-0 footer-emails">
 							<a href="mailto:abhijaymitraofficial@gmail.com">abhijaymitraofficial@gmail.com</a>
-							<br>
 							<a href="mailto:abhijay.mitra@iitkgp.ac.in">abhijay.mitra@iitkgp.ac.in</a>
 						</p>
 					</div>
@@ -857,6 +828,24 @@
 				<i class="fas fa-times"></i>
 			</button>
 			<img class="lightbox-img" id="lightboxImg" alt="">
+		</div>
+
+		<!-- Resume Modal — in-page PDF viewer with download option -->
+		<div class="resume-modal" id="resumeModal" aria-hidden="true" role="dialog" aria-label="Resume viewer">
+			<div class="resume-modal-toolbar">
+				<span class="resume-modal-title">Resume &middot; Abhijay Mitra</span>
+				<div class="resume-modal-actions">
+					<a class="resume-modal-download" href="assets/resume-abhj.pdf" download>
+						<i class="fas fa-download mr-2"></i> Download
+					</a>
+					<button type="button" class="resume-modal-close" aria-label="Close resume">
+						<i class="fas fa-times"></i>
+					</button>
+				</div>
+			</div>
+			<div class="resume-modal-body">
+				<iframe id="resumeFrame" title="Resume" src="about:blank"></iframe>
+			</div>
 		</div>
 
 		<!-- Scroll Progress FAB — toggles between scroll-to-top / scroll-to-bottom -->

@@ -549,15 +549,28 @@ AOS.init({
 		for (var r = 0; r < 7; r++) {
 			if (DAY_LABELS[r]) ctx.fillText(DAY_LABELS[r], 0, MARGIN_TOP + r * (CELL + GAP) + CELL / 2);
 		}
-		var lastMonth = -1;
+		// Label the majority-month of each column; only emit a label when that majority changes.
+		// Skip the first column's label if the grid starts mid-month (avoids crammed edge label).
+		var lastLabeledMonth = -1;
 		for (var c = 0; c < cols; c++) {
 			var ci = c * 7;
 			if (ci >= grid.length) break;
-			var m = grid[ci].date.getMonth();
-			if (m !== lastMonth) {
-				ctx.fillStyle = "rgba(255,255,255,0.3)";
-				ctx.fillText(MONTH_NAMES[m], MARGIN_LEFT + c * (CELL + GAP), 10);
-				lastMonth = m;
+			var counts = {};
+			for (var r = 0; r < 7 && ci + r < grid.length; r++) {
+				var mm = grid[ci + r].date.getMonth();
+				counts[mm] = (counts[mm] || 0) + 1;
+			}
+			var majMonth = -1, majCount = 0;
+			for (var k in counts) {
+				if (counts[k] > majCount) { majCount = counts[k]; majMonth = parseInt(k, 10); }
+			}
+			if (majMonth !== -1 && majMonth !== lastLabeledMonth) {
+				// Skip the very first column if it's only barely that month (common for truncated starts).
+				if (c > 0 || majCount >= 4) {
+					ctx.fillStyle = "rgba(255,255,255,0.3)";
+					ctx.fillText(MONTH_NAMES[majMonth], MARGIN_LEFT + c * (CELL + GAP), 10);
+				}
+				lastLabeledMonth = majMonth;
 			}
 		}
 		for (var i = 0; i < grid.length; i++) {
@@ -826,15 +839,27 @@ AOS.init({
 		}
 
 		// Month labels
-		var lastMonth = -1;
+		// Label the majority-month of each column; only emit a label when that majority changes.
+		// Skip the first column's label if the grid starts mid-month (avoids crammed edge label).
+		var lastLabeledMonth = -1;
 		for (var c = 0; c < cols; c++) {
 			var cellIdx = c * 7;
 			if (cellIdx >= grid.length) break;
-			var m = grid[cellIdx].date.getMonth();
-			if (m !== lastMonth) {
-				ctx.fillStyle = "rgba(255,255,255,0.3)";
-				ctx.fillText(MONTH_NAMES[m], MARGIN_LEFT + c * (CELL + GAP), 10);
-				lastMonth = m;
+			var counts = {};
+			for (var r = 0; r < 7 && cellIdx + r < grid.length; r++) {
+				var mm = grid[cellIdx + r].date.getMonth();
+				counts[mm] = (counts[mm] || 0) + 1;
+			}
+			var majMonth = -1, majCount = 0;
+			for (var k in counts) {
+				if (counts[k] > majCount) { majCount = counts[k]; majMonth = parseInt(k, 10); }
+			}
+			if (majMonth !== -1 && majMonth !== lastLabeledMonth) {
+				if (c > 0 || majCount >= 4) {
+					ctx.fillStyle = "rgba(255,255,255,0.3)";
+					ctx.fillText(MONTH_NAMES[majMonth], MARGIN_LEFT + c * (CELL + GAP), 10);
+				}
+				lastLabeledMonth = majMonth;
 			}
 		}
 
@@ -1170,6 +1195,41 @@ AOS.init({
 	});
 })();
 
+// ===== Resume Modal — in-page PDF viewer with download fallback =====
+(function () {
+	var trigger = document.getElementById("openResume");
+	var modal = document.getElementById("resumeModal");
+	var frame = document.getElementById("resumeFrame");
+	if (!trigger || !modal || !frame) return;
+	var closeBtn = modal.querySelector(".resume-modal-close");
+	var RESUME_URL = "assets/resume-abhj.pdf";
+
+	function open() {
+		// Only set src the first time — keeps the modal snappy on re-open
+		if (!frame.src || frame.src === "about:blank" || frame.src.indexOf(RESUME_URL) === -1) {
+			frame.src = RESUME_URL;
+		}
+		modal.classList.add("open");
+		modal.setAttribute("aria-hidden", "false");
+		document.body.classList.add("resume-open");
+	}
+
+	function close() {
+		modal.classList.remove("open");
+		modal.setAttribute("aria-hidden", "true");
+		document.body.classList.remove("resume-open");
+	}
+
+	trigger.addEventListener("click", open);
+	if (closeBtn) closeBtn.addEventListener("click", close);
+	modal.addEventListener("click", function (e) {
+		if (e.target === modal) close();
+	});
+	document.addEventListener("keydown", function (e) {
+		if (e.key === "Escape" && modal.classList.contains("open")) close();
+	});
+})();
+
 // ===== Lightbox — fullscreen image viewer for zoom buttons =====
 (function () {
 	var lightbox = document.getElementById("lightbox");
@@ -1274,14 +1334,33 @@ AOS.init({
 	update();
 })();
 
-// ===== Rotating Hero Subheading — cycles the three professional one-liners =====
+// ===== Highlight chip deep-link pulse — flashes the target card on arrival =====
+(function () {
+	document.addEventListener("click", function (e) {
+		var link = e.target.closest("a.highlight-chip--link");
+		if (!link) return;
+		var href = link.getAttribute("href");
+		if (!href || href.charAt(0) !== "#") return;
+		var target = document.querySelector(href);
+		if (!target) return;
+		// Let the existing smooth-scroll handler run first; then pulse.
+		setTimeout(function () {
+			target.classList.remove("pulse");
+			void target.offsetWidth; // force reflow so animation restarts
+			target.classList.add("pulse");
+			setTimeout(function () { target.classList.remove("pulse"); }, 1700);
+		}, 650);
+	});
+})();
+
+// ===== Rotating Hero Subheading — cycles the three one-liners =====
 (function () {
 	var el = document.getElementById("hero-rotate");
 	if (!el) return;
 	var lines = [
-		'Member of Technical Staff (SWE 2) @ <strong>Salesforce</strong>',
+		'Full Stack Software Engineer at <strong>Salesforce</strong>',
 		'Building enterprise-grade software at scale',
-		"B.Tech Electrical &amp; CS Minor — IIT Kharagpur '22"
+		"B.Tech EECS &middot; IIT Kharagpur"
 	];
 	var idx = 0;
 	setInterval(function () {
@@ -1293,3 +1372,4 @@ AOS.init({
 		}, 400);
 	}, 3500);
 })();
+
