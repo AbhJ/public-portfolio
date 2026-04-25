@@ -61,7 +61,10 @@ function fetchWithTimeout(url, opts, ms) {
 			}
 			if (el) {
 				e.preventDefault();
-				var top = el.getBoundingClientRect().top + window.pageYOffset - 71;
+				// Land exactly at the section's top boundary, just below the fixed navbar.
+				var nav = document.getElementById("mainNav");
+				var navH = nav ? nav.getBoundingClientRect().height : 0;
+				var top = el.getBoundingClientRect().top + window.pageYOffset - navH;
 				window.scrollTo({ top: top, behavior: "smooth" });
 			}
 		}
@@ -549,29 +552,19 @@ AOS.init({
 		for (var r = 0; r < 7; r++) {
 			if (DAY_LABELS[r]) ctx.fillText(DAY_LABELS[r], 0, MARGIN_TOP + r * (CELL + GAP) + CELL / 2);
 		}
-		// Label the majority-month of each column; only emit a label when that majority changes.
-		// Skip the first column's label if the grid starts mid-month (avoids crammed edge label).
+		// Label a month only at the column whose Sunday falls within the first 7 days
+		// of that month. This matches GitHub's algorithm and guarantees ~4-cell spacing.
 		var lastLabeledMonth = -1;
 		for (var c = 0; c < cols; c++) {
 			var ci = c * 7;
 			if (ci >= grid.length) break;
-			var counts = {};
-			for (var r = 0; r < 7 && ci + r < grid.length; r++) {
-				var mm = grid[ci + r].date.getMonth();
-				counts[mm] = (counts[mm] || 0) + 1;
-			}
-			var majMonth = -1, majCount = 0;
-			for (var k in counts) {
-				if (counts[k] > majCount) { majCount = counts[k]; majMonth = parseInt(k, 10); }
-			}
-			if (majMonth !== -1 && majMonth !== lastLabeledMonth) {
-				// Skip the very first column if it's only barely that month (common for truncated starts).
-				if (c > 0 || majCount >= 4) {
-					ctx.fillStyle = "rgba(255,255,255,0.3)";
-					ctx.fillText(MONTH_NAMES[majMonth], MARGIN_LEFT + c * (CELL + GAP), 10);
-				}
-				lastLabeledMonth = majMonth;
-			}
+			var colDate = grid[ci].date;
+			if (colDate.getDate() > 7) continue;
+			var m = colDate.getMonth();
+			if (m === lastLabeledMonth) continue;
+			ctx.fillStyle = "rgba(255,255,255,0.3)";
+			ctx.fillText(MONTH_NAMES[m], MARGIN_LEFT + c * (CELL + GAP), 10);
+			lastLabeledMonth = m;
 		}
 		for (var i = 0; i < grid.length; i++) {
 			var col = Math.floor(i / 7), row = i % 7;
@@ -839,28 +832,19 @@ AOS.init({
 		}
 
 		// Month labels
-		// Label the majority-month of each column; only emit a label when that majority changes.
-		// Skip the first column's label if the grid starts mid-month (avoids crammed edge label).
+		// Label a month only at the column whose Sunday falls within the first 7 days
+		// of that month. This matches GitHub's algorithm and guarantees ~4-cell spacing.
 		var lastLabeledMonth = -1;
 		for (var c = 0; c < cols; c++) {
 			var cellIdx = c * 7;
 			if (cellIdx >= grid.length) break;
-			var counts = {};
-			for (var r = 0; r < 7 && cellIdx + r < grid.length; r++) {
-				var mm = grid[cellIdx + r].date.getMonth();
-				counts[mm] = (counts[mm] || 0) + 1;
-			}
-			var majMonth = -1, majCount = 0;
-			for (var k in counts) {
-				if (counts[k] > majCount) { majCount = counts[k]; majMonth = parseInt(k, 10); }
-			}
-			if (majMonth !== -1 && majMonth !== lastLabeledMonth) {
-				if (c > 0 || majCount >= 4) {
-					ctx.fillStyle = "rgba(255,255,255,0.3)";
-					ctx.fillText(MONTH_NAMES[majMonth], MARGIN_LEFT + c * (CELL + GAP), 10);
-				}
-				lastLabeledMonth = majMonth;
-			}
+			var colDate = grid[cellIdx].date;
+			if (colDate.getDate() > 7) continue;
+			var m = colDate.getMonth();
+			if (m === lastLabeledMonth) continue;
+			ctx.fillStyle = "rgba(255,255,255,0.3)";
+			ctx.fillText(MONTH_NAMES[m], MARGIN_LEFT + c * (CELL + GAP), 10);
+			lastLabeledMonth = m;
 		}
 
 		// Cells

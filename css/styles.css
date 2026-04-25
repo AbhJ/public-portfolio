@@ -292,7 +292,6 @@ h1, h2, h3, h4, h5, h6,
 	opacity: 0.3;
 }
 
-
 #beyond {
 	background: linear-gradient(155deg, #0c0a1e 0%, #12102a 30%, #0e0c24 55%, #0a0818 100%);
 }
@@ -695,7 +694,6 @@ a.text-secondary:focus {
 	);
 	overflow: hidden;
 	position: relative;
-	padding: 6rem 0;
 }
 
 /* Floating aurora orbs behind experience */
@@ -915,12 +913,6 @@ a.text-secondary:focus {
 	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 	white-space: nowrap;
 	transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-a.highlight-chip,
-a.highlight-chip:hover,
-a.highlight-chip:focus {
-    text-decoration: none;
 }
 
 .highlight-chip:hover {
@@ -1157,14 +1149,16 @@ a.portfolio-card:focus {
 	color: inherit;
 }
 
-.portfolio-card-body--link {
+.portfolio-card-body--link,
+.portfolio-card-body--link:hover,
+.portfolio-card-body--link:focus,
+.portfolio-card-body--link:active {
 	color: inherit;
 	text-decoration: none;
 	transition: background 0.3s ease;
 }
 
 .portfolio-card-body--link:hover {
-	color: inherit;
 	background: rgba(66, 170, 245, 0.06);
 }
 
