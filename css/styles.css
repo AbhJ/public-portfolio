@@ -176,7 +176,6 @@ h1, h2, h3, h4, h5, h6,
 #experience,
 #education,
 #skills,
-#blog,
 #portfolio,
 #codeStats,
 #beyond {
@@ -189,7 +188,6 @@ h1, h2, h3, h4, h5, h6,
 #skills,
 #portfolio,
 #codeStats,
-#blog,
 #beyond {
 	position: relative;
 	overflow: hidden;
@@ -199,7 +197,6 @@ h1, h2, h3, h4, h5, h6,
 #skills > .container,
 #portfolio > .container,
 #codeStats > .container,
-#blog > .container,
 #beyond > .container {
 	position: relative;
 	z-index: 2;
@@ -213,7 +210,6 @@ h1, h2, h3, h4, h5, h6,
 #skills::before,
 #portfolio::before, #portfolio::after,
 #codeStats::before, #codeStats::after,
-#blog::before,
 #beyond::before, #beyond::after {
 	content: '';
 	position: absolute;
@@ -288,78 +284,6 @@ h1, h2, h3, h4, h5, h6,
 	opacity: 0.3;
 }
 
-
-#blog {
-	background: linear-gradient(135deg, #0b1120 0%, #0e1630 35%, #0a1228 65%, #08101c 100%);
-}
-
-.blog-preview-card {
-	border-radius: 12px;
-	overflow: hidden;
-	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-	border: 1px solid rgba(255, 255, 255, 0.08);
-	background: #1a1a2e;
-	transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-}
-
-.blog-browser-bar {
-	display: flex;
-	align-items: center;
-	gap: 6px;
-	padding: 10px 14px;
-	background: rgba(255, 255, 255, 0.05);
-	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.browser-dot {
-	width: 10px;
-	height: 10px;
-	border-radius: 50%;
-	background: rgba(255, 255, 255, 0.15);
-}
-
-.browser-dot:nth-child(1) { background: #ff5f57; }
-.browser-dot:nth-child(2) { background: #febc2e; }
-.browser-dot:nth-child(3) { background: #28c840; }
-
-.browser-url {
-	font-size: 0.65rem;
-	color: rgba(255, 255, 255, 0.3);
-	margin-left: 8px;
-	letter-spacing: 0.02em;
-	font-family: -apple-system, BlinkMacSystemFont, 'SF Mono', monospace;
-}
-
-.blog-preview-img {
-	max-height: 280px;
-	overflow: hidden;
-}
-
-.blog-preview-img img {
-	width: 100%;
-	display: block;
-	object-fit: cover;
-	object-position: top;
-}
-
-.blog-preview-link:hover .blog-preview-card {
-	transform: translateY(-6px);
-	box-shadow: 0 16px 40px rgba(66, 170, 245, 0.15);
-}
-
-.blog-desc {
-	font-size: 1.05rem;
-	color: rgba(255, 255, 255, 0.6);
-	line-height: 1.7;
-	margin-bottom: 1.5rem;
-}
-#blog::before {
-	width: 400px; height: 400px;
-	background: radial-gradient(circle, rgba(233, 69, 96, 0.25), rgba(255, 120, 80, 0.1), transparent 70%);
-	top: 10%; right: -6%;
-	animation: orb-float-1 17s ease-in-out infinite;
-	opacity: 0.3;
-}
 
 #beyond {
 	background: linear-gradient(155deg, #0c0a1e 0%, #12102a 30%, #0e0c24 55%, #0a0818 100%);
@@ -509,21 +433,76 @@ a.text-secondary:focus {
 	box-shadow: 0 4px 15px rgba(66, 170, 245, 0.4);
 }
 
-/* ===== Scroll to Top ===== */
+/* ===== Scroll Progress FAB ===== */
 
-.scroll-to-top {
+.scroll-fab {
+	position: fixed;
+	right: 1.2rem;
+	bottom: 1.2rem;
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: rgba(10, 10, 35, 0.6);
+	backdrop-filter: saturate(180%) blur(12px);
+	-webkit-backdrop-filter: saturate(180%) blur(12px);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+	color: #fff;
+	padding: 0;
+	cursor: pointer;
 	z-index: 1042;
-	right: 1rem;
-	bottom: 1rem;
-	display: none;
+	opacity: 0;
+	transform: translateY(12px) scale(0.9);
+	pointer-events: none;
+	transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
 }
 
-.scroll-to-top a {
-	width: 3.5rem;
-	height: 3.5rem;
-	background-color: rgba(10, 10, 35, 0.7);
-	line-height: 3.1rem;
-	border-radius: 50%;
+.scroll-fab.visible {
+	opacity: 1;
+	transform: translateY(0) scale(1);
+	pointer-events: auto;
+}
+
+.scroll-fab:hover {
+	background: rgba(10, 10, 35, 0.85);
+	border-color: rgba(66, 170, 245, 0.5);
+}
+
+.scroll-fab-ring {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	transform: rotate(-90deg);
+	pointer-events: none;
+}
+
+.scroll-fab-track {
+	fill: none;
+	stroke: rgba(255, 255, 255, 0.08);
+	stroke-width: 2.5;
+}
+
+.scroll-fab-progress {
+	fill: none;
+	stroke: var(--primary);
+	stroke-width: 2.5;
+	stroke-linecap: round;
+	stroke-dasharray: 131.95; /* 2 * π * 21 */
+	stroke-dashoffset: 131.95;
+	transition: stroke-dashoffset 0.15s linear;
+}
+
+.scroll-fab-icon {
+	position: relative;
+	z-index: 1;
+	font-size: 0.9rem;
+	transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+	display: inline-block;
+}
+
+.scroll-fab.flip .scroll-fab-icon {
+	transform: rotate(180deg);
 }
 
 /* ===== Navbar ===== */
@@ -639,14 +618,23 @@ a.text-secondary:focus {
 }
 
 .masthead .masthead-heading {
-	font-size: 2.75rem;
-	line-height: 2.75rem;
-	letter-spacing: 0.05em;
+	font-size: 2.1rem;
+	line-height: 2.3rem;
+	letter-spacing: 0.04em;
 }
 
 .masthead .masthead-subheading {
 	font-size: 1.15rem;
 	opacity: 0.9;
+}
+
+.hero-rotating {
+	min-height: 1.6em;
+	transition: opacity 0.4s ease;
+}
+
+.hero-rotating.fade-out {
+	opacity: 0;
 }
 
 .masthead .masthead-avatar {
@@ -675,8 +663,8 @@ a.text-secondary:focus {
 		height: min(350px, 30vh);
 	}
 	.masthead .masthead-heading {
-		font-size: 4rem;
-		line-height: 3.5rem;
+		font-size: 3rem;
+		line-height: 3rem;
 	}
 	.masthead .masthead-subheading {
 		font-size: 1.4rem;
@@ -1051,6 +1039,285 @@ a.portfolio-card:focus {
 	transform: scale(1.08);
 }
 
+/* Portrait-oriented images: use blurred self as backdrop, sharp trophy centered on top */
+.portfolio-card-img--portrait {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	position: relative;
+}
+
+.portfolio-card-img--portrait::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	backdrop-filter: blur(20px) saturate(140%);
+	-webkit-backdrop-filter: blur(20px) saturate(140%);
+	background: rgba(10, 10, 35, 0.45);
+}
+
+.portfolio-card-img--portrait img {
+	position: relative;
+	z-index: 1;
+	max-height: 100%;
+	width: auto;
+	object-fit: contain;
+	filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5));
+}
+
+/* Split-action card — image opens lightbox, body links elsewhere */
+.portfolio-card--split {
+	display: flex;
+	flex-direction: column;
+	cursor: default;
+}
+
+.portfolio-card-img--button {
+	border: none;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	cursor: zoom-in;
+	font: inherit;
+	color: inherit;
+}
+
+.portfolio-card-body--link {
+	color: inherit;
+	text-decoration: none;
+	transition: background 0.3s ease;
+}
+
+.portfolio-card-body--link:hover {
+	color: inherit;
+	background: rgba(66, 170, 245, 0.06);
+}
+
+.portfolio-card-body--link:hover h5 {
+	color: var(--primary);
+}
+
+.portfolio-card-body--link h5 {
+	transition: color 0.3s ease;
+}
+
+.portfolio-card-body--link h5 .fa-external-link-alt {
+	opacity: 0;
+	transform: translateX(-4px);
+	transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.portfolio-card-body--link:hover h5 .fa-external-link-alt {
+	opacity: 1;
+	transform: translateX(0);
+}
+
+/* Split card shouldn't lift on whole-card hover — hover states live on each half */
+.portfolio-card--split:hover {
+	transform: none;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+	border-color: rgba(255, 255, 255, 0.08);
+}
+
+.portfolio-card-img--button:hover .portfolio-card-overlay {
+	opacity: 1;
+}
+
+.portfolio-card-img--button:hover img {
+	transform: scale(1.06);
+}
+
+/* Zoom button — sits on portrait images, opens lightbox */
+.portfolio-card-zoom {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 3;
+	width: 34px;
+	height: 34px;
+	border-radius: 50%;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	background: rgba(10, 10, 35, 0.55);
+	backdrop-filter: blur(10px) saturate(160%);
+	-webkit-backdrop-filter: blur(10px) saturate(160%);
+	color: #fff;
+	font-size: 0.8rem;
+	cursor: pointer;
+	opacity: 0;
+	transform: scale(0.85);
+	transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.portfolio-card:hover .portfolio-card-zoom,
+.portfolio-card-img--button:hover .portfolio-card-zoom,
+.portfolio-card-img--button:focus-visible .portfolio-card-zoom,
+.lifestyle-card:hover .portfolio-card-zoom,
+.lifestyle-img:focus-visible .portfolio-card-zoom {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.portfolio-card-img--button:hover .portfolio-card-zoom,
+.lifestyle-img:hover .portfolio-card-zoom {
+	background: rgba(66, 170, 245, 0.35);
+	border-color: rgba(66, 170, 245, 0.7);
+}
+
+/* Always-visible on touch devices (no hover) */
+@media (hover: none) {
+	.portfolio-card-zoom {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+/* Generic zoomable <img> — clickable hero/thumbnail images */
+.zoomable {
+	cursor: zoom-in;
+	transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.zoomable:hover {
+	transform: scale(1.02);
+}
+
+/* Lifestyle card image made into a button */
+.zoomable-btn {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	background: none;
+	cursor: zoom-in;
+	width: 100%;
+	font: inherit;
+	color: inherit;
+	display: block;
+}
+
+/* WakaTime cards — zoom affordance */
+.zoomable-figure {
+	position: relative;
+	cursor: zoom-in;
+}
+
+.wakatime-zoom {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 2;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	background: rgba(10, 10, 35, 0.6);
+	backdrop-filter: blur(10px) saturate(160%);
+	-webkit-backdrop-filter: blur(10px) saturate(160%);
+	color: rgba(255, 255, 255, 0.8);
+	font-size: 0.7rem;
+	opacity: 0;
+	transform: scale(0.85);
+	transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	pointer-events: none;
+}
+
+.zoomable-figure:hover .wakatime-zoom {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.zoomable-figure:hover {
+	background: rgba(66, 170, 245, 0.06);
+}
+
+@media (hover: none) {
+	.wakatime-zoom {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+/* ===== Lightbox — fullscreen image viewer ===== */
+.lightbox {
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	background: rgba(5, 5, 15, 0.92);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.lightbox.open {
+	opacity: 1;
+	visibility: visible;
+}
+
+.lightbox-img {
+	max-width: 92vw;
+	max-height: 88vh;
+	width: auto;
+	height: auto;
+	border-radius: 10px;
+	box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+	transform: scale(0.95);
+	transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lightbox.open .lightbox-img {
+	transform: scale(1);
+}
+
+.lightbox-close {
+	position: absolute;
+	top: 1.2rem;
+	right: 1.2rem;
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	background: rgba(10, 10, 35, 0.6);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	color: #fff;
+	font-size: 1.1rem;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.lightbox-close:hover {
+	background: rgba(233, 69, 96, 0.45);
+	border-color: rgba(233, 69, 96, 0.7);
+	transform: rotate(90deg);
+}
+
+body.lightbox-open {
+	overflow: hidden;
+}
+
+/* WakaTime variant — match the dark-themed filter used on the small cards.
+   CSS filter also inverts the box-shadow (dark → white halo), so strip it here. */
+.lightbox-img.lightbox-img--wakatime {
+	filter: invert(0.88) hue-rotate(180deg);
+	box-shadow: none;
+}
+
 .portfolio-card-overlay {
 	position: absolute;
 	top: 0;
@@ -1107,7 +1374,7 @@ a.portfolio-card:focus {
 }
 
 
-/* ===== Resume — inline download button at end of Skills ===== */
+/* ===== Resume — download button in hero ===== */
 
 .btn-resume {
 	padding: 0.75rem 2rem;
@@ -1683,6 +1950,13 @@ a.gh-repo-card:focus {
 	aspect-ratio: 3 / 4;
 	overflow: hidden;
 	background: rgba(255, 255, 255, 0.02);
+	border: 0;
+	padding: 0;
+	width: 100%;
+	display: block;
+	cursor: zoom-in;
+	font: inherit;
+	color: inherit;
 }
 
 .lifestyle-img img {

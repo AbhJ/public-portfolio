@@ -1,7 +1,9 @@
 // ===== Page Readiness — preloader control =====
 // Spinner stays until EVERY data source resolves or rejects.
 // Each fetch has its own AbortController timeout so nothing hangs.
-var _dataReady = { pending: 0, revealed: false };
+// Sentinel starts at 1 and is released by window.load — prevents a cache hit
+// from zeroing the counter before later IIFEs register their sources.
+var _dataReady = { pending: 1, revealed: false };
 
 function dataSourceStarted() { _dataReady.pending++; }
 function dataSourceDone() {
@@ -20,6 +22,10 @@ function revealPage() {
 		setTimeout(function () { AOS.refresh(); }, 200);
 	}
 }
+
+// Release the sentinel once the page's base assets are loaded.
+// By then all top-level IIFEs have registered their data sources.
+window.addEventListener("load", function () { dataSourceDone(); });
 
 // Safety net: if all per-fetch timeouts somehow fail, force reveal at 10s
 setTimeout(revealPage, 10000);
@@ -61,15 +67,6 @@ function fetchWithTimeout(url, opts, ms) {
 		}
 	});
 
-	// Scroll-to-top button visibility
-	$(document).scroll(function () {
-		if ($(this).scrollTop() > 100) {
-			$(".scroll-to-top").fadeIn();
-		} else {
-			$(".scroll-to-top").fadeOut();
-		}
-	});
-
 	// Close responsive menu on scroll-trigger click
 	$(".js-scroll-trigger").click(function () {
 		$(".navbar-collapse").collapse("hide");
@@ -91,12 +88,19 @@ function fetchWithTimeout(url, opts, ms) {
 
 })(jQuery);
 
-// Copyright date
-document.getElementById("year").textContent = new Date().getFullYear();
-document.getElementById("month").textContent = [
-	"January", "February", "March", "April", "May", "June",
-	"July", "August", "September", "October", "November", "December"
-][new Date().getMonth()];
+// Copyright — month and year
+(function () {
+	var now = new Date();
+	var yearEl = document.getElementById("year");
+	var monthEl = document.getElementById("month");
+	if (yearEl) yearEl.textContent = now.getFullYear();
+	if (monthEl) {
+		monthEl.textContent = [
+			"January", "February", "March", "April", "May", "June",
+			"July", "August", "September", "October", "November", "December"
+		][now.getMonth()];
+	}
+})();
 
 // ===== AOS — Apple-style bidirectional scroll animations =====
 AOS.init({
@@ -1164,4 +1168,128 @@ AOS.init({
 		};
 		img.src = coverUrl;
 	});
+})();
+
+// ===== Lightbox — fullscreen image viewer for zoom buttons =====
+(function () {
+	var lightbox = document.getElementById("lightbox");
+	var lightboxImg = document.getElementById("lightboxImg");
+	if (!lightbox || !lightboxImg) return;
+	var closeBtn = lightbox.querySelector(".lightbox-close");
+
+	var LIGHTBOX_BASE_CLASS = "lightbox-img";
+	var _activeClass = "";
+
+	function open(src, alt, extraClass) {
+		lightboxImg.src = src;
+		lightboxImg.alt = alt || "";
+		_activeClass = extraClass || "";
+		lightboxImg.className = LIGHTBOX_BASE_CLASS + (_activeClass ? " " + _activeClass : "");
+		lightbox.classList.add("open");
+		lightbox.setAttribute("aria-hidden", "false");
+		document.body.classList.add("lightbox-open");
+	}
+
+	function close() {
+		lightbox.classList.remove("open");
+		lightbox.setAttribute("aria-hidden", "true");
+		document.body.classList.remove("lightbox-open");
+		// Clear src + variant class after transition so the big image drops from memory
+		setTimeout(function () {
+			if (!lightbox.classList.contains("open")) {
+				lightboxImg.src = "";
+				lightboxImg.className = LIGHTBOX_BASE_CLASS;
+				_activeClass = "";
+			}
+		}, 350);
+	}
+
+	// Any element with data-lightbox-src opens the lightbox
+	document.addEventListener("click", function (e) {
+		var trigger = e.target.closest("[data-lightbox-src]");
+		if (trigger) {
+			e.preventDefault();
+			e.stopPropagation();
+			open(
+				trigger.getAttribute("data-lightbox-src"),
+				trigger.getAttribute("data-lightbox-alt"),
+				trigger.getAttribute("data-lightbox-class")
+			);
+		}
+	});
+
+	// Close on backdrop click, X button, or Escape
+	lightbox.addEventListener("click", function (e) {
+		if (e.target === lightbox) close();
+	});
+	if (closeBtn) closeBtn.addEventListener("click", close);
+	document.addEventListener("keydown", function (e) {
+		if (e.key === "Escape" && lightbox.classList.contains("open")) close();
+	});
+})();
+
+// ===== Scroll Progress FAB — ring fills as you scroll; flips direction past halfway =====
+(function () {
+	var fab = document.getElementById("scrollFab");
+	if (!fab) return;
+	var ring = fab.querySelector(".scroll-fab-progress");
+	var CIRC = 2 * Math.PI * 21; // matches r="21" in SVG
+	var ticking = false;
+
+	function update() {
+		ticking = false;
+		var scrollY = window.pageYOffset;
+		var max = document.documentElement.scrollHeight - window.innerHeight;
+		var pct = max > 0 ? Math.min(scrollY / max, 1) : 0;
+
+		// Show after 120px of scroll
+		if (scrollY > 120) fab.classList.add("visible");
+		else fab.classList.remove("visible");
+
+		// Flip to "down" arrow when in the top half
+		if (pct < 0.5) fab.classList.add("flip");
+		else fab.classList.remove("flip");
+
+		// Fill ring
+		ring.style.strokeDashoffset = CIRC * (1 - pct);
+	}
+
+	function onScroll() {
+		if (!ticking) {
+			requestAnimationFrame(update);
+			ticking = true;
+		}
+	}
+
+	fab.addEventListener("click", function () {
+		var scrollY = window.pageYOffset;
+		var max = document.documentElement.scrollHeight - window.innerHeight;
+		var pct = max > 0 ? scrollY / max : 0;
+		var target = pct < 0.5 ? max : 0;
+		window.scrollTo({ top: target, behavior: "smooth" });
+	});
+
+	window.addEventListener("scroll", onScroll, { passive: true });
+	window.addEventListener("resize", onScroll);
+	update();
+})();
+
+// ===== Rotating Hero Subheading — cycles the three professional one-liners =====
+(function () {
+	var el = document.getElementById("hero-rotate");
+	if (!el) return;
+	var lines = [
+		'Member of Technical Staff (SWE 2) @ <strong>Salesforce</strong>',
+		'Building enterprise-grade software at scale',
+		"B.Tech Electrical &amp; CS Minor — IIT Kharagpur '22"
+	];
+	var idx = 0;
+	setInterval(function () {
+		el.classList.add("fade-out");
+		setTimeout(function () {
+			idx = (idx + 1) % lines.length;
+			el.innerHTML = lines[idx];
+			el.classList.remove("fade-out");
+		}, 400);
+	}, 3500);
 })();

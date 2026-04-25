@@ -14,7 +14,7 @@
 	<meta property="og:image" content="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/assets/abj_new_dp.jpg">
 
 	<!-- Favicon -->
-	<link href="https://toppng.com/uploads/preview/letter-a-png-11552941435fskk9pyn7o.png" rel="icon" type="image/x-icon">
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230a0a23' width='100' height='100' rx='18'/><text x='50' y='73' font-size='62' font-family='Montserrat,sans-serif' font-weight='700' fill='%2342aaf5' text-anchor='middle'>A</text></svg>">
 
 	<!-- Font Awesome -->
 	<script crossorigin="anonymous" src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
@@ -58,7 +58,6 @@
 					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-1 rounded js-scroll-trigger" href="#skills">Skills</a></li>
 					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-1 rounded js-scroll-trigger" href="#portfolio">Highlights</a></li>
 					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-1 rounded js-scroll-trigger" href="#codeStats">Code Stats</a></li>
-					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-1 rounded js-scroll-trigger" href="#blog">Blog</a></li>
 					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-1 rounded js-scroll-trigger" href="#beyond">Beyond Code</a></li>
 				</ul>
 			</div>
@@ -69,17 +68,15 @@
 		<!-- Hero / Masthead -->
 		<section class="masthead text-white text-center">
 			<div class="container d-flex align-items-center flex-column masthead-content">
-				<img alt="Abhijay Mitra" class="masthead-avatar mb-5" src="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/assets/abj_new_dp.jpg">
+				<img alt="Abhijay Mitra" class="masthead-avatar mb-5 zoomable" src="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/assets/abj_new_dp.jpg" data-lightbox-src="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/assets/abj_new_dp.jpg" data-lightbox-alt="Abhijay Mitra (AbJ)">
 				<h1 class="masthead-heading text-uppercase mb-0">Abhijay Mitra (AbJ)</h1>
 				<div class="divider-custom divider-light">
 					<div class="divider-custom-line"></div>
 					<div class="divider-custom-icon"><i class="fas fa-rocket"></i></div>
 					<div class="divider-custom-line"></div>
 				</div>
-				<p class="masthead-subheading font-weight-light mb-2">Member of Technical Staff (SWE 2) @ <strong>Salesforce</strong></p>
-				<p class="masthead-subheading font-weight-light mb-2">Building enterprise-grade software at scale</p>
-				<p class="masthead-subheading font-weight-light mb-0">B.Tech Electrical &amp; CS Minor — IIT Kharagpur '22</p>
-				<div class="mt-3">
+				<p class="masthead-subheading font-weight-light mb-0 hero-rotating" id="hero-rotate">Member of Technical Staff (SWE 2) @ <strong>Salesforce</strong></p>
+				<div class="mt-4">
 					<a class="btn btn-outline-light btn-social mx-1" href="https://github.com/AbhJ"><i class="fab fa-fw fa-github"></i></a>
 					<a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/abhj"><i class="fab fa-fw fa-linkedin-in"></i></a>
 					<a class="btn btn-outline-light btn-social mx-1" href="https://x.com/abjkgp"><span class="fa-fw" style="font-weight:900;font-size:1em;">𝕏</span></a>
@@ -116,10 +113,10 @@
 							</div>
 							<div class="timeline-body">
 								<ul>
-									<li>Built OOTB <strong>Gen-AI Agentforce features</strong> on top of business entities owned by Financial Services Cloud.</li>
-									<li>Shipped <strong>Flexible Hierarchy</strong> — a multi-object directed-graph data model for corporate ownership, KYC/AML and fund structures. Built the <strong>Graph Viewer</strong> (visual node-and-edge UI with paginated child loading, inline CRUD), <strong>Grid Viewer</strong> (expandable tree-table, batch-fetching up to 2000 nodes via GraphQL), and an <strong>async framework</strong> using message queues for hierarchy validations at scale.</li>
-									<li>Designed &amp; delivered <strong>2 end-to-end tested business entities</strong> (UDD) ensuring company-wide seamless integration.</li>
-									<li>Won the <strong>Industries Gen-AI Hackathon (APAC, 2024)</strong> and received the <strong>T&amp;P All Star Award (2025)</strong>.</li>
+									<li>Built OOTB <strong>Gen-AI Agentforce features</strong> on top of business entities owned by Financial Services Cloud — bringing conversational AI into core CRM workflows.</li>
+									<li>Shipped <strong>Flexible Hierarchy</strong>, a multi-object directed-graph data model for corporate ownership, KYC/AML, and fund structures. Built the <strong>Graph Viewer</strong> (interactive node-and-edge UI with paginated child loading and inline CRUD), the <strong>Grid Viewer</strong> (expandable tree-table batch-fetching up to 2000 nodes via GraphQL), and an <strong>Async Validation Framework</strong> using message queues to validate hierarchies at scale.</li>
+									<li>Designed and delivered <strong>2 end-to-end tested business entities</strong> (UDD) ensuring seamless company-wide integration across dependent clouds.</li>
+									<li>Won the <strong>Industries Gen-AI Hackathon (APAC, 2024)</strong>.</li>
 								</ul>
 								<p class="mb-0"><small class="text-muted">Java &middot; JavaScript &middot; LWC &middot; GraphQL &middot; Spring &middot; Bazel &middot; Postgres &middot; SOQL</small></p>
 							</div>
@@ -141,10 +138,9 @@
 							</div>
 							<div class="timeline-body">
 								<ul>
-									<li>Built reusable customer-facing features on business entities owned by <strong>Financial Services Cloud</strong>.</li>
-									<li>Integrated <strong>Enterprise Product Catalog</strong> with <strong>Service Process Studio (SPS)</strong> — exposed Process Definitions as Products with Access Control via junction entities, <strong>reducing Dispute queries by 45%</strong>.</li>
-									<li>Pioneered <strong>validation rules</strong> within SPS — dependency checks, logical sequencing, integrity constraints — <strong>reducing customer gacks by 80%</strong>.</li>
-									<li>Owned bug investigations, test failures and PR reviews across the team under tight release timelines.</li>
+									<li>Integrated <strong>Enterprise Product Catalog</strong> with <strong>Service Process Studio</strong>, enabling product-driven dispute flows and <strong>reducing Dispute queries by 45%</strong>.</li>
+									<li>Pioneered <strong>validation rules</strong> in SPS — dependency checks and integrity constraints across the process definition — <strong>cutting customer gacks by 80%</strong>.</li>
+									<li>Owned bug investigations, flaky test triage, and PR reviews across the team, keeping the release cadence unblocked.</li>
 								</ul>
 								<p class="mb-0"><small class="text-muted">Java &middot; JavaScript &middot; Spring &middot; Maven &middot; Bazel &middot; Postgres &middot; MongoDB &middot; SOQL</small></p>
 							</div>
@@ -166,11 +162,10 @@
 							</div>
 							<div class="timeline-body">
 								<ul>
-									<li>Built a prototype app for healthcare registrars to <strong>recognize, analyze and store data automatically</strong> from medical voice conversations.</li>
-									<li>Integrated <strong>Google Speech-to-Text</strong> and <strong>Einstein NER APIs</strong> to eliminate manual intervention in patient registration.</li>
-									<li><strong>Won the InTurn Hackathon</strong> organized by Salesforce for its interns.</li>
+									<li>Built a voice-to-record prototype using <strong>Google Speech-to-Text</strong> and <strong>Einstein NER</strong> — parsing clinical conversations into structured patient records, eliminating manual data entry for Health Cloud users.</li>
+									<li><strong>Won the InTurn Hackathon</strong> organized by Salesforce for its intern cohort.</li>
 								</ul>
-								<p class="mb-0"><small class="text-muted">Java &middot; JavaScript &middot; Spring Boot</small></p>
+								<p class="mb-0"><small class="text-muted">Java &middot; JavaScript &middot; Spring Boot &middot; Google Cloud Platform &middot; Named Entity Recognition</small></p>
 							</div>
 						</div>
 						<div class="timeline-highlight" data-aos="fade-left" data-aos-delay="200">
@@ -190,10 +185,10 @@
 							</div>
 							<div class="timeline-body">
 								<ul>
-									<li>Aimed to remove rain and fog from HD video streams in real time.</li>
-									<li>Developed <strong>license encryption</strong> using RSA algorithm built from scratch.</li>
-									<li>Implemented histogram equalization and stretching in <strong>CUDA C</strong> for multi-fold speed gains.</li>
+									<li>Built a real-time video de-hazing pipeline — removing rain and fog from HD footage using <strong>CUDA C</strong> GPU-accelerated histogram processing for 1080p streams.</li>
+									<li>Implemented <strong>RSA license encryption</strong> from scratch for product distribution.</li>
 								</ul>
+								<p class="mb-0"><small class="text-muted">CUDA &middot; C++ &middot; Compilers &middot; Image Processing &middot; Internet of Things</small></p>
 							</div>
 						</div>
 						<div class="timeline-highlight" data-aos="fade-right" data-aos-delay="200">
@@ -322,26 +317,36 @@
 				<h2 class="page-section-heading masthead-heading text-center text-uppercase text-white mb-0" data-aos="zoom-in-down">Highlights</h2>
 				<div class="divider-custom divider-light">
 					<div class="divider-custom-line"></div>
-					<div class="divider-custom-icon"><i class="fas fa-globe"></i></div>
+					<div class="divider-custom-icon"><i class="fas fa-rocket"></i></div>
 					<div class="divider-custom-line"></div>
 				</div>
 				<div class="row">
 					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-easing="ease-in-sine">
-						<a class="portfolio-card" href="https://www.salesforce.com/" target="_blank" rel="noopener">
+						<a class="portfolio-card" href="https://abhj.github.io/abj-blogs" target="_blank" rel="noopener">
 							<div class="portfolio-card-img">
-								<img alt="Salesforce" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/salesforce.jpg">
+								<img alt="ABJ Blogs" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj-blog.png">
 								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
 							</div>
 							<div class="portfolio-card-body">
-								<h5>Salesforce</h5>
-								<p>Contributed to Gen-AI Agentforce features, Flexible Hierarchy and enterprise business entities on Financial Services Cloud. 4 years of shipping production software at scale.</p>
-								<span class="portfolio-card-tag">Enterprise</span>
-								<span class="portfolio-card-tag">Gen-AI</span>
-								<span class="portfolio-card-tag">Java</span>
+								<h5>ABJ Blogs</h5>
+								<p>A personal writing space on software engineering, system design, and reflections from building enterprise software.</p>
 							</div>
 						</a>
 					</div>
 					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="100" data-aos-easing="ease-in-sine">
+						<div class="portfolio-card portfolio-card--split">
+							<button type="button" class="portfolio-card-img portfolio-card-img--portrait portfolio-card-img--button" style="background-image: url('assets/tp-allstar-award.jpg');" data-lightbox-src="assets/tp-allstar-award.jpg" data-lightbox-alt="T&amp;P All Star Award — Abhijay Mitra (AbJ), FY26" aria-label="View full-size award photo">
+								<img alt="T&amp;P All Star Award" class="img-fluid" src="assets/tp-allstar-award.jpg">
+								<div class="portfolio-card-overlay"><i class="fas fa-search-plus fa-lg"></i></div>
+								<span class="portfolio-card-zoom" aria-hidden="true"><i class="fas fa-expand-arrows-alt"></i></span>
+							</button>
+							<a class="portfolio-card-body portfolio-card-body--link" href="https://engineering.salesforce.com/celebrating-our-technology-and-products-all-stars-4dba20137cb" target="_blank" rel="noopener">
+								<h5>T&amp;P All Star Award '25 <i class="fas fa-external-link-alt fa-xs ml-1" aria-hidden="true"></i></h5>
+								<p>Salesforce's highest peer-nominated honor for top performers — only 169 chosen across the entire 20,000+ Technology &amp; Product organization, and one of just two MTS-level recipients in the Bangalore office.</p>
+							</a>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="200" data-aos-easing="ease-in-sine">
 						<a class="portfolio-card" href="https://codeforces.com/profile/abhj" target="_blank" rel="noopener">
 							<div class="portfolio-card-img">
 								<img alt="Codeforces" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/force.png">
@@ -349,37 +354,19 @@
 							</div>
 							<div class="portfolio-card-body">
 								<h5>Codeforces</h5>
-								<p>Expert rated (peak 1877) — one step from Candidate Master. Consistently solving across graph theory, DP, number theory and combinatorics since 2019.</p>
-								<span class="portfolio-card-tag">Competitive Programming</span>
-								<span class="portfolio-card-tag">C++</span>
-							</div>
-						</a>
-					</div>
-					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="200" data-aos-easing="ease-in-sine">
-						<a class="portfolio-card" href="https://www.codechef.com/users/abhj" target="_blank" rel="noopener">
-							<div class="portfolio-card-img">
-								<img alt="Codechef" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/chef.jpeg">
-								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
-							</div>
-							<div class="portfolio-card-body">
-								<h5>Codechef</h5>
-								<p>5-star coder with a max rating of 2030. Participated in Long Challenges, Cook-Offs and Lunchtime contests — consistently placing in the top percentile.</p>
-								<span class="portfolio-card-tag">Competitive Programming</span>
-								<span class="portfolio-card-tag">Algorithms</span>
+								<p>Competitive programming since 2019 — peaked at Expert (1877), working toward Candidate Master across graph theory, DP, and number theory.</p>
 							</div>
 						</a>
 					</div>
 					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="100" data-aos-easing="ease-in-sine">
-						<a class="portfolio-card" href="https://www.stopstalk.com/user/profile/abj" target="_blank" rel="noopener">
+						<a class="portfolio-card" href="https://www.codechef.com/users/abhj" target="_blank" rel="noopener">
 							<div class="portfolio-card-img">
-								<img alt="StopStalk" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/s.png">
+								<img alt="CodeChef" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/chef.jpeg">
 								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
 							</div>
 							<div class="portfolio-card-body">
-								<h5>StopStalk</h5>
-								<p>Ranked #1 on the IIT Kharagpur StopStalk Leaderboard. A unified competitive programming record across Codeforces, Codechef, SPOJ, and HackerRank.</p>
-								<span class="portfolio-card-tag">Leaderboard #1</span>
-								<span class="portfolio-card-tag">IIT KGP</span>
+								<h5>CodeChef</h5>
+								<p>5★ rated coder with a peak rating of 2030 — consistent contest participation and problem solving for over five years.</p>
 							</div>
 						</a>
 					</div>
@@ -391,23 +378,19 @@
 							</div>
 							<div class="portfolio-card-body">
 								<h5>Quora</h5>
-								<p>Writing about software engineering, competitive programming, and navigating the tech industry. Answers on IIT, Salesforce, and problem-solving approaches.</p>
-								<span class="portfolio-card-tag">Writing</span>
-								<span class="portfolio-card-tag">Tech</span>
+								<p>Long-form answers on engineering, career, and IITs — sharing experience with a wider technical community.</p>
 							</div>
 						</a>
 					</div>
 					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="300" data-aos-easing="ease-in-sine">
-						<a class="portfolio-card" href="https://www.linkedin.com/company/proficient-vision-solutions/" target="_blank" rel="noopener">
+						<a class="portfolio-card" href="https://www.stopstalk.com/user/profile/abj" target="_blank" rel="noopener">
 							<div class="portfolio-card-img">
-								<img alt="Proficient Vision" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/p.png">
+								<img alt="StopStalk" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/s.png">
 								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
 							</div>
 							<div class="portfolio-card-body">
-								<h5>Proficient Vision Solutions</h5>
-								<p>Real-time rain and fog removal from HD video streams. Built RSA encryption from scratch and implemented histogram processing in CUDA C for multi-fold speed gains.</p>
-								<span class="portfolio-card-tag">Computer Vision</span>
-								<span class="portfolio-card-tag">CUDA</span>
+								<h5>StopStalk</h5>
+								<p>Ranked #1 on the IIT Kharagpur StopStalk leaderboard for over two years — aggregated across Codeforces, CodeChef, and more.</p>
 							</div>
 						</a>
 					</div>
@@ -627,53 +610,22 @@
 				<h5 class="beyond-sub text-center text-uppercase mb-4" data-aos="fade-up"><i class="fas fa-clock mr-2"></i>Coding Activity</h5>
 
 				<div class="wakatime-grid" data-aos="zoom-in">
-					<figure class="wakatime-card">
+					<figure class="wakatime-card zoomable-figure" data-lightbox-src="https://wakatime.com/share/@abhj/88bb3b86-cc49-4284-ab0c-f79130413f96.svg" data-lightbox-alt="WakaTime — Languages" data-lightbox-class="lightbox-img--wakatime">
 						<img src="https://wakatime.com/share/@abhj/88bb3b86-cc49-4284-ab0c-f79130413f96.svg" alt="WakaTime Languages">
+						<span class="wakatime-zoom" aria-hidden="true"><i class="fas fa-expand-arrows-alt"></i></span>
 					</figure>
-					<figure class="wakatime-card">
+					<figure class="wakatime-card zoomable-figure" data-lightbox-src="https://wakatime.com/share/@abhj/3e8ba326-54f6-40f7-b53d-872d029c3e25.svg" data-lightbox-alt="WakaTime — Editors" data-lightbox-class="lightbox-img--wakatime">
 						<img src="https://wakatime.com/share/@abhj/3e8ba326-54f6-40f7-b53d-872d029c3e25.svg" alt="WakaTime Editors">
+						<span class="wakatime-zoom" aria-hidden="true"><i class="fas fa-expand-arrows-alt"></i></span>
 					</figure>
-					<figure class="wakatime-card">
+					<figure class="wakatime-card zoomable-figure" data-lightbox-src="https://wakatime.com/share/@abhj/38cd03a8-4664-4676-bde8-f75495a93663.svg" data-lightbox-alt="WakaTime — Coding Activity" data-lightbox-class="lightbox-img--wakatime">
 						<img src="https://wakatime.com/share/@abhj/38cd03a8-4664-4676-bde8-f75495a93663.svg" alt="WakaTime Coding Activity">
+						<span class="wakatime-zoom" aria-hidden="true"><i class="fas fa-expand-arrows-alt"></i></span>
 					</figure>
-					<figure class="wakatime-card">
+					<figure class="wakatime-card zoomable-figure" data-lightbox-src="https://wakatime.com/share/@abhj/be2d0598-92a9-414e-b0d1-8ff4b984dd6f.svg" data-lightbox-alt="WakaTime — Operating Systems" data-lightbox-class="lightbox-img--wakatime">
 						<img src="https://wakatime.com/share/@abhj/be2d0598-92a9-414e-b0d1-8ff4b984dd6f.svg" alt="WakaTime Operating Systems">
+						<span class="wakatime-zoom" aria-hidden="true"><i class="fas fa-expand-arrows-alt"></i></span>
 					</figure>
-				</div>
-			</div>
-		</section>
-
-		<!-- Blog Section -->
-		<section class="page-section text-white mb-0" id="blog">
-			<div class="container">
-				<h2 class="page-section-heading text-center text-uppercase text-white" data-aos="fade-down">Blog</h2>
-				<div class="divider-custom divider-light">
-					<div class="divider-custom-line"></div>
-					<div class="divider-custom-icon"><i class="fas fa-pen" aria-hidden="true"></i></div>
-					<div class="divider-custom-line"></div>
-				</div>
-				<div class="row align-items-center justify-content-center">
-					<div class="col-lg-5 col-md-6 mb-4 mb-md-0" data-aos="fade-up">
-						<a href="https://abhj.github.io/abj-blogs" class="blog-preview-link" target="_blank" rel="noopener">
-							<div class="blog-preview-card">
-								<div class="blog-browser-bar">
-									<span class="browser-dot"></span>
-									<span class="browser-dot"></span>
-									<span class="browser-dot"></span>
-									<span class="browser-url">abhj.github.io/abj-blogs</span>
-								</div>
-								<div class="blog-preview-img">
-									<img alt="ABJ Blogs" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj-blog.png" loading="lazy">
-								</div>
-							</div>
-						</a>
-					</div>
-					<div class="col-lg-5 col-md-6" data-aos="fade-up" data-aos-delay="100">
-						<p class="blog-desc">Occasional writing on software engineering, system design, and things I find worth sharing.</p>
-						<a class="btn btn-outline-light btn-sm" href="https://abhj.github.io/abj-blogs" target="_blank" rel="noopener">
-							<i class="fas fa-external-link-alt mr-2"></i> Read the Blog
-						</a>
-					</div>
 				</div>
 			</div>
 		</section>
@@ -694,12 +646,10 @@
 				<div class="row justify-content-center mb-5">
 					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
 						<div class="lifestyle-card">
-							<div class="lifestyle-img">
+							<button type="button" class="lifestyle-img zoomable-btn" data-lightbox-src="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/assets/gym.jpg" data-lightbox-alt="Gym" aria-label="View full-size Gym photo">
 								<img src="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/assets/gym.jpg" alt="Gym" loading="lazy">
-								<div class="lifestyle-overlay">
-									<i class="fas fa-dumbbell"></i>
-								</div>
-							</div>
+								<span class="portfolio-card-zoom" aria-hidden="true"><i class="fas fa-expand-arrows-alt"></i></span>
+							</button>
 							<div class="lifestyle-body">
 								<h5><i class="fas fa-dumbbell mr-2"></i>Gym</h5>
 								<p>Consistent training — pushing limits and building discipline one rep at a time.</p>
@@ -713,12 +663,10 @@
 					</div>
 					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
 						<div class="lifestyle-card">
-							<div class="lifestyle-img">
+							<button type="button" class="lifestyle-img zoomable-btn" data-lightbox-src="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/assets/travel.jpg" data-lightbox-alt="Travel" aria-label="View full-size Travel photo">
 								<img src="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/assets/travel.jpg" alt="Travel" loading="lazy">
-								<div class="lifestyle-overlay">
-									<i class="fas fa-plane"></i>
-								</div>
-							</div>
+								<span class="portfolio-card-zoom" aria-hidden="true"><i class="fas fa-expand-arrows-alt"></i></span>
+							</button>
 							<div class="lifestyle-body">
 								<h5><i class="fas fa-map-marked-alt mr-2"></i>Travel</h5>
 								<p>Exploring new places, cultures, and perspectives — the best kind of refresh.</p>
@@ -732,12 +680,10 @@
 					</div>
 					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
 						<div class="lifestyle-card">
-							<div class="lifestyle-img">
-								<img src="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/assets/bike.jpg" alt="Bike" loading="lazy">
-								<div class="lifestyle-overlay">
-									<i class="fas fa-motorcycle"></i>
-								</div>
-							</div>
+							<button type="button" class="lifestyle-img zoomable-btn" data-lightbox-src="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/assets/bike.jpg" data-lightbox-alt="Riding" aria-label="View full-size Riding photo">
+								<img src="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/assets/bike.jpg" alt="Bike" loading="lazy" style="object-position: 35% top;">
+								<span class="portfolio-card-zoom" aria-hidden="true"><i class="fas fa-expand-arrows-alt"></i></span>
+							</button>
 							<div class="lifestyle-body">
 								<h5><i class="fas fa-motorcycle mr-2"></i>Riding</h5>
 								<p>Open roads, clear head — nothing beats the freedom of a good ride.</p>
@@ -820,8 +766,8 @@
 				<h5 class="beyond-sub text-center text-uppercase mb-4" data-aos="fade-up"><i class="fas fa-music mr-2"></i>What I Listen To</h5>
 				<div class="row justify-content-center mb-4">
 					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-						<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" class="apple-music-song" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/the-distance/1632540361?i=1632540369" loading="lazy"></iframe>
-						<p class="song-label">The Distance — Cake</p>
+						<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" class="apple-music-song" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/a-horse-with-no-name/301027593?i=301027918" loading="lazy"></iframe>
+						<p class="song-label">A Horse with No Name — America</p>
 					</div>
 					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
 						<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" class="apple-music-song" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/gods-eyes/1696357011?i=1696357034" loading="lazy"></iframe>
@@ -873,9 +819,9 @@
 					<div class="col-lg-4 mb-5 mb-lg-0">
 						<h4 class="text-uppercase mb-4">Email</h4>
 						<p class="lead mb-0">
-							<a href="mailto:abhijay.mitra@iitkgp.ac.in">abhijay.mitra@iitkgp.ac.in</a>
-							<br>
 							<a href="mailto:abhijaymitraofficial@gmail.com">abhijaymitraofficial@gmail.com</a>
+							<br>
+							<a href="mailto:abhijay.mitra@iitkgp.ac.in">abhijay.mitra@iitkgp.ac.in</a>
 						</p>
 					</div>
 					<div class="col-lg-4 mb-5 mb-lg-0">
@@ -887,11 +833,9 @@
 						<a class="btn btn-outline-light btn-social mx-1" href="https://www.instagram.com/abjkgp"><i class="fab fa-fw fa-instagram"></i></a>
 					</div>
 					<div class="col-lg-4">
-						<h4 class="text-uppercase mb-4">Visitors</h4>
+						<h4 class="text-uppercase mb-4">Location</h4>
 						<p class="lead mb-0">
-							<a href="https://www.hitwebcounter.com" target="_blank">
-								<img alt="web counter" border="0" src="https://hitwebcounter.com/counter/counter.php?page=7855540&style=0006&nbdigits=4&type=page&initCount=500" title="Free Counter" loading="lazy">
-							</a>
+							<i class="fas fa-map-marker-alt mr-1"></i> Bangalore, India
 						</p>
 					</div>
 				</div>
@@ -901,18 +845,28 @@
 		<!-- Copyright -->
 		<div class="copyright py-4 text-center text-white">
 			<div class="container">
-				<small>Copyright &copy; AbJ <span id="month"></span> <span id="year"></span></small>
+				<small>&copy; Abhijay Mitra (AbJ) &middot; <span id="month"></span> <span id="year"></span></small>
 				<br>
 				<a href="legacy.html" class="legacy-link">View the old portfolio &rarr;</a>
 			</div>
 		</div>
 
-		<!-- Scroll to Top Button -->
-		<div class="scroll-to-top d-lg-none position-fixed">
-			<a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
-				<i class="fa fa-chevron-up"></i>
-			</a>
+		<!-- Lightbox — fullscreen image viewer -->
+		<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+			<button class="lightbox-close" type="button" aria-label="Close">
+				<i class="fas fa-times"></i>
+			</button>
+			<img class="lightbox-img" id="lightboxImg" alt="">
 		</div>
+
+		<!-- Scroll Progress FAB — toggles between scroll-to-top / scroll-to-bottom -->
+		<button class="scroll-fab" id="scrollFab" aria-label="Scroll">
+			<svg class="scroll-fab-ring" viewBox="0 0 48 48" aria-hidden="true">
+				<circle class="scroll-fab-track" cx="24" cy="24" r="21"></circle>
+				<circle class="scroll-fab-progress" cx="24" cy="24" r="21"></circle>
+			</svg>
+			<i class="fas fa-chevron-up scroll-fab-icon"></i>
+		</button>
 	</main>
 
 	<!-- Scripts -->
