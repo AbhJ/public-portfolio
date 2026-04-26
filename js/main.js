@@ -114,226 +114,6 @@ AOS.init({
 	offset: 50
 });
 
-// ===== Ember Trail — subtle mouse-reactive particles =====
-// Monochrome embers: cool whites + dim blues. No stars, no colors. Clean.
-(function () {
-	var canvas = document.createElement("canvas");
-	canvas.style.cssText =
-		"position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10000";
-	document.body.appendChild(canvas);
-	var ctx = canvas.getContext("2d");
-	var embers = [];
-	var mouse = { x: -1000, y: -1000, speed: 0, prevX: 0, prevY: 0 };
-
-	function resize() {
-		canvas.width = window.innerWidth;
-		canvas.height = window.innerHeight;
-	}
-	resize();
-	window.addEventListener("resize", resize);
-
-	document.addEventListener("mousemove", function (e) {
-		var dx = e.clientX - mouse.prevX;
-		var dy = e.clientY - mouse.prevY;
-		mouse.speed = Math.sqrt(dx * dx + dy * dy);
-		mouse.x = e.clientX;
-		mouse.y = e.clientY;
-		mouse.prevX = e.clientX;
-		mouse.prevY = e.clientY;
-
-		// Spawn embers proportional to speed, capped
-		if (mouse.speed > 8) {
-			var count = Math.min(Math.floor(mouse.speed / 18), 3);
-			for (var i = 0; i < count; i++) {
-				embers.push(createEmber(mouse.x, mouse.y, "trail"));
-			}
-		}
-	});
-
-	// Sparse ambient embers — very occasional
-	var ambientTimer = 0;
-
-	function createEmber(x, y, type) {
-		var isTrail = type === "trail";
-		var size = isTrail ? 1 + Math.random() * 1.5 : 0.8 + Math.random() * 1.2;
-		// Monochrome palette: white, blue-white, steel-blue
-		var tones = [
-			[255, 255, 255],
-			[200, 220, 255],
-			[160, 190, 240],
-			[130, 170, 230]
-		];
-		var tone = tones[Math.floor(Math.random() * tones.length)];
-		return {
-			x: x + (Math.random() - 0.5) * 10,
-			y: y + (Math.random() - 0.5) * 10,
-			r: size,
-			vx: (Math.random() - 0.5) * 0.6,
-			vy: -(0.3 + Math.random() * 0.8),
-			life: 1.0,
-			decay: isTrail ? 0.015 + Math.random() * 0.012 : 0.006 + Math.random() * 0.005,
-			color: tone,
-			maxOpacity: isTrail ? 0.5 + Math.random() * 0.3 : 0.2 + Math.random() * 0.15
-		};
-	}
-
-	function tick() {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-		// Ambient embers — very sparse
-		ambientTimer += 0.016;
-		if (ambientTimer > 1.5 + Math.random() * 2) {
-			embers.push(
-				createEmber(
-					Math.random() * canvas.width,
-					Math.random() * canvas.height,
-					"ambient"
-				)
-			);
-			ambientTimer = 0;
-		}
-
-		for (var i = embers.length - 1; i >= 0; i--) {
-			var e = embers[i];
-			e.x += e.vx;
-			e.y += e.vy;
-			e.vy -= 0.003; // subtle upward drift
-			e.life -= e.decay;
-
-			if (e.life <= 0) {
-				embers.splice(i, 1);
-				continue;
-			}
-
-			var alpha = e.life * e.maxOpacity;
-			// Dot
-			ctx.beginPath();
-			ctx.arc(e.x, e.y, e.r * e.life, 0, Math.PI * 2);
-			ctx.fillStyle =
-				"rgba(" + e.color[0] + "," + e.color[1] + "," + e.color[2] + "," + alpha + ")";
-			ctx.fill();
-
-			// Soft glow
-			ctx.beginPath();
-			ctx.arc(e.x, e.y, e.r * e.life * 4, 0, Math.PI * 2);
-			ctx.fillStyle =
-				"rgba(" + e.color[0] + "," + e.color[1] + "," + e.color[2] + "," + alpha * 0.12 + ")";
-			ctx.fill();
-		}
-
-		requestAnimationFrame(tick);
-	}
-	tick();
-})();
-
-// ===== Enhanced Particle Background =====
-(function () {
-	var canvas = document.getElementById("particles");
-	if (!canvas) return;
-	var ctx = canvas.getContext("2d");
-	var particles = [];
-	var mouse = { x: null, y: null };
-	var count = 80;
-
-	function resize() {
-		canvas.width = window.innerWidth;
-		canvas.height = window.innerHeight;
-	}
-	resize();
-	window.addEventListener("resize", resize);
-
-	window.addEventListener("mousemove", function (e) {
-		mouse.x = e.clientX;
-		mouse.y = e.clientY;
-	});
-
-	var pColors = [
-		[66, 170, 245],
-		[120, 160, 220],
-		[180, 200, 240],
-		[100, 140, 200]
-	];
-
-	for (var i = 0; i < count; i++) {
-		var c = pColors[Math.floor(Math.random() * pColors.length)];
-		particles.push({
-			x: Math.random() * canvas.width,
-			y: Math.random() * canvas.height,
-			r: Math.random() * 2.5 + 0.8,
-			dx: (Math.random() - 0.5) * 0.4,
-			dy: (Math.random() - 0.5) * 0.4,
-			opacity: Math.random() * 0.5 + 0.1,
-			color: c,
-			pulsePhase: Math.random() * Math.PI * 2
-		});
-	}
-
-	var time = 0;
-	function draw() {
-		time += 0.016;
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-		for (var i = 0; i < particles.length; i++) {
-			var p = particles[i];
-			var pulse = Math.sin(time * 2 + p.pulsePhase) * 0.3 + 0.7;
-			var curOp = p.opacity * pulse;
-
-			// Mouse repulsion — particles gently pushed away
-			if (mouse.x !== null) {
-				var mdx = p.x - mouse.x;
-				var mdy = p.y - mouse.y;
-				var mDist = Math.sqrt(mdx * mdx + mdy * mdy);
-				if (mDist < 200 && mDist > 0) {
-					var force = ((200 - mDist) / 200) * 0.5;
-					p.x += (mdx / mDist) * force;
-					p.y += (mdy / mDist) * force;
-				}
-			}
-
-			// Glowing dot
-			ctx.beginPath();
-			ctx.arc(p.x, p.y, p.r * pulse, 0, Math.PI * 2);
-			ctx.fillStyle =
-				"rgba(" + p.color[0] + "," + p.color[1] + "," + p.color[2] + "," + curOp + ")";
-			ctx.fill();
-
-			// Soft glow halo
-			ctx.beginPath();
-			ctx.arc(p.x, p.y, p.r * pulse * 3, 0, Math.PI * 2);
-			ctx.fillStyle =
-				"rgba(" + p.color[0] + "," + p.color[1] + "," + p.color[2] + "," + curOp * 0.12 + ")";
-			ctx.fill();
-
-			// Connections
-			for (var j = i + 1; j < particles.length; j++) {
-				var p2 = particles[j];
-				var dist = Math.sqrt(
-					Math.pow(p.x - p2.x, 2) + Math.pow(p.y - p2.y, 2)
-				);
-				if (dist < 120) {
-					var alpha = 0.06 * (1 - dist / 120);
-					ctx.beginPath();
-					ctx.moveTo(p.x, p.y);
-					ctx.lineTo(p2.x, p2.y);
-					ctx.strokeStyle =
-						"rgba(" +
-						p.color[0] + "," + p.color[1] + "," + p.color[2] + "," +
-						alpha + ")";
-					ctx.lineWidth = 0.5;
-					ctx.stroke();
-				}
-			}
-
-			p.x += p.dx;
-			p.y += p.dy;
-			if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-			if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-		}
-		requestAnimationFrame(draw);
-	}
-	draw();
-})();
-
 // ===== Hero Parallax + Fade =====
 (function () {
 	var hero = document.querySelector(".masthead");
@@ -1355,5 +1135,153 @@ AOS.init({
 			el.classList.remove("fade-out");
 		}, 400);
 	}, 3500);
+})();
+
+// ===== GitHub Languages — live aggregate of bytes-per-language across repos =====
+// Fetches up to 100 public repos, then the language breakdown for each, sums
+// the byte counts, picks the top N by volume, and renders a stacked bar + legend.
+// Cached in localStorage for 1h so repeat visits don't hammer the API.
+(function () {
+	var USERNAME = "AbhJ";
+	var CACHE_KEY = "gh_lang_stats";
+	var CACHE_TTL = 60 * 60 * 1000; // 1 hour
+	var MAX_SEGMENTS = 6;            // top N languages shown in the bar + legend
+
+	// Canonical GitHub language colors (matching github-linguist)
+	var LANG_COLORS = {
+		"JavaScript": "#f1e05a", "TypeScript": "#3178c6", "Python": "#3572A5",
+		"Java": "#b07219", "C++": "#f34b7d", "C": "#555555", "HTML": "#e34c26",
+		"CSS": "#563d7c", "SCSS": "#c6538c", "Shell": "#89e051", "Go": "#00ADD8",
+		"Rust": "#dea584", "Ruby": "#701516", "Swift": "#F05138", "Kotlin": "#A97BFF",
+		"Dart": "#00B4AB", "PHP": "#4F5D95", "Jupyter Notebook": "#DA5B0B",
+		"Makefile": "#427819", "Dockerfile": "#384d54", "Vue": "#41b883",
+		"Objective-C": "#438eff", "Lua": "#000080", "Haskell": "#5e5086",
+		"Perl": "#0298c3", "Scala": "#c22d40", "R": "#198CE7", "Matlab": "#e16737"
+	};
+
+	var bar = document.getElementById("gh-langs-bar");
+	var legend = document.getElementById("gh-langs-legend");
+	var summary = document.getElementById("gh-langs-summary");
+	if (!bar || !legend || !summary) return;
+
+	function renderBar(totals) {
+		var sum = 0;
+		Object.keys(totals).forEach(function (k) { sum += totals[k]; });
+		if (!sum) return;
+
+		var entries = Object.keys(totals).map(function (k) {
+			return { name: k, bytes: totals[k] };
+		}).sort(function (a, b) { return b.bytes - a.bytes; });
+
+		var top = entries.slice(0, MAX_SEGMENTS);
+		var restSum = 0;
+		entries.slice(MAX_SEGMENTS).forEach(function (e) { restSum += e.bytes; });
+		if (restSum > 0) top.push({ name: "Other", bytes: restSum });
+
+		// Build bar
+		bar.innerHTML = "";
+		top.forEach(function (e) {
+			var pct = (e.bytes / sum) * 100;
+			var seg = document.createElement("div");
+			seg.className = "gh-langs__bar-seg";
+			seg.style.flexBasis = pct + "%";
+			seg.style.background = LANG_COLORS[e.name] || "#888";
+			seg.title = e.name + " — " + pct.toFixed(1) + "%";
+			bar.appendChild(seg);
+		});
+
+		// Build legend
+		legend.innerHTML = "";
+		top.forEach(function (e) {
+			var pct = (e.bytes / sum) * 100;
+			var item = document.createElement("span");
+			item.className = "gh-langs__legend-item";
+			item.innerHTML =
+				'<span class="gh-langs__legend-dot" style="background:' +
+				(LANG_COLORS[e.name] || "#888") + '"></span>' +
+				e.name +
+				'<span class="gh-langs__legend-pct">' + pct.toFixed(1) + '%</span>';
+			legend.appendChild(item);
+		});
+
+		// Estimated line count — industry-average ~30 bytes/line across
+		// mixed-language codebases. Written into the `Lines of Code` stat
+		// card and a shorter summary label beside the bar.
+		var lines = Math.round(sum / 30);
+		var lineStr;
+		if (lines >= 1e6) lineStr = (lines / 1e6).toFixed(1) + "M";
+		else if (lines >= 1e3) lineStr = Math.round(lines / 1e3) + "K";
+		else lineStr = String(lines);
+
+		var locEl = document.getElementById("gh-loc");
+		if (locEl) locEl.textContent = "~" + lineStr;
+
+		// `entries` is the full language list before top-N slicing — use its
+		// length for the true count, not the bar-segment count.
+		var totalLangs = entries.length;
+		summary.textContent = totalLangs + " languages across all public repos";
+	}
+
+	// Cache read
+	dataSourceStarted();
+	try {
+		var cached = localStorage.getItem(CACHE_KEY);
+		if (cached) {
+			var parsed = JSON.parse(cached);
+			if (parsed.ts && (Date.now() - parsed.ts) < CACHE_TTL && parsed.data) {
+				renderBar(parsed.data);
+				dataSourceDone();
+				return;
+			}
+		}
+	} catch (e) {}
+
+	// Fetch repo list + language breakdowns
+	var reposUrl = "https://api.github.com/users/" + USERNAME + "/repos?per_page=100&type=owner&sort=updated";
+	fetchWithTimeout(reposUrl)
+		.then(function (r) { return r.ok ? r.json() : []; })
+		.then(function (repos) {
+			if (!Array.isArray(repos) || !repos.length) throw new Error("No repos");
+			// Skip forks (they'd double-count) and archived; cap at 25 to respect rate limit
+			var ownRepos = repos
+				.filter(function (r) { return !r.fork && !r.archived; })
+				.slice(0, 25);
+			var totals = {};
+			var done = 0;
+
+			ownRepos.forEach(function (repo) {
+				fetchWithTimeout("https://api.github.com/repos/" + USERNAME + "/" + repo.name + "/languages")
+					.then(function (r) { return r.ok ? r.json() : {}; })
+					.then(function (langs) {
+						Object.keys(langs || {}).forEach(function (k) {
+							totals[k] = (totals[k] || 0) + langs[k];
+						});
+					})
+					.catch(function () {})
+					.finally(function () {
+						done++;
+						if (done === ownRepos.length) {
+							if (Object.keys(totals).length) {
+								renderBar(totals);
+								try {
+									localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: totals }));
+								} catch (e) {}
+							} else {
+								summary.textContent = "Unavailable";
+							}
+							dataSourceDone();
+						}
+					});
+			});
+
+			if (!ownRepos.length) {
+				summary.textContent = "No public repos";
+				dataSourceDone();
+			}
+		})
+		.catch(function () {
+			summary.textContent = "Unavailable";
+			dataSourceDone();
+		});
 })();
 

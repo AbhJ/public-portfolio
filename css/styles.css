@@ -53,15 +53,13 @@ body:not(.ready) {
 }
 
 body:not(.ready) main,
-body:not(.ready) #mainNav,
-body:not(.ready) #particles {
+body:not(.ready) #mainNav {
 	opacity: 0;
 	pointer-events: none;
 }
 
 body.ready main,
-body.ready #mainNav,
-body.ready #particles {
+body.ready #mainNav {
 	opacity: 1;
 	transition: opacity 0.6s ease 0.15s;
 }
@@ -103,18 +101,6 @@ h1, h2, h3, h4, h5, h6,
 ::selection {
 	background: var(--primary);
 	color: #fff;
-}
-
-/* ===== Particle Canvas ===== */
-
-#particles {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: -1;
-	pointer-events: none;
 }
 
 /* ===== Animations ===== */
@@ -555,6 +541,16 @@ a.text-secondary:focus {
 
 #mainNav .navbar-nav li.nav-item a.nav-link.active {
 	color: var(--primary);
+}
+
+/* Blog link — accented so it reads as a destination, not a section. */
+#mainNav .navbar-nav li.nav-item a.nav-link--blog {
+	color: var(--primary) !important;
+	font-weight: 600;
+}
+
+#mainNav .navbar-nav li.nav-item a.nav-link--blog:hover {
+	color: #fff !important;
 }
 
 #mainNav .navbar-toggler {
@@ -1083,6 +1079,56 @@ a.portfolio-card:focus {
 	border-color: rgba(66, 170, 245, 0.25);
 }
 
+/* Featured variant — subtle accent border + softly glowing top edge so it
+   reads as the primary CTA in the Highlights grid. Used for the Blog card. */
+.portfolio-card--featured {
+	border-color: rgba(66, 170, 245, 0.28);
+	background:
+		linear-gradient(180deg, rgba(66, 170, 245, 0.09), rgba(66, 170, 245, 0) 40%),
+		rgba(255, 255, 255, 0.04);
+	box-shadow: 0 0 0 1px rgba(66, 170, 245, 0.06), 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-card--featured:hover {
+	border-color: rgba(66, 170, 245, 0.55);
+	box-shadow: 0 0 0 1px rgba(66, 170, 245, 0.18), 0 24px 56px rgba(66, 170, 245, 0.22);
+}
+
+/* Blog preview SVG fills its frame edge-to-edge (like the other logo cards
+   but as a rectangular preview). Override the default contain + padding. */
+.portfolio-card--featured .portfolio-card-img {
+	padding: 0;
+	background: transparent;
+}
+
+.portfolio-card--featured .portfolio-card-img img {
+	width: 100%;
+	height: 100%;
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: cover;
+	object-position: center;
+	transform: none;
+}
+
+.portfolio-card--featured:hover .portfolio-card-img img {
+	transform: scale(1.04);
+}
+
+.portfolio-card-badge {
+	display: inline-block;
+	font-size: 0.65rem;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--primary);
+	padding: 0.2rem 0.6rem;
+	margin-bottom: 0.6rem;
+	border: 1px solid rgba(66, 170, 245, 0.35);
+	border-radius: 999px;
+	background: rgba(66, 170, 245, 0.08);
+}
+
 .portfolio-card-img {
 	position: relative;
 	overflow: hidden;
@@ -1091,15 +1137,31 @@ a.portfolio-card:focus {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 1.2rem;
+	padding: 0;
 }
 
 .portfolio-card-img img {
-	max-width: 100%;
-	max-height: 100%;
-	object-fit: contain;
+	width: 100%;
+	height: 100%;
+	/* `cover` so every logo fills the frame identically regardless of its
+	   own aspect ratio — the alternative (`contain`) leaves varying widths
+	   of empty space around tall-thin vs. wide logos. */
+	object-fit: cover;
+	object-position: center;
 	display: block;
 	transition: transform 0.5s ease;
+}
+
+/* Compact variant — for logos with tight/packed brand art (Codeforces banner,
+   StopStalk circular emblem) that look over-zoomed when `cover` fills edge-
+   to-edge. Drops back to `contain` with padding so the logo sits at a
+   comfortable size with breathing room. */
+.portfolio-card-img--compact {
+	padding: 1.25rem 1.5rem;
+}
+
+.portfolio-card-img--compact img {
+	object-fit: contain;
 }
 
 .portfolio-card:hover .portfolio-card-img img {
@@ -1130,6 +1192,7 @@ a.portfolio-card:focus {
 	width: auto;
 	object-fit: contain;
 	filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5));
+	transform: none;
 }
 
 /* Split-action card — image opens lightbox, body links elsewhere */
@@ -1181,11 +1244,13 @@ a.portfolio-card:focus {
 	transform: translateX(0);
 }
 
-/* Split card shouldn't lift on whole-card hover — hover states live on each half */
+/* Split card lifts as a unit on hover, same motion as every other card in
+   the grid. Click targets are still split: image opens the lightbox, body
+   links to the Salesforce article — but the whole card responds visually. */
 .portfolio-card--split:hover {
-	transform: none;
-	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-	border-color: rgba(255, 255, 255, 0.08);
+	transform: translateY(-8px);
+	box-shadow: 0 20px 50px rgba(66, 170, 245, 0.2);
+	border-color: rgba(66, 170, 245, 0.25);
 }
 
 .portfolio-card-img--button:hover .portfolio-card-overlay {
@@ -1810,6 +1875,107 @@ body.resume-open {
 	letter-spacing: 0.08em;
 	color: rgba(255, 255, 255, 0.4);
 	margin-top: 0.3rem;
+}
+
+/* Language / LOC strip — stacked bar of top languages with a legend row. */
+.gh-langs {
+	max-width: 820px;
+	margin: 1rem auto 2rem;
+	padding: 1.25rem 1.5rem;
+	background: rgba(255, 255, 255, 0.03);
+	border: 1px solid rgba(255, 255, 255, 0.07);
+	border-radius: 14px;
+}
+
+.gh-langs__header {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-bottom: 0.85rem;
+	font-family: var(--font-family-heading);
+}
+
+.gh-langs__title {
+	font-size: 0.72rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.22em;
+	color: rgba(255, 255, 255, 0.4);
+}
+
+.gh-langs__summary {
+	font-size: 0.8rem;
+	color: rgba(255, 255, 255, 0.7);
+	font-variant-numeric: tabular-nums;
+}
+
+/* Mobile — stack the header vertically so the summary never gets cropped. */
+@media (max-width: 640px) {
+	.gh-langs__header {
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		gap: 0.35rem;
+	}
+	.gh-langs__summary {
+		font-size: 0.78rem;
+	}
+}
+
+.gh-langs__bar {
+	display: flex;
+	width: 100%;
+	height: 10px;
+	border-radius: 999px;
+	overflow: hidden;
+	background: rgba(255, 255, 255, 0.05);
+}
+
+.gh-langs__bar-seg {
+	height: 100%;
+	transition: flex-basis 0.4s ease;
+}
+
+.gh-langs__legend {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 0.4rem 0.9rem;
+	margin-top: 0.85rem;
+	font-size: 0.68rem;
+	color: rgba(255, 255, 255, 0.65);
+	font-variant-numeric: tabular-nums;
+}
+
+.gh-langs__legend-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3rem;
+	letter-spacing: 0.01em;
+	white-space: nowrap;
+	flex: 0 0 auto;
+}
+
+/* Mobile — center-justify the wrapped rows so they look intentional rather
+   than orphaned left-aligned. */
+@media (max-width: 720px) {
+	.gh-langs__legend {
+		justify-content: center;
+		gap: 0.5rem 0.9rem;
+	}
+}
+
+.gh-langs__legend-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	display: inline-block;
+}
+
+.gh-langs__legend-pct {
+	color: rgba(255, 255, 255, 0.45);
+	margin-left: 0.15rem;
 }
 
 /* Repo cards */

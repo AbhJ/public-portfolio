@@ -7,11 +7,21 @@
 	<meta name="author" content="Abhijay Mitra (AbJ)">
 	<title>AbJ — Software Engineer</title>
 
-	<!-- Open Graph -->
-	<meta property="og:title" content="AbJ — Software Engineer">
+	<!-- Open Graph (Facebook, LinkedIn, WhatsApp, Slack, Discord, …) -->
+	<meta property="og:title" content="Abhijay Mitra — Software Engineer">
 	<meta property="og:type" content="profile">
-	<meta property="og:description" content="MTS (SWE 2) at Salesforce | Building enterprise software at scale | IIT Kharagpur '22">
+	<meta property="og:url" content="https://abhj.github.io/public-portfolio/">
+	<meta property="og:description" content="Member of Technical Staff (SWE 2) at Salesforce · IIT Kharagpur '22 · Building enterprise-grade software at scale.">
 	<meta property="og:image" content="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/assets/abj_new_dp.jpg">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="1200">
+	<meta property="og:image:alt" content="Abhijay Mitra">
+
+	<!-- Twitter Card (X, Twitter previews) -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Abhijay Mitra — Software Engineer">
+	<meta name="twitter:description" content="MTS (SWE 2) at Salesforce · IIT Kharagpur '22 · Building enterprise software at scale.">
+	<meta name="twitter:image" content="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/assets/abj_new_dp.jpg">
 
 	<!-- Favicon -->
 	<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230a0a23' width='100' height='100' rx='18'/><text x='50' y='73' font-size='62' font-family='Montserrat,sans-serif' font-weight='700' fill='%2342aaf5' text-anchor='middle'>A</text></svg>">
@@ -41,9 +51,6 @@
 		</div>
 	</div>
 
-	<!-- Animated Background Particles -->
-	<canvas id="particles"></canvas>
-
 	<!-- Navbar -->
 	<nav class="navbar navbar-expand-lg text-uppercase fixed-top" id="mainNav">
 		<div class="container">
@@ -59,6 +66,7 @@
 					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-1 rounded js-scroll-trigger" href="#portfolio">Highlights</a></li>
 					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-1 rounded js-scroll-trigger" href="#codeStats">Code Stats</a></li>
 					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-1 rounded js-scroll-trigger" href="#beyond">Beyond Code</a></li>
+					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link nav-link--blog py-3 px-0 px-lg-1 rounded" href="https://abhj.github.io/abj-blogs" target="_blank" rel="noopener">Blog &nearr;</a></li>
 				</ul>
 			</div>
 		</div>
@@ -323,14 +331,15 @@
 				</div>
 				<div class="row">
 					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-easing="ease-in-sine">
-						<a class="portfolio-card" href="https://abhj.github.io/abj-blogs" target="_blank" rel="noopener">
+						<a class="portfolio-card portfolio-card--featured" href="https://abhj.github.io/abj-blogs" target="_blank" rel="noopener">
 							<div class="portfolio-card-img">
-								<img alt="ABJ Blogs" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/abj-blog.png">
-								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
+								<img alt="ABJ Blogs" class="img-fluid" src="assets/abj-blog-preview.svg">
+								<div class="portfolio-card-overlay"><i class="fas fa-book-open fa-lg"></i></div>
 							</div>
 							<div class="portfolio-card-body">
-								<h5>ABJ Blogs</h5>
-								<p>Essays on software engineering, system design, and reflections from building enterprise software.</p>
+								<span class="portfolio-card-badge">Featured</span>
+								<h5>ABJ Blogs &rarr;</h5>
+								<p>My writing on software engineering, system design, and reflections from building enterprise software. Updated regularly.</p>
 							</div>
 						</a>
 					</div>
@@ -349,7 +358,7 @@
 					</div>
 					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="200" data-aos-easing="ease-in-sine">
 						<a class="portfolio-card" href="https://codeforces.com/profile/abhj" target="_blank" rel="noopener">
-							<div class="portfolio-card-img">
+							<div class="portfolio-card-img portfolio-card-img--compact">
 								<img alt="Codeforces" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/force.png">
 								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
 							</div>
@@ -385,7 +394,7 @@
 					</div>
 					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="300" data-aos-easing="ease-in-sine">
 						<a class="portfolio-card" href="https://www.stopstalk.com/user/profile/abj" target="_blank" rel="noopener">
-							<div class="portfolio-card-img">
+							<div class="portfolio-card-img portfolio-card-img--compact">
 								<img alt="StopStalk" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/s.png">
 								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
 							</div>
@@ -427,8 +436,8 @@
 					</div>
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="200">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number" id="gh-following">&mdash;</span>
-							<span class="gh-stat-label">Following</span>
+							<span class="gh-stat-number" id="gh-loc">&mdash;</span>
+							<span class="gh-stat-label">Lines of Code</span>
 						</div>
 					</div>
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="300">
@@ -437,6 +446,18 @@
 							<span class="gh-stat-label">Since</span>
 						</div>
 					</div>
+				</div>
+
+				<!-- Language / Lines-of-Code strip — fetched live from GitHub -->
+				<div class="gh-langs" data-aos="fade-up">
+					<div class="gh-langs__header">
+						<span class="gh-langs__title">Top languages</span>
+						<span class="gh-langs__summary" id="gh-langs-summary">Loading&hellip;</span>
+					</div>
+					<div class="gh-langs__bar" id="gh-langs-bar" role="img" aria-label="Languages used across repositories">
+						<!-- Populated at runtime by main.js -->
+					</div>
+					<div class="gh-langs__legend" id="gh-langs-legend"></div>
 				</div>
 
 				<h6 class="text-center text-uppercase mt-5 mb-4" style="letter-spacing: 0.22em; color: rgba(255,255,255,0.4); font-size: 0.75rem; font-weight: 500;">Featured Repositories</h6>
@@ -473,10 +494,10 @@
 								<i class="fas fa-terminal gh-repo-icon"></i>
 								<span class="gh-repo-name">cp</span>
 							</div>
-							<p class="gh-repo-desc">Competitive programming archive — Codeforces, Codechef and contest solutions across graph theory, DP and number theory.</p>
+							<p class="gh-repo-desc">My competitive programming toolkit — build scripts, snippets, and templates I reach for during contests for fast setup and clean boilerplate.</p>
 							<div class="gh-repo-footer">
 								<span class="gh-repo-lang"><span class="gh-lang-dot" style="background: #f34b7d;"></span> C++</span>
-								<span class="gh-repo-stars"><i class="fas fa-fire"></i> 1000+ files</span>
+								<span class="gh-repo-stars"><i class="fas fa-tools"></i> Toolkit</span>
 							</div>
 						</a>
 					</div>
@@ -499,10 +520,10 @@
 								<i class="fas fa-book-open gh-repo-icon"></i>
 								<span class="gh-repo-name">abj-blogs</span>
 							</div>
-							<p class="gh-repo-desc">Open source blog page — minimalist themed tech and software blog built from scratch.</p>
+							<p class="gh-repo-desc">My personal blog — Vite + React 18 + TypeScript. Posts are Markdown files; drop one in and it publishes automatically.</p>
 							<div class="gh-repo-footer">
-								<span class="gh-repo-lang"><span class="gh-lang-dot" style="background: #f1e05a;"></span> JavaScript</span>
-								<span class="gh-repo-stars"><i class="fas fa-star"></i> 2</span>
+								<span class="gh-repo-lang"><span class="gh-lang-dot" style="background: #3178c6;"></span> TypeScript</span>
+								<span class="gh-repo-stars"><i class="fas fa-pen-nib"></i> Writing</span>
 							</div>
 						</a>
 					</div>
