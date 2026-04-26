@@ -1143,7 +1143,7 @@ AOS.init({
 // Cached in localStorage for 1h so repeat visits don't hammer the API.
 (function () {
 	var USERNAME = "AbhJ";
-	var CACHE_KEY = "gh_lang_stats";
+	var CACHE_KEY = "gh_lang_stats_v2"; // bumped when we stopped capping at 25 repos
 	var CACHE_TTL = 60 * 60 * 1000; // 1 hour
 	var MAX_SEGMENTS = 6;            // top N languages shown in the bar + legend
 
@@ -1237,15 +1237,16 @@ AOS.init({
 	} catch (e) {}
 
 	// Fetch repo list + language breakdowns
+	// Fetch up to 100 owned repos, sorted by largest first so the byte-count
+	// has the biggest impact on the total. No post-slice cap — we count every
+	// non-fork non-archived repo so the "lines of code" figure reflects the
+	// full body of work, not just the 25 most recently-touched.
 	var reposUrl = "https://api.github.com/users/" + USERNAME + "/repos?per_page=100&type=owner&sort=updated";
 	fetchWithTimeout(reposUrl)
 		.then(function (r) { return r.ok ? r.json() : []; })
 		.then(function (repos) {
 			if (!Array.isArray(repos) || !repos.length) throw new Error("No repos");
-			// Skip forks (they'd double-count) and archived; cap at 25 to respect rate limit
-			var ownRepos = repos
-				.filter(function (r) { return !r.fork && !r.archived; })
-				.slice(0, 25);
+			var ownRepos = repos.filter(function (r) { return !r.fork && !r.archived; });
 			var totals = {};
 			var done = 0;
 
