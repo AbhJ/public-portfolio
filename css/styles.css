@@ -6,7 +6,7 @@
 	position: fixed;
 	inset: 0;
 	z-index: 99999;
-	background: #0a0a23;
+	background: #05060a;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -26,8 +26,8 @@
 .preloader-spinner {
 	width: 40px;
 	height: 40px;
-	border: 3px solid rgba(66, 170, 245, 0.15);
-	border-top-color: #42aaf5;
+	border: 3px solid rgba(90, 120, 145, 0.15);
+	border-top-color: #5a7891;
 	border-radius: 50%;
 	animation: spin 0.8s linear infinite;
 	margin: 0 auto 1.2rem;
@@ -46,7 +46,11 @@
 	text-transform: uppercase;
 }
 
-/* Hide main content and lock scroll until loaded */
+/* Reveal-on-load — opacity only, NEVER blocks pointer events.
+   Earlier the gate also set `pointer-events: none` which meant a single
+   hung fetch could leave the entire page unclickable until the 10-second
+   safety net fired. The preloader spinner lives at z-index 99999 and stays
+   on top until removed, so visually the gating below is purely cosmetic. */
 body:not(.ready) {
 	overflow: hidden;
 	height: 100vh;
@@ -55,7 +59,6 @@ body:not(.ready) {
 body:not(.ready) main,
 body:not(.ready) #mainNav {
 	opacity: 0;
-	pointer-events: none;
 }
 
 body.ready main,
@@ -64,23 +67,37 @@ body.ready #mainNav {
 	transition: opacity 0.6s ease 0.15s;
 }
 
+/* Hard guarantee: nothing on the page-ready gate can disable input on
+   <main> or the navbar. Decorative pseudo-elements that genuinely need
+   pointer-events: none keep their own rules — those override this one
+   because their selectors are more specific. */
+main, #mainNav {
+	pointer-events: auto !important;
+}
+
 html {
 	scroll-behavior: smooth;
 }
 
 :root {
-	--primary: #42aaf5;
-	--secondary: #0a0a23;
-	--accent: #e94560;
-	--dark: #0f0f23;
-	--font-family-sans-serif: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-	--font-family-heading: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	--primary: #5a7891;
+	--secondary: #05060a;
+	--accent: #7a1a22;
+	--dark: #08090d;
+	/* Body — Lato for long-form reading. */
+	--font-family-sans-serif: "Lato", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	/* Display — Inter as the new heading face. Apple/Linear/Stripe
+	   vocabulary. Falls back to system display fonts. Old Montserrat var
+	   kept available via `--font-family-mono-display` for tracked-caps
+	   contrast use (kbd, eyebrows, the press strip). */
+	--font-family-heading: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	--font-family-mono-display: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 body {
 	font-family: var(--font-family-sans-serif);
-	background-color: #f0f0f0;
-	color: #333;
+	background-color: #08090d;
+	color: #cfd2d6;
 }
 
 a {
@@ -88,7 +105,7 @@ a {
 }
 
 a:hover {
-	color: #1a7fd4;
+	color: #b59760;       /* hover lifts to oxidized brass — readable on dark */
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -111,8 +128,8 @@ h1, h2, h3, h4, h5, h6,
 }
 
 @keyframes glow {
-	0%, 100% { box-shadow: 0 0 20px rgba(66, 170, 245, 0.3); }
-	50% { box-shadow: 0 0 50px rgba(66, 170, 245, 0.7), 0 0 80px rgba(66, 170, 245, 0.2); }
+	0%, 100% { box-shadow: 0 0 20px rgba(90, 120, 145, 0.3); }
+	50% { box-shadow: 0 0 50px rgba(90, 120, 145, 0.7), 0 0 80px rgba(90, 120, 145, 0.2); }
 }
 
 @keyframes shimmer {
@@ -214,83 +231,83 @@ h1, h2, h3, h4, h5, h6,
 }
 
 #education {
-	background: linear-gradient(160deg, #0a0e1a 0%, #0e1428 30%, #0c1a30 60%, #08101e 100%);
+	background: linear-gradient(160deg, #04050a 0%, #080a12 30%, #091018 60%, #040608 100%);
 }
 #education::before {
 	width: 450px; height: 450px;
-	background: radial-gradient(circle, rgba(66, 170, 245, 0.3), rgba(100, 120, 255, 0.15), transparent 70%);
+	background: radial-gradient(circle, rgba(90, 120, 145, 0.3), rgba(80, 96, 122, 0.15), transparent 70%);
 	top: 15%; right: -5%;
 	animation: orb-float-2 16s ease-in-out infinite;
 	opacity: 0.35;
 }
 #education::after {
 	width: 350px; height: 350px;
-	background: radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 70%);
+	background: radial-gradient(circle, rgba(122, 26, 34, 0.25), transparent 70%);
 	bottom: 10%; left: -3%;
 	animation: orb-float-1 20s ease-in-out infinite;
 	opacity: 0.3;
 }
 
 #skills {
-	background: linear-gradient(150deg, #0e0e24 0%, #141430 40%, #0f1128 70%, #0b0b20 100%);
+	background: linear-gradient(150deg, #070810 0%, #0a0c14 40%, #080a10 70%, #06070d 100%);
 }
 #skills::before {
 	width: 400px; height: 400px;
-	background: radial-gradient(circle, rgba(168, 85, 247, 0.3), rgba(66, 170, 245, 0.15), transparent 70%);
+	background: radial-gradient(circle, rgba(122, 26, 34, 0.3), rgba(90, 120, 145, 0.15), transparent 70%);
 	top: 20%; left: -8%;
 	animation: orb-float-3 18s ease-in-out infinite;
 	opacity: 0.3;
 }
 
 #portfolio {
-	background: linear-gradient(145deg, #080818 0%, #0c0e28 35%, #0a1020 65%, #060614 100%);
+	background: linear-gradient(145deg, #040508 0%, #070912 35%, #06080e 65%, #030406 100%);
 }
 #portfolio::before {
 	width: 500px; height: 500px;
-	background: radial-gradient(circle, rgba(66, 170, 245, 0.25), rgba(0, 200, 180, 0.1), transparent 70%);
+	background: radial-gradient(circle, rgba(90, 120, 145, 0.25), rgba(60, 78, 92, 0.1), transparent 70%);
 	top: 5%; left: -6%;
 	animation: orb-float-1 15s ease-in-out infinite;
 	opacity: 0.35;
 }
 #portfolio::after {
 	width: 400px; height: 400px;
-	background: radial-gradient(circle, rgba(233, 69, 96, 0.2), rgba(168, 85, 247, 0.1), transparent 70%);
+	background: radial-gradient(circle, rgba(154, 122, 62, 0.2), rgba(122, 26, 34, 0.1), transparent 70%);
 	bottom: 8%; right: -5%;
 	animation: orb-float-2 22s ease-in-out infinite;
 	opacity: 0.3;
 }
 
 #codeStats {
-	background: linear-gradient(160deg, #0d1117 0%, #0f1926 25%, #0e1225 50%, #0c1520 75%, #0a0f18 100%);
+	background: linear-gradient(160deg, #050608 0%, #080b12 25%, #070910 50%, #06080d 75%, #04060a 100%);
 }
 #codeStats::before {
 	width: 500px; height: 500px;
-	background: radial-gradient(circle, rgba(66, 170, 245, 0.3), rgba(100, 200, 255, 0.1), transparent 70%);
+	background: radial-gradient(circle, rgba(90, 120, 145, 0.3), rgba(110, 140, 168, 0.1), transparent 70%);
 	top: 5%; left: -6%;
 	animation: orb-float-1 16s ease-in-out infinite;
 	opacity: 0.35;
 }
 #codeStats::after {
 	width: 450px; height: 450px;
-	background: radial-gradient(circle, rgba(255, 161, 22, 0.2), rgba(168, 85, 247, 0.1), transparent 70%);
+	background: radial-gradient(circle, rgba(154, 122, 62, 0.2), rgba(122, 26, 34, 0.1), transparent 70%);
 	bottom: 8%; right: -5%;
 	animation: orb-float-3 21s ease-in-out infinite;
 	opacity: 0.3;
 }
 
 #beyond {
-	background: linear-gradient(155deg, #0c0a1e 0%, #12102a 30%, #0e0c24 55%, #0a0818 100%);
+	background: linear-gradient(155deg, #06070c 0%, #0a0c14 30%, #080910 55%, #050608 100%);
 }
 #beyond::before {
 	width: 500px; height: 500px;
-	background: radial-gradient(circle, rgba(168, 85, 247, 0.3), rgba(233, 69, 96, 0.12), transparent 70%);
+	background: radial-gradient(circle, rgba(122, 26, 34, 0.3), rgba(154, 122, 62, 0.12), transparent 70%);
 	top: 8%; left: -5%;
 	animation: orb-float-1 17s ease-in-out infinite;
 	opacity: 0.35;
 }
 #beyond::after {
 	width: 400px; height: 400px;
-	background: radial-gradient(circle, rgba(66, 170, 245, 0.25), rgba(0, 200, 180, 0.1), transparent 70%);
+	background: radial-gradient(circle, rgba(90, 120, 145, 0.25), rgba(60, 78, 92, 0.1), transparent 70%);
 	bottom: 10%; right: -6%;
 	animation: orb-float-3 21s ease-in-out infinite;
 	opacity: 0.3;
@@ -351,7 +368,7 @@ h1, h2, h3, h4, h5, h6,
 
 a.text-primary:hover,
 a.text-primary:focus {
-	color: #1a7fd4 !important;
+	color: #3d5a72 !important;
 }
 
 .text-secondary {
@@ -360,7 +377,7 @@ a.text-primary:focus {
 
 a.text-secondary:hover,
 a.text-secondary:focus {
-	color: #11181f !important;
+	color: #cfd2d6 !important;
 }
 
 .btn-primary {
@@ -371,24 +388,24 @@ a.text-secondary:focus {
 
 .btn-primary:hover {
 	color: #fff;
-	background-color: #1a7fd4;
-	border-color: #1a7fd4;
+	background-color: #3d5a72;
+	border-color: #3d5a72;
 }
 
 .btn-primary:focus,
 .btn-primary.focus {
 	color: #fff;
-	background-color: #1a7fd4;
-	border-color: #1a7fd4;
-	box-shadow: 0 0 0 0.2rem rgba(66, 170, 245, 0.5);
+	background-color: #3d5a72;
+	border-color: #3d5a72;
+	box-shadow: 0 0 0 0.2rem rgba(90, 120, 145, 0.5);
 }
 
 .btn-primary:not(:disabled):not(.disabled):active,
 .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
 	color: #fff;
-	background-color: #1565a0;
-	border-color: #1565a0;
+	background-color: #3d5a72;
+	border-color: #3d5a72;
 }
 
 .btn-outline-light {
@@ -397,7 +414,7 @@ a.text-secondary:focus {
 }
 
 .btn-outline-light:hover {
-	color: #212529;
+	color: #04060a;
 	background-color: #f8f9fa;
 	border-color: #f8f9fa;
 }
@@ -423,7 +440,7 @@ a.text-secondary:focus {
 
 .btn-social:hover {
 	transform: translateY(-3px);
-	box-shadow: 0 4px 15px rgba(66, 170, 245, 0.4);
+	box-shadow: 0 4px 15px rgba(90, 120, 145, 0.4);
 }
 
 /* ===== Scroll Progress FAB ===== */
@@ -458,7 +475,7 @@ a.text-secondary:focus {
 
 .scroll-fab:hover {
 	background: rgba(10, 10, 35, 0.85);
-	border-color: rgba(66, 170, 245, 0.5);
+	border-color: rgba(90, 120, 145, 0.5);
 }
 
 .scroll-fab-ring {
@@ -596,7 +613,7 @@ a.text-secondary:focus {
 .masthead {
 	padding-top: calc(4rem + 74px);
 	padding-bottom: 3rem;
-	background: linear-gradient(135deg, #0a0a23 0%, #1a1a2e 40%, #16213e 100%);
+	background: linear-gradient(135deg, #05060a 0%, #0a0c14 40%, #080a10 100%);
 	position: relative;
 }
 
@@ -615,8 +632,8 @@ a.text-secondary:focus {
 	content: '';
 	position: absolute;
 	inset: 0;
-	background: radial-gradient(circle at 30% 50%, rgba(66, 170, 245, 0.08) 0%, transparent 50%),
-	            radial-gradient(circle at 70% 80%, rgba(233, 69, 96, 0.06) 0%, transparent 50%);
+	background: radial-gradient(circle at 30% 50%, rgba(90, 120, 145, 0.08) 0%, transparent 50%),
+	            radial-gradient(circle at 70% 80%, rgba(154, 122, 62, 0.06) 0%, transparent 50%);
 	animation: float 8s ease-in-out infinite;
 	pointer-events: none;
 }
@@ -647,7 +664,7 @@ a.text-secondary:focus {
 	width: min(250px, 45vw);
 	height: min(250px, 45vw);
 	border-radius: 50%;
-	border: 4px solid rgba(66, 170, 245, 0.5);
+	border: 4px solid rgba(90, 120, 145, 0.5);
 	animation: glow 3s ease-in-out infinite;
 	object-fit: cover;
 	object-position: center 25%;
@@ -682,11 +699,11 @@ a.text-secondary:focus {
 #experience {
 	background: linear-gradient(
 		170deg,
-		#0d0d2b 0%,
-		#0f1638 18%,
-		#111a3a 35%,
-		#0d1b2a 60%,
-		#0f0f23 100%
+		#06070b 0%,
+		#0a0c12 18%,
+		#0c0e14 35%,
+		#080a10 60%,
+		#040508 100%
 	);
 	overflow: hidden;
 	position: relative;
@@ -707,7 +724,7 @@ a.text-secondary:focus {
 #experience::before {
 	width: 500px;
 	height: 500px;
-	background: radial-gradient(circle, rgba(66, 170, 245, 0.5), rgba(168, 85, 247, 0.3), transparent 70%);
+	background: radial-gradient(circle, rgba(90, 120, 145, 0.5), rgba(122, 26, 34, 0.3), transparent 70%);
 	top: 10%;
 	left: -5%;
 	animation: orb-float-1 14s ease-in-out infinite;
@@ -716,7 +733,7 @@ a.text-secondary:focus {
 #experience::after {
 	width: 600px;
 	height: 600px;
-	background: radial-gradient(circle, rgba(233, 69, 96, 0.35), rgba(66, 170, 245, 0.2), transparent 70%);
+	background: radial-gradient(circle, rgba(154, 122, 62, 0.35), rgba(90, 120, 145, 0.2), transparent 70%);
 	bottom: 5%;
 	right: -8%;
 	animation: orb-float-2 18s ease-in-out infinite;
@@ -746,7 +763,7 @@ a.text-secondary:focus {
 	width: 350px;
 	height: 350px;
 	border-radius: 50%;
-	background: radial-gradient(circle, rgba(0, 255, 213, 0.3), rgba(66, 170, 245, 0.2), transparent 70%);
+	background: radial-gradient(circle, rgba(122, 26, 34, 0.28), rgba(90, 120, 145, 0.18), transparent 70%);
 	filter: blur(80px);
 	opacity: 0.3;
 	top: 50%;
@@ -769,7 +786,7 @@ a.text-secondary:focus {
 	top: 0;
 	bottom: 0;
 	width: 3px;
-	background: linear-gradient(to bottom, var(--primary), rgba(168, 85, 247, 0.8), var(--accent));
+	background: linear-gradient(to bottom, var(--primary), rgba(122, 26, 34, 0.8), var(--accent));
 	transform: translateX(-50%);
 }
 
@@ -795,14 +812,14 @@ a.text-secondary:focus {
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;
-	background: linear-gradient(135deg, var(--primary), #a855f7);
+	background: linear-gradient(135deg, var(--primary), #7a1a22);
 	color: #fff;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	font-size: 1.2rem;
 	z-index: 2;
-	box-shadow: 0 0 0 4px #0f1638, 0 0 20px rgba(66, 170, 245, 0.4);
+	box-shadow: 0 0 0 4px #06070b, 0 0 20px rgba(90, 120, 145, 0.4);
 }
 
 .timeline-item:nth-child(odd) .timeline-badge {
@@ -828,8 +845,8 @@ a.text-secondary:focus {
 
 .timeline-panel:hover {
 	transform: translateY(-6px);
-	box-shadow: 0 12px 40px rgba(66, 170, 245, 0.15);
-	border-color: rgba(66, 170, 245, 0.3);
+	box-shadow: 0 12px 40px rgba(90, 120, 145, 0.15);
+	border-color: rgba(90, 120, 145, 0.3);
 }
 
 .timeline-heading {
@@ -903,7 +920,7 @@ a.text-secondary:focus {
 	padding: 0.5rem 1.1rem;
 	border-radius: 50px;
 	background: rgba(10, 10, 35, 0.75);
-	border: 1px solid rgba(66, 170, 245, 0.45);
+	border: 1px solid rgba(90, 120, 145, 0.45);
 	backdrop-filter: blur(12px);
 	-webkit-backdrop-filter: blur(12px);
 	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
@@ -913,8 +930,8 @@ a.text-secondary:focus {
 
 .highlight-chip:hover {
 	transform: scale(1.05);
-	box-shadow: 0 4px 20px rgba(66, 170, 245, 0.3);
-	border-color: rgba(66, 170, 245, 0.7);
+	box-shadow: 0 4px 20px rgba(90, 120, 145, 0.3);
+	border-color: rgba(90, 120, 145, 0.7);
 }
 
 .highlight-chip i,
@@ -953,10 +970,10 @@ a.highlight-chip--link:focus {
 }
 
 @keyframes allstar-pulse {
-	0%   { box-shadow: 0 0 0 0 rgba(66, 170, 245, 0); border-color: rgba(255, 255, 255, 0.08); }
-	25%  { box-shadow: 0 0 0 10px rgba(66, 170, 245, 0.25); border-color: rgba(66, 170, 245, 0.7); }
-	70%  { box-shadow: 0 0 0 16px rgba(66, 170, 245, 0);   border-color: rgba(66, 170, 245, 0.3); }
-	100% { box-shadow: 0 0 0 0 rgba(66, 170, 245, 0);      border-color: rgba(255, 255, 255, 0.08); }
+	0%   { box-shadow: 0 0 0 0 rgba(90, 120, 145, 0); border-color: rgba(255, 255, 255, 0.08); }
+	25%  { box-shadow: 0 0 0 10px rgba(90, 120, 145, 0.25); border-color: rgba(90, 120, 145, 0.7); }
+	70%  { box-shadow: 0 0 0 16px rgba(90, 120, 145, 0);   border-color: rgba(90, 120, 145, 0.3); }
+	100% { box-shadow: 0 0 0 0 rgba(90, 120, 145, 0);      border-color: rgba(255, 255, 255, 0.08); }
 }
 
 @media (max-width: 768px) {
@@ -1029,8 +1046,8 @@ a.highlight-chip--link:focus {
 
 .skill-badge:hover {
 	transform: translateY(-8px);
-	box-shadow: 0 12px 30px rgba(66, 170, 245, 0.15);
-	border-color: rgba(66, 170, 245, 0.3);
+	box-shadow: 0 12px 30px rgba(90, 120, 145, 0.15);
+	border-color: rgba(90, 120, 145, 0.3);
 }
 
 .skill-badge i {
@@ -1075,23 +1092,23 @@ a.portfolio-card:focus {
 
 .portfolio-card:hover {
 	transform: translateY(-8px);
-	box-shadow: 0 20px 50px rgba(66, 170, 245, 0.2);
-	border-color: rgba(66, 170, 245, 0.25);
+	box-shadow: 0 20px 50px rgba(90, 120, 145, 0.2);
+	border-color: rgba(90, 120, 145, 0.25);
 }
 
 /* Featured variant — subtle accent border + softly glowing top edge so it
    reads as the primary CTA in the Highlights grid. Used for the Blog card. */
 .portfolio-card--featured {
-	border-color: rgba(66, 170, 245, 0.28);
+	border-color: rgba(90, 120, 145, 0.28);
 	background:
-		linear-gradient(180deg, rgba(66, 170, 245, 0.09), rgba(66, 170, 245, 0) 40%),
+		linear-gradient(180deg, rgba(90, 120, 145, 0.09), rgba(90, 120, 145, 0) 40%),
 		rgba(255, 255, 255, 0.04);
-	box-shadow: 0 0 0 1px rgba(66, 170, 245, 0.06), 0 8px 24px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 0 1px rgba(90, 120, 145, 0.06), 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .portfolio-card--featured:hover {
-	border-color: rgba(66, 170, 245, 0.55);
-	box-shadow: 0 0 0 1px rgba(66, 170, 245, 0.18), 0 24px 56px rgba(66, 170, 245, 0.22);
+	border-color: rgba(90, 120, 145, 0.55);
+	box-shadow: 0 0 0 1px rgba(90, 120, 145, 0.18), 0 24px 56px rgba(90, 120, 145, 0.22);
 }
 
 /* Blog preview SVG fills its frame edge-to-edge (like the other logo cards
@@ -1124,9 +1141,9 @@ a.portfolio-card:focus {
 	color: var(--primary);
 	padding: 0.2rem 0.6rem;
 	margin-bottom: 0.6rem;
-	border: 1px solid rgba(66, 170, 245, 0.35);
+	border: 1px solid rgba(90, 120, 145, 0.35);
 	border-radius: 999px;
-	background: rgba(66, 170, 245, 0.08);
+	background: rgba(90, 120, 145, 0.08);
 }
 
 .portfolio-card-img {
@@ -1222,7 +1239,7 @@ a.portfolio-card:focus {
 }
 
 .portfolio-card-body--link:hover {
-	background: rgba(66, 170, 245, 0.06);
+	background: rgba(90, 120, 145, 0.06);
 }
 
 .portfolio-card-body--link:hover h5 {
@@ -1249,8 +1266,8 @@ a.portfolio-card:focus {
    links to the Salesforce article — but the whole card responds visually. */
 .portfolio-card--split:hover {
 	transform: translateY(-8px);
-	box-shadow: 0 20px 50px rgba(66, 170, 245, 0.2);
-	border-color: rgba(66, 170, 245, 0.25);
+	box-shadow: 0 20px 50px rgba(90, 120, 145, 0.2);
+	border-color: rgba(90, 120, 145, 0.25);
 }
 
 .portfolio-card-img--button:hover .portfolio-card-overlay {
@@ -1297,8 +1314,8 @@ a.portfolio-card:focus {
 
 .portfolio-card-img--button:hover .portfolio-card-zoom,
 .lifestyle-img:hover .portfolio-card-zoom {
-	background: rgba(66, 170, 245, 0.35);
-	border-color: rgba(66, 170, 245, 0.7);
+	background: rgba(90, 120, 145, 0.35);
+	border-color: rgba(90, 120, 145, 0.7);
 }
 
 /* Always-visible on touch devices (no hover) */
@@ -1367,7 +1384,7 @@ a.portfolio-card:focus {
 }
 
 .zoomable-figure:hover {
-	background: rgba(66, 170, 245, 0.06);
+	background: rgba(90, 120, 145, 0.06);
 }
 
 @media (hover: none) {
@@ -1436,8 +1453,8 @@ a.portfolio-card:focus {
 }
 
 .lightbox-close:hover {
-	background: rgba(233, 69, 96, 0.45);
-	border-color: rgba(233, 69, 96, 0.7);
+	background: rgba(154, 122, 62, 0.45);
+	border-color: rgba(154, 122, 62, 0.7);
 	transform: rotate(90deg);
 }
 
@@ -1503,16 +1520,16 @@ body.lightbox-open {
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 	color: #fff;
-	background: rgba(66, 170, 245, 0.18);
-	border: 1px solid rgba(66, 170, 245, 0.35);
+	background: rgba(90, 120, 145, 0.18);
+	border: 1px solid rgba(90, 120, 145, 0.35);
 	border-radius: 50px;
 	text-decoration: none;
 	transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 }
 
 .resume-modal-download:hover {
-	background: rgba(66, 170, 245, 0.35);
-	border-color: rgba(66, 170, 245, 0.75);
+	background: rgba(90, 120, 145, 0.35);
+	border-color: rgba(90, 120, 145, 0.75);
 	color: #fff;
 	text-decoration: none;
 	transform: translateY(-1px);
@@ -1535,14 +1552,14 @@ body.lightbox-open {
 }
 
 .resume-modal-close:hover {
-	background: rgba(233, 69, 96, 0.4);
-	border-color: rgba(233, 69, 96, 0.7);
+	background: rgba(154, 122, 62, 0.4);
+	border-color: rgba(154, 122, 62, 0.7);
 	transform: rotate(90deg);
 }
 
 .resume-modal-body {
 	flex: 1;
-	background: #1a1a2e;
+	background: #0a0c14;
 	border: 1px solid rgba(255, 255, 255, 0.08);
 	border-top: 0;
 	border-radius: 0 0 10px 10px;
@@ -1555,7 +1572,7 @@ body.lightbox-open {
 	height: 100%;
 	border: 0;
 	display: block;
-	background: #1a1a2e;
+	background: #0a0c14;
 }
 
 body.resume-open {
@@ -1632,7 +1649,7 @@ body.resume-open {
 	text-transform: uppercase;
 	letter-spacing: 0.04em;
 	color: var(--primary);
-	border: 1px solid rgba(66, 170, 245, 0.3);
+	border: 1px solid rgba(90, 120, 145, 0.3);
 	border-radius: 4px;
 	padding: 0.2rem 0.5rem;
 	margin-right: 0.4rem;
@@ -1654,7 +1671,7 @@ body.resume-open {
 
 .btn-resume:hover {
 	transform: translateY(-2px);
-	box-shadow: 0 6px 20px rgba(66, 170, 245, 0.25);
+	box-shadow: 0 6px 20px rgba(90, 120, 145, 0.25);
 }
 
 /* ===== Footer ===== */
@@ -1747,13 +1764,13 @@ body.resume-open {
 
 .edu-card:hover {
 	transform: translateY(-6px);
-	box-shadow: 0 16px 40px rgba(66, 170, 245, 0.15);
-	border-color: rgba(66, 170, 245, 0.25);
+	box-shadow: 0 16px 40px rgba(90, 120, 145, 0.15);
+	border-color: rgba(90, 120, 145, 0.25);
 }
 
 .edu-card-accent {
 	height: 4px;
-	background: linear-gradient(90deg, var(--primary), #a855f7);
+	background: linear-gradient(90deg, var(--primary), #7a1a22);
 }
 
 .edu-card-body {
@@ -1855,8 +1872,8 @@ body.resume-open {
 
 .gh-stat-card:hover {
 	transform: translateY(-4px);
-	box-shadow: 0 8px 25px rgba(66, 170, 245, 0.15);
-	border-color: rgba(66, 170, 245, 0.25);
+	box-shadow: 0 8px 25px rgba(90, 120, 145, 0.15);
+	border-color: rgba(90, 120, 145, 0.25);
 }
 
 .gh-stat-number {
@@ -2000,8 +2017,8 @@ a.gh-repo-card:focus {
 
 .gh-repo-card:hover {
 	transform: translateY(-5px);
-	box-shadow: 0 12px 35px rgba(66, 170, 245, 0.15);
-	border-color: rgba(66, 170, 245, 0.25);
+	box-shadow: 0 12px 35px rgba(90, 120, 145, 0.15);
+	border-color: rgba(90, 120, 145, 0.25);
 }
 
 .gh-repo-header {
@@ -2105,24 +2122,156 @@ a.gh-repo-card:focus {
 .lc-dot-medium { background: #ffc01e; }
 .lc-dot-hard { background: #ef4743; }
 
+/* ===== Heatmaps — DOM grid (LeetCode/GitHub modern style) ===== */
+/* The wrap is full-width and centred; an inner `.hm-scroll` element handles
+   horizontal overflow on small screens (last month no longer clips). */
 #lc-heatmap-wrap,
-#gh-heatmap-wrap {
+#gh-heatmap-wrap,
+.hm-wrap {
 	position: relative;
-	display: inline-block;
-	max-width: 100%;
-	overflow: visible;
-	padding: 1.5rem 1.25rem;
+	display: block;
+	max-width: 920px;
+	margin: 0 auto;
+	padding: 1.4rem 1.2rem;
 	background: rgba(255, 255, 255, 0.02);
 	border: 1px solid rgba(255, 255, 255, 0.06);
 	border-radius: 12px;
+	overflow: hidden;
 }
 
-#lc-heatmap,
-#gh-heatmap {
-	display: block;
-	max-width: 100%;
-	height: auto;
-	border-radius: 8px;
+.hm-scroll {
+	overflow-x: auto;
+	overflow-y: hidden;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: thin;
+	scrollbar-color: rgba(154, 122, 62, 0.35) transparent;
+	padding-bottom: 0.4rem;
+}
+.hm-scroll::-webkit-scrollbar { height: 6px; }
+.hm-scroll::-webkit-scrollbar-track { background: transparent; }
+.hm-scroll::-webkit-scrollbar-thumb {
+	background: rgba(154, 122, 62, 0.35);
+	border-radius: 3px;
+}
+
+/* The .hm element pins the months row, the day labels, and the cell grid
+   into a single composition. Min-width keeps every column reachable
+   horizontally even on tiny screens — scroll reveals what doesn't fit. */
+.hm {
+	min-width: 720px;            /* ~53 cols × 13 px + day-label gutter */
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	font-size: 10px;
+	color: rgba(255, 255, 255, 0.55);
+	user-select: none;
+}
+
+.hm-months {
+	display: grid;
+	margin-left: 30px;            /* matches .hm-days width — keeps months aligned */
+	grid-template-rows: 14px;
+	margin-bottom: 4px;
+}
+
+.hm-month {
+	font-size: 10px;
+	color: rgba(255, 255, 255, 0.45);
+	text-align: left;
+	white-space: nowrap;
+	letter-spacing: 0.02em;
+}
+
+.hm-body {
+	display: grid;
+	grid-template-columns: 30px 1fr;
+	column-gap: 0;
+	align-items: stretch;
+}
+
+.hm-days {
+	display: grid;
+	grid-template-rows: repeat(7, 1fr);
+	font-size: 10px;
+	color: rgba(255, 255, 255, 0.35);
+	text-align: left;
+	letter-spacing: 0.02em;
+	padding-right: 6px;
+	padding-top: 1px;
+}
+.hm-days span { line-height: 13px; min-height: 13px; }
+
+.hm-grid {
+	display: grid;
+	grid-auto-flow: column;
+	gap: 3px;
+	min-width: 0;
+}
+
+/* Each day cell — a button so the OS handles touch/click hit-testing for us. */
+.hm-cell {
+	width: 11px;
+	height: 11px;
+	border: 0;
+	padding: 0;
+	border-radius: 2px;
+	background: rgba(255, 255, 255, 0.045);
+	cursor: pointer;
+	transition: outline-color 0.15s ease, transform 0.15s ease;
+	outline: 1px solid transparent;
+	outline-offset: -1px;
+}
+
+.hm-cell:hover,
+.hm-cell:focus-visible {
+	outline-color: rgba(181, 151, 96, 0.7);
+	transform: scale(1.15);
+	z-index: 2;
+	position: relative;
+}
+
+/* Active states for "pinned" tap-target on mobile — slightly elevated. */
+.hm-cell:active {
+	transform: scale(1.25);
+	outline-color: rgba(181, 151, 96, 0.9);
+}
+
+/* GitHub level scale (blue progression) */
+.hm-l-0 { background: rgba(255, 255, 255, 0.04); }
+.hm-l-1 { background: rgba(66, 170, 245, 0.32); }
+.hm-l-2 { background: rgba(66, 170, 245, 0.55); }
+.hm-l-3 { background: rgba(66, 170, 245, 0.78); }
+.hm-l-4 { background: rgba(66, 170, 245, 1.0); }
+
+/* LeetCode level scale (warm orange — matches LC's own colors) */
+.hm-lc-0 { background: rgba(255, 255, 255, 0.04); }
+.hm-lc-1 { background: rgba(255, 161, 22, 0.32); }
+.hm-lc-2 { background: rgba(255, 161, 22, 0.55); }
+.hm-lc-3 { background: rgba(255, 161, 22, 0.78); }
+.hm-lc-4 { background: rgba(255, 161, 22, 1.0); }
+
+.hm-legend {
+	display: flex;
+	align-items: center;
+	gap: 0.3rem;
+	justify-content: flex-end;
+	padding: 0.7rem 0 0;
+	margin-left: 30px;
+	font-size: 10px;
+	color: rgba(255, 255, 255, 0.4);
+	letter-spacing: 0.04em;
+}
+.hm-legend .hm-cell {
+	width: 10px;
+	height: 10px;
+	cursor: default;
+}
+.hm-legend .hm-cell:hover { transform: none; outline-color: transparent; }
+.hm-legend-text { padding: 0 0.25rem; }
+
+/* On small screens, give the user a hint that the grid scrolls. */
+@media (max-width: 720px) {
+	.hm-wrap { padding: 1rem 0.9rem; }
+	.hm-grid { gap: 2px; }
+	.hm-cell { width: 10px; height: 10px; }
 }
 
 /* Streak line under LeetCode heatmap */
@@ -2148,20 +2297,26 @@ a.gh-repo-card:focus {
 .gh-tooltip {
 	position: absolute;
 	pointer-events: none;
-	background: rgba(0, 0, 0, 0.85);
-	color: #e0e0e0;
-	font-size: 0.75rem;
+	background: rgba(8, 9, 13, 0.95);
+	color: #e6e6e6;
+	font-size: 0.72rem;
 	font-family: var(--font-family-heading);
-	padding: 0.4rem 0.7rem;
+	font-weight: 500;
+	padding: 0.45rem 0.8rem;
 	border-radius: 6px;
+	border: 1px solid rgba(154, 122, 62, 0.35);
 	white-space: nowrap;
 	opacity: 0;
-	transition: opacity 0.15s ease;
-	z-index: 10;
+	transform: translateY(2px);
+	transition: opacity 0.15s ease, transform 0.15s ease;
+	z-index: 1000;
+	box-shadow: 0 8px 22px rgba(0, 0, 0, 0.55);
+	letter-spacing: 0.02em;
 }
 
 .gh-tooltip.visible {
 	opacity: 1;
+	transform: translateY(0);
 }
 
 
@@ -2186,8 +2341,8 @@ a.gh-repo-card:focus {
 
 .wakatime-card:hover {
 	transform: translateY(-4px);
-	box-shadow: 0 12px 35px rgba(66, 170, 245, 0.12);
-	border-color: rgba(66, 170, 245, 0.2);
+	box-shadow: 0 12px 35px rgba(90, 120, 145, 0.12);
+	border-color: rgba(90, 120, 145, 0.2);
 }
 
 .wakatime-card img {
@@ -2195,6 +2350,29 @@ a.gh-repo-card:focus {
 	display: block;
 	border-radius: 6px;
 	filter: invert(0.88) hue-rotate(180deg);
+	/* Reserve space so the card doesn't collapse to zero height while
+	   wakatime.com (which is occasionally slow / 502s) hasn't responded.
+	   The aspect-ratio matches WakaTime's 4:3 SVG output. */
+	aspect-ratio: 4 / 3;
+	background: rgba(255, 255, 255, 0.02);
+	min-height: 1px;
+}
+
+/* Broken/failed image — show a graceful "couldn't load" hint instead of an
+   empty card. `:has()` lets us style the parent if the <img> errored out. */
+.wakatime-card img.wakatime-img-error {
+	min-height: 140px;
+	background: rgba(255, 255, 255, 0.03);
+}
+.wakatime-card.wakatime-card--error::after {
+	content: "WakaTime is loading… ↻";
+	display: block;
+	text-align: center;
+	color: rgba(255, 255, 255, 0.45);
+	font-size: 0.75rem;
+	font-family: var(--font-family-heading);
+	letter-spacing: 0.06em;
+	margin-top: 0.4rem;
 }
 
 @media (min-width: 992px) {
@@ -2385,8 +2563,8 @@ a.gh-repo-card:focus {
 
 .lifestyle-card:hover {
 	transform: translateY(-6px);
-	box-shadow: 0 16px 40px rgba(66, 170, 245, 0.15);
-	border-color: rgba(66, 170, 245, 0.2);
+	box-shadow: 0 16px 40px rgba(90, 120, 145, 0.15);
+	border-color: rgba(90, 120, 145, 0.2);
 }
 
 .lifestyle-img {
@@ -2484,3 +2662,1504 @@ a.gh-repo-card:focus {
 	height: 100%;
 	border: 0;
 }
+
+/* ============================================================================
+   ===== Midnight Forge — Luxe Polish =========================================
+   ============================================================================
+   Purely additive layer. Goal: keep every existing section structurally
+   intact, but lift the production value with five moves:
+     1. Whisper vignette + dim brass scrollbar (page atmosphere)
+     2. Editorial monogram + vitals pill above the avatar
+     3. Couture stacked-ring avatar shadow + gradient text-fill on hero h1
+     4. Footer manifesto in serif italic
+     5. Hairline gradient borders ("Linear/Stripe trick") on the existing
+        stat cards, repo cards, edu cards, timeline panels, portfolio cards,
+        and lifestyle cards — the move that reads "this site has a budget".
+   No new sections. No copy invented. Only universal polish.
+   ============================================================================ */
+
+:root {
+	--mf-bone: #cfd2d6;
+	--mf-bone-bright: #ffffff;
+	--mf-steel: #5a7891;
+	--mf-brass: #9a7a3e;
+	--mf-brass-pale: #b59760;
+	--mf-display: "Cormorant Garamond", "Times New Roman", Times, serif;
+	--mf-filament: rgba(154, 122, 62, 0.55);
+}
+
+/* ----- Whisper vignette — corners only, never fights legibility ----------- */
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 9999;
+	background: radial-gradient(ellipse at center,
+		transparent 65%,
+		rgba(0, 0, 0, 0.12) 92%,
+		rgba(0, 0, 0, 0.22) 100%);
+}
+
+/* ----- Dim brass scrollbar ------------------------------------------------- */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(154, 122, 62, 0.35) transparent;
+}
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb {
+	background: linear-gradient(180deg, rgba(154, 122, 62, 0.35), rgba(90, 120, 145, 0.25));
+	border-radius: 999px;
+	border: 2px solid transparent;
+	background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+	background: linear-gradient(180deg, rgba(154, 122, 62, 0.55), rgba(90, 120, 145, 0.45));
+	background-clip: content-box;
+}
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* ----- Hero monogram (above avatar) --------------------------------------- */
+.hero-monogram {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.9rem;
+	margin: 0 auto 1.4rem;
+	font-family: var(--font-family-heading);
+	letter-spacing: 0.42em;
+	font-size: 0.7rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	opacity: 0.92;
+}
+
+.hero-monogram-mark {
+	background: linear-gradient(180deg, #ffffff 0%, #cfd2d6 60%, #b59760 130%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+}
+
+.hero-monogram-rule {
+	flex: 0 0 56px;
+	height: 1px;
+	background: linear-gradient(90deg, transparent 0%, var(--mf-filament) 50%, transparent 100%);
+}
+
+@media (max-width: 575px) {
+	.hero-monogram { font-size: 0.64rem; letter-spacing: 0.34em; gap: 0.55rem; }
+	.hero-monogram-rule { flex-basis: 36px; }
+}
+
+/* ----- Hero vitals pill --------------------------------------------------- */
+.hero-vitals {
+	display: inline-flex;
+	align-items: center;
+	gap: 1.1rem;
+	list-style: none;
+	margin: 1.4rem auto 0;
+	padding: 0.55rem 1.4rem;
+	border: 1px solid rgba(154, 122, 62, 0.28);
+	border-radius: 999px;
+	background: rgba(10, 10, 35, 0.55);
+	backdrop-filter: blur(10px) saturate(140%);
+	-webkit-backdrop-filter: blur(10px) saturate(140%);
+	box-shadow:
+		0 8px 28px rgba(0, 0, 0, 0.45),
+		inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.hero-vitals li {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-family: var(--font-family-heading);
+	font-size: 0.72rem;
+	font-weight: 600;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.78);
+}
+
+.hero-vitals li i {
+	color: var(--mf-brass-pale);
+	font-size: 0.78rem;
+	filter: drop-shadow(0 0 6px rgba(154, 122, 62, 0.35));
+}
+
+.hero-vitals-sep {
+	width: 4px;
+	height: 4px;
+	border-radius: 50%;
+	background: rgba(154, 122, 62, 0.55);
+	box-shadow: 0 0 5px rgba(154, 122, 62, 0.5);
+}
+
+@media (max-width: 480px) {
+	.hero-vitals { gap: 0.7rem; padding: 0.5rem 1rem; }
+	.hero-vitals li { font-size: 0.62rem; letter-spacing: 0.14em; }
+}
+
+/* ----- Hero avatar — couture rings + brass halo --------------------------- */
+.masthead-avatar {
+	position: relative;
+	box-shadow:
+		0 0 0 1px rgba(154, 122, 62, 0.45),
+		0 0 0 6px rgba(0, 0, 0, 0.6),
+		0 0 0 7px rgba(207, 210, 214, 0.12),
+		0 0 0 8px rgba(0, 0, 0, 0.5),
+		0 0 60px rgba(154, 122, 62, 0.18),
+		0 30px 80px rgba(0, 0, 0, 0.6) !important;
+	transition: box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s ease;
+}
+
+.masthead-avatar:hover {
+	transform: scale(1.02);
+	box-shadow:
+		0 0 0 1px rgba(181, 151, 96, 0.75),
+		0 0 0 6px rgba(0, 0, 0, 0.6),
+		0 0 0 7px rgba(207, 210, 214, 0.22),
+		0 0 0 8px rgba(0, 0, 0, 0.5),
+		0 0 90px rgba(181, 151, 96, 0.28),
+		0 36px 100px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* ----- Hero h1 gradient fill ---------------------------------------------- */
+.masthead-heading {
+	background: linear-gradient(180deg, #ffffff 0%, #cfd2d6 70%, #b59760 130%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+	letter-spacing: 0.04em !important;
+	font-weight: 700;
+}
+
+/* ----- The Linear/Stripe gradient hairline border, applied to existing
+   cards. Each card gets a `::after` overlay (so we don't fight any existing
+   `::before` orb pseudo-elements). The mask-composite trick produces a 1 px
+   gradient outline without nested elements or layout cost. -------------- */
+
+.gh-stat-card,
+.gh-repo-card,
+.edu-card,
+.timeline-panel,
+.lifestyle-card,
+a.portfolio-card,
+.portfolio-card,
+.skill-badge,
+.book-card {
+	position: relative;
+}
+
+.gh-stat-card::after,
+.gh-repo-card::after,
+.edu-card::after,
+.timeline-panel::after,
+.lifestyle-card::after,
+a.portfolio-card::after,
+.skill-badge::after,
+.book-card::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	padding: 1px;
+	border-radius: inherit;
+	background: linear-gradient(135deg,
+		rgba(154, 122, 62, 0.5) 0%,
+		rgba(154, 122, 62, 0.05) 35%,
+		rgba(207, 210, 214, 0.12) 60%,
+		rgba(154, 122, 62, 0.5) 100%);
+	-webkit-mask:
+		linear-gradient(#000 0 0) content-box,
+		linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	pointer-events: none;
+	opacity: 0.7;
+	transition: opacity 0.4s ease;
+}
+
+/* On hover, the gradient lifts and brightens — the "lit edge" feel. */
+.gh-stat-card:hover::after,
+.gh-repo-card:hover::after,
+.edu-card:hover::after,
+.timeline-panel:hover::after,
+.lifestyle-card:hover::after,
+a.portfolio-card:hover::after,
+.skill-badge:hover::after,
+.book-card:hover::after {
+	opacity: 1;
+	background: linear-gradient(135deg,
+		rgba(181, 151, 96, 0.85) 0%,
+		rgba(154, 122, 62, 0.18) 35%,
+		rgba(207, 210, 214, 0.25) 60%,
+		rgba(181, 151, 96, 0.85) 100%);
+}
+
+/* The portfolio-card--split has a child `.portfolio-card-img` that's
+   absolutely positioned; we don't want the gradient overlay reading inside
+   the image button. So we drop the rule on that variant. */
+.portfolio-card--split::after { display: none; }
+
+/* ----- Tabular numerals on every metric — small detail, reads expensive -- */
+.gh-stat-number,
+.lc-bar,
+.lc-streak-line,
+.gh-langs__summary {
+	font-variant-numeric: tabular-nums;
+	font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+/* Bigger gh-stat numbers + soft gradient fill — quietly more luxurious */
+.gh-stat-number {
+	background: linear-gradient(180deg, #ffffff 0%, #d8d2c4 70%, #b59760 130%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+	letter-spacing: 0.02em;
+}
+
+/* Keep LeetCode difficulty colors loud — they're semantic, not decorative */
+.lc-color-easy,
+.lc-color-medium,
+.lc-color-hard {
+	-webkit-text-fill-color: initial;
+	background: none;
+}
+
+/* ----- Footer manifesto --------------------------------------------------- */
+.forge-manifesto {
+	display: inline-flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 0.7rem;
+	margin: 0 0 0.7rem;
+	font-family: var(--font-family-heading);
+	font-size: 0.72rem;
+	font-weight: 600;
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	color: var(--mf-brass-pale);
+	opacity: 0.92;
+}
+
+.forge-manifesto > span:not(.forge-manifesto-sep) {
+	color: var(--mf-bone-bright);
+}
+
+.forge-manifesto-sep {
+	color: rgba(154, 122, 62, 0.5);
+	font-weight: 400;
+	letter-spacing: 0;
+}
+
+@media (max-width: 480px) {
+	.forge-manifesto { font-size: 0.62rem; letter-spacing: 0.24em; gap: 0.45rem; }
+}
+
+/* "Built quietly" suffix in copyright reads as serif italic for that
+   editorial-magazine touch. */
+.copyright small {
+	color: rgba(255, 255, 255, 0.45);
+}
+
+/* ----- Navbar — gentle brass on hover only -------------------------------- */
+#mainNav .navbar-nav .nav-link:hover,
+#mainNav .navbar-brand:hover {
+	color: var(--mf-brass-pale) !important;
+}
+
+/* ----- Beyond Code — Film shelf (10/10 picks) ---------------------------- */
+/* Same horizontal scroll-snap pattern as the bookshelf, but cards are
+   fractionally wider and taller because movie posters are 2:3 aspect. */
+.filmshelf {
+	position: relative;
+	padding: 1.2rem 0 0.5rem;
+}
+
+.filmshelf-scroll {
+	display: flex;
+	gap: 1.6rem;
+	overflow-x: auto;
+	overflow-y: hidden;
+	padding: 0.6rem 0.5rem 1.4rem;
+	scroll-snap-type: x mandatory;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: thin;
+	scrollbar-color: rgba(154, 122, 62, 0.35) transparent;
+}
+
+/* When there are only a few cards, centre them on the row instead of
+   left-aligning them. On small screens the natural `overflow-x: auto`
+   takes over and the row scrolls. */
+.filmshelf--centered .filmshelf-scroll {
+	justify-content: center;
+}
+
+/* If the cards overflow on a small viewport, fall back to scroll-flush-left
+   (Bootstrap-style) so the user can swipe. */
+@media (max-width: 575px) {
+	.filmshelf--centered .filmshelf-scroll {
+		justify-content: flex-start;
+	}
+}
+.filmshelf-scroll::-webkit-scrollbar { height: 6px; }
+.filmshelf-scroll::-webkit-scrollbar-track { background: transparent; }
+.filmshelf-scroll::-webkit-scrollbar-thumb {
+	background: rgba(154, 122, 62, 0.35);
+	border-radius: 3px;
+}
+.filmshelf-scroll::-webkit-scrollbar-thumb:hover {
+	background: rgba(154, 122, 62, 0.55);
+}
+
+.film-card {
+	flex-shrink: 0;
+	scroll-snap-align: start;
+	width: 150px;
+	text-align: center;
+	color: inherit;
+	text-decoration: none !important;
+	transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.film-card:hover {
+	transform: translateY(-8px) scale(1.03);
+	color: inherit;
+}
+
+.film-poster-wrap {
+	position: relative;
+	width: 130px;
+	height: 195px;          /* 2:3 poster aspect */
+	margin: 0 auto 0.7rem;
+	border-radius: 6px;
+	overflow: hidden;
+	background: rgba(255,255,255,0.04);
+	box-shadow:
+		0 4px 20px rgba(0, 0, 0, 0.55),
+		0 0 0 1px rgba(154, 122, 62, 0.22);
+	transition: box-shadow 0.4s ease;
+}
+
+.film-card:hover .film-poster-wrap {
+	box-shadow:
+		0 14px 32px rgba(0, 0, 0, 0.7),
+		0 0 0 1px rgba(181, 151, 96, 0.55);
+}
+
+.film-poster-wrap img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.55s ease;
+}
+
+.film-card:hover .film-poster-wrap img {
+	transform: scale(1.05);
+}
+
+/* Brass rating badge — sits in the bottom-right of the poster */
+.film-rating {
+	position: absolute;
+	right: 6px;
+	bottom: 6px;
+	min-width: 22px;
+	height: 22px;
+	padding: 0 6px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(180deg, rgba(8, 9, 13, 0.9), rgba(8, 9, 13, 0.95));
+	border: 1px solid rgba(181, 151, 96, 0.6);
+	border-radius: 999px;
+	color: #f5e4b5;
+	font-family: var(--font-family-heading);
+	font-size: 0.66rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* "10" badge gets a hint more weight to read clearly. */
+.film-rating:not(:empty) { line-height: 1; }
+
+.film-title {
+	font-size: 0.74rem;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.85);
+	line-height: 1.3;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	margin-bottom: 0.15rem;
+	letter-spacing: 0.01em;
+}
+
+.film-meta {
+	font-size: 0.66rem;
+	color: rgba(255, 255, 255, 0.35);
+	line-height: 1.2;
+	letter-spacing: 0.02em;
+}
+
+/* ----- Footer — compact form (no big H4 columns) ------------------------- */
+footer.footer.footer--compact {
+	padding: 2.2rem 0 1.6rem !important;
+}
+
+.footer-socials {
+	display: flex;
+	justify-content: center;
+	gap: 0.4rem;
+	margin-bottom: 1.2rem;
+}
+
+.footer-meta {
+	display: inline-flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 0.7rem;
+	max-width: 100%;
+	color: rgba(255, 255, 255, 0.55);
+	font-size: 0.85rem;
+	font-family: var(--font-family-heading);
+	letter-spacing: 0.02em;
+	padding-top: 1rem;
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
+	width: 100%;
+	max-width: 720px;
+	margin: 0 auto;
+}
+
+.footer-meta-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	color: rgba(255, 255, 255, 0.7);
+	text-decoration: none !important;
+	transition: color 0.25s ease;
+}
+
+.footer-meta-item:hover {
+	color: var(--mf-brass-pale);
+}
+
+.footer-meta-item i {
+	color: var(--mf-brass-pale);
+	font-size: 0.85rem;
+}
+
+.footer-meta-sep {
+	color: rgba(154, 122, 62, 0.5);
+	font-weight: 400;
+}
+
+@media (max-width: 575px) {
+	.footer-meta { gap: 0.4rem 0.7rem; font-size: 0.78rem; }
+}
+
+
+/* ============================================================================
+   ===== ATELIER — High-budget editorial pass ================================
+   ============================================================================
+   Sealed additive layer. Goal: take the page from "dark dev portfolio" to
+   "T Magazine profile of an engineer". Six moves:
+
+     1. Fine-grain paper noise overlay across the entire page (the trick that
+        makes flat dark surfaces feel ink-printed instead of pixel-rendered).
+     2. Editorial chapter eyebrows above every section heading via the
+        `.chapter-eyebrow` element (Roman numeral in brass-foil + small-caps).
+     3. A magazine-style press strip below the hero — small-caps tickerline
+        of credentials separated by brass diamonds.
+     4. Refined dividers — chunky icon dividers become hairline brass rules
+        with a brass-foil glyph.
+     5. Editorial pull-quote treatment — italic Cormorant, hanging brass
+        quote-mark, hairline rules above and below.
+     6. Brass inner-glow on every card-hover (the move that reads "budget").
+
+   No prior layer is removed. Every existing animation, orb, timeline, and
+   hover continues to work. Atelier sits on top.
+   ========================================================================== */
+
+:root {
+	--at-ink:        #07070a;
+	--at-vellum:     #ddd3bd;
+	--at-brass-1:    #d4af6a;
+	--at-brass-2:    #9a7a3e;
+	--at-brass-3:    #66491c;
+	--at-blood:      #7a1a22;
+	--at-paper:      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='7' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.85  0 0 0 0 0.83  0 0 0 0 0.74  0 0 0 0.95 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* ----- Paper grain — the single biggest "feels printed" move -------------- */
+body::after {
+	content: '';
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 9998; /* under MF's vignette at 9999 */
+	background-image: var(--at-paper);
+	background-size: 220px 220px;
+	opacity: 0.07;
+	mix-blend-mode: overlay;
+}
+
+/* ----- Chapter eyebrows --------------------------------------------------- */
+.chapter-eyebrow {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.9rem;
+	margin: 0 auto 1rem;
+	max-width: 36rem;
+	font-family: var(--font-family-heading);
+	font-size: 0.66rem;
+	font-weight: 600;
+	letter-spacing: 0.42em;
+	text-transform: uppercase;
+	color: var(--at-brass-1);
+}
+
+.chapter-eyebrow::before,
+.chapter-eyebrow::after {
+	content: '';
+	flex: 1;
+	height: 1px;
+	background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 106, 0.6) 50%, transparent 100%);
+	max-width: 6rem;
+}
+
+.chapter-eyebrow .chapter-numeral {
+	font-family: var(--mf-display, "Cormorant Garamond", serif);
+	font-style: italic;
+	font-weight: 500;
+	font-size: 1.1rem;
+	letter-spacing: 0.04em;
+	background: linear-gradient(180deg, #f1d99a 0%, #b59760 60%, #66491c 130%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+}
+
+.chapter-eyebrow .chapter-bullet {
+	color: rgba(212, 175, 106, 0.45);
+	font-weight: 400;
+	letter-spacing: 0;
+}
+
+@media (max-width: 575px) {
+	.chapter-eyebrow {
+		font-size: 0.58rem;
+		letter-spacing: 0.32em;
+		gap: 0.55rem;
+	}
+	.chapter-eyebrow::before,
+	.chapter-eyebrow::after {
+		max-width: 3rem;
+	}
+	.chapter-eyebrow .chapter-numeral { font-size: 0.95rem; }
+}
+
+/* ----- Section headings — brass-foil editorial weight --------------------- */
+.page-section .page-section-heading {
+	background: linear-gradient(180deg, #ffffff 0%, #ddd3bd 60%, #b59760 135%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+	letter-spacing: 0.05em !important;
+	font-weight: 600;
+	font-feature-settings: "ss01" 1, "ss02" 1, "kern" 1, "liga" 1;
+	margin-bottom: 0.4rem !important;
+}
+
+#skills .page-section-heading { color: transparent !important; }
+
+/* ----- Refined dividers — hairline brass rule + brass-foil glyph ---------- */
+.page-section .divider-custom {
+	margin: 0.3rem auto 2.4rem;
+	width: 100%;
+	max-width: 18rem;
+}
+
+.page-section .divider-custom .divider-custom-line {
+	max-width: none;
+	flex: 1 1 auto;
+	height: 1px;
+	background: linear-gradient(90deg,
+		transparent 0%,
+		rgba(212, 175, 106, 0.55) 50%,
+		transparent 100%) !important;
+}
+
+.page-section .divider-custom .divider-custom-icon {
+	/* Solid brass — gradient text-fill broke the icon when Font Awesome
+	   replaced <i> with inline <svg> (background-clip:text doesn't apply to
+	   SVG glyphs the way it does to text). Solid color works on both. */
+	color: #b59760 !important;
+	background: none !important;
+	-webkit-text-fill-color: currentColor !important;
+	font-size: 0.95rem;
+	margin: 0 1rem;
+	filter: drop-shadow(0 0 8px rgba(181, 151, 96, 0.25));
+}
+
+/* Also force the SVG fill (inserted by Font Awesome JS) to inherit the
+   brass color — covers the path inside the inline <svg> too. */
+.page-section .divider-custom .divider-custom-icon svg {
+	color: inherit;
+	fill: currentColor;
+}
+
+/* ----- Press strip — magazine credit-line under the hero ------------------ */
+.press-strip {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 0.85rem 1.4rem;
+	list-style: none;
+	margin: 1.6rem auto 0;
+	padding: 0 1rem;
+	max-width: 60rem;
+	font-family: var(--font-family-heading);
+	font-size: 0.66rem;
+	font-weight: 500;
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	color: rgba(221, 211, 189, 0.6);
+}
+
+.press-strip li {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	white-space: nowrap;
+}
+
+.press-strip li:not(:last-child)::after {
+	content: '';
+	margin-left: 1.4rem;
+	width: 4px;
+	height: 4px;
+	transform: rotate(45deg);
+	background: linear-gradient(135deg, #d4af6a, #66491c);
+	box-shadow: 0 0 4px rgba(212, 175, 106, 0.45);
+}
+
+@media (max-width: 575px) {
+	.press-strip {
+		gap: 0.55rem 0.95rem;
+		font-size: 0.58rem;
+		letter-spacing: 0.22em;
+	}
+	.press-strip li:not(:last-child)::after { margin-left: 0.95rem; }
+}
+
+/* ----- Editorial pull-quote ----------------------------------------------- */
+.atelier-quote {
+	position: relative;
+	max-width: 42rem;
+	margin: 3.2rem auto 3rem;
+	padding: 1.6rem 2rem 1.4rem;
+	font-family: var(--mf-display, "Cormorant Garamond", serif);
+	font-style: italic;
+	font-weight: 400;
+	font-size: clamp(1.05rem, 0.85rem + 0.7vw, 1.45rem);
+	line-height: 1.55;
+	color: rgba(221, 211, 189, 0.82);
+	text-align: center;
+	border-top: 1px solid rgba(212, 175, 106, 0.22);
+	border-bottom: 1px solid rgba(212, 175, 106, 0.22);
+}
+
+.atelier-quote::before {
+	content: '\201C';
+	position: absolute;
+	top: -1.05rem;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 2rem;
+	height: 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: var(--mf-display, "Cormorant Garamond", serif);
+	font-style: normal;
+	font-size: 2.4rem;
+	line-height: 1;
+	color: var(--at-brass-1);
+	background: var(--at-ink);
+	border-radius: 50%;
+}
+
+.atelier-quote p { margin: 0 auto; max-width: 36rem; }
+
+.atelier-quote cite {
+	display: block;
+	margin-top: 0.9rem;
+	font-family: var(--font-family-heading);
+	font-style: normal;
+	font-size: 0.65rem;
+	font-weight: 600;
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	color: rgba(212, 175, 106, 0.72);
+}
+
+/* ----- Generous chapter rhythm + brass thread between sections ----------- */
+@media (min-width: 992px) {
+	.page-section { padding-top: 8.5rem; padding-bottom: 8.5rem; }
+}
+
+.page-section { position: relative; }
+.page-section + .page-section::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: clamp(8rem, 30vw, 22rem);
+	height: 1px;
+	background: linear-gradient(90deg,
+		transparent 0%,
+		rgba(212, 175, 106, 0.42) 50%,
+		transparent 100%);
+	pointer-events: none;
+	z-index: 3;
+}
+
+/* ----- Body copy on dark slabs reads slightly warmer --------------------- */
+.timeline-panel ul li,
+.portfolio-card-body p,
+.gh-repo-desc {
+	color: rgba(221, 211, 189, 0.72) !important;
+}
+
+.timeline-panel strong,
+.portfolio-card-body strong,
+.lifestyle-body strong,
+.edu-detail strong {
+	color: var(--at-vellum) !important;
+}
+
+/* ----- Refined timeline rail — single brass thread tapering in & out ----- */
+.timeline::before {
+	background: linear-gradient(to bottom,
+		transparent 0%,
+		rgba(212, 175, 106, 0.06) 6%,
+		rgba(212, 175, 106, 0.45) 50%,
+		rgba(212, 175, 106, 0.06) 94%,
+		transparent 100%) !important;
+	width: 1px !important;
+}
+
+.timeline-badge {
+	background: radial-gradient(circle at 30% 30%, #f1d99a 0%, #9a7a3e 55%, #5a3f17 100%) !important;
+	color: #0a0a0a !important;
+	box-shadow:
+		0 0 0 1px rgba(212, 175, 106, 0.55),
+		0 0 0 4px rgba(7, 7, 10, 0.85),
+		0 0 24px rgba(212, 175, 106, 0.3) !important;
+}
+
+/* ----- Highlight chip — brass thread instead of steel-blue --------------- */
+.highlight-chip {
+	border: 1px solid rgba(212, 175, 106, 0.42) !important;
+	background: rgba(7, 7, 10, 0.78) !important;
+}
+
+.highlight-chip i,
+.highlight-chip svg {
+	color: var(--at-brass-1) !important;
+	fill: var(--at-brass-1) !important;
+}
+
+.highlight-chip:hover {
+	border-color: rgba(212, 175, 106, 0.78) !important;
+	box-shadow: 0 6px 22px rgba(212, 175, 106, 0.22) !important;
+}
+
+/* ----- Edu-card brass accent --------------------------------------------- */
+.edu-card-accent {
+	height: 2px !important;
+	background: linear-gradient(90deg,
+		transparent 0%,
+		rgba(212, 175, 106, 0.0) 4%,
+		rgba(212, 175, 106, 0.85) 50%,
+		rgba(212, 175, 106, 0.0) 96%,
+		transparent 100%) !important;
+}
+
+/* ----- Skill icons + portfolio badge in brass ---------------------------- */
+.skill-badge i { color: var(--at-brass-1) !important; }
+
+.portfolio-card-badge {
+	color: var(--at-brass-1) !important;
+	border-color: rgba(212, 175, 106, 0.42) !important;
+	background: linear-gradient(180deg, rgba(212, 175, 106, 0.10), rgba(212, 175, 106, 0.02)) !important;
+}
+
+/* ----- Repo card titles + icons brass on hover --------------------------- */
+.gh-repo-icon { color: var(--at-brass-1) !important; }
+.gh-repo-name { color: var(--at-vellum) !important; transition: color 0.3s ease; }
+.gh-repo-card:hover .gh-repo-name { color: var(--at-brass-1) !important; }
+
+/* ----- Outline buttons — brass hairline -> filled brass on hover --------- */
+.btn-outline-light {
+	border-color: rgba(212, 175, 106, 0.55) !important;
+	color: var(--at-vellum) !important;
+}
+.btn-outline-light:hover {
+	background: linear-gradient(180deg, #f1d99a 0%, #9a7a3e 100%) !important;
+	border-color: rgba(212, 175, 106, 0.95) !important;
+	color: #0a0a0a !important;
+	box-shadow: 0 8px 24px rgba(212, 175, 106, 0.28) !important;
+}
+
+.btn-resume {
+	border-width: 1px !important;
+	letter-spacing: 0.18em !important;
+}
+
+/* ----- Resume modal toolbar in brass ------------------------------------- */
+.resume-modal-toolbar { border-bottom: 1px solid rgba(212, 175, 106, 0.18) !important; }
+.resume-modal-download {
+	background: linear-gradient(180deg, rgba(212, 175, 106, 0.18), rgba(212, 175, 106, 0.05)) !important;
+	border-color: rgba(212, 175, 106, 0.45) !important;
+	color: var(--at-vellum) !important;
+}
+.resume-modal-download:hover {
+	background: linear-gradient(180deg, #f1d99a, #9a7a3e) !important;
+	color: #0a0a0a !important;
+}
+
+/* ----- Lightbox close in brass ------------------------------------------ */
+.lightbox-close { border-color: rgba(212, 175, 106, 0.30) !important; }
+.lightbox-close:hover {
+	background: linear-gradient(180deg, #d4af6a, #9a7a3e) !important;
+	color: #0a0a0a !important;
+}
+
+/* ----- Beyond-sub headings as brass label -------------------------------- */
+.beyond-sub {
+	color: var(--at-brass-1) !important;
+	letter-spacing: 0.32em !important;
+	font-size: 0.7rem !important;
+}
+.beyond-sub i { color: var(--at-brass-1) !important; opacity: 0.85; }
+
+/* ----- Heatmap cards & gh-langs strip with brass hairline frame ---------- */
+#lc-heatmap-wrap,
+#gh-heatmap-wrap {
+	border: 1px solid rgba(212, 175, 106, 0.18) !important;
+	background:
+		linear-gradient(180deg, rgba(212, 175, 106, 0.025), transparent 30%),
+		rgba(7, 7, 10, 0.6) !important;
+}
+
+.gh-langs {
+	border: 1px solid rgba(212, 175, 106, 0.18) !important;
+	background:
+		linear-gradient(180deg, rgba(212, 175, 106, 0.03), transparent 40%),
+		rgba(7, 7, 10, 0.55) !important;
+}
+.gh-langs__title { color: var(--at-brass-1) !important; }
+
+/* ----- Section motto — italic Cormorant chapter-line --------------------- */
+.section-motto {
+	font-family: var(--mf-display, "Cormorant Garamond", serif);
+	font-style: italic;
+	font-weight: 400;
+	font-size: clamp(0.95rem, 0.78rem + 0.5vw, 1.2rem);
+	letter-spacing: 0.04em;
+	color: rgba(221, 211, 189, 0.65);
+	text-align: center;
+	margin: -0.4rem auto 1.6rem;
+	max-width: 38rem;
+	text-transform: none;
+}
+
+/* ----- Footer + colophon ------------------------------------------------- */
+.footer {
+	border-top: 1px solid rgba(212, 175, 106, 0.16);
+	background:
+		radial-gradient(ellipse at 50% 0%, rgba(212, 175, 106, 0.04), transparent 60%),
+		var(--secondary) !important;
+}
+
+.copyright {
+	background: #050507 !important;
+	border-top: 1px solid rgba(212, 175, 106, 0.10);
+}
+
+.atelier-colophon {
+	display: block;
+	margin: 0.7rem auto 0;
+	max-width: 38rem;
+	font-family: var(--mf-display, "Cormorant Garamond", serif);
+	font-style: italic;
+	font-size: 0.78rem;
+	color: rgba(221, 211, 189, 0.42);
+	letter-spacing: 0.02em;
+	line-height: 1.55;
+}
+
+.atelier-colophon::before {
+	content: '— ';
+	color: rgba(212, 175, 106, 0.7);
+}
+
+/* ----- Hero brass aura behind avatar + serif italic subheading ----------- */
+.masthead-content { position: relative; }
+.masthead-content::before {
+	content: '';
+	position: absolute;
+	left: 50%;
+	top: 5rem;
+	transform: translateX(-50%);
+	width: clamp(280px, 50vw, 520px);
+	height: clamp(280px, 50vw, 520px);
+	border-radius: 50%;
+	background: radial-gradient(circle, rgba(212, 175, 106, 0.10) 0%, transparent 60%);
+	filter: blur(40px);
+	pointer-events: none;
+	z-index: 0;
+}
+
+.masthead-heading {
+	letter-spacing: 0.06em !important;
+	font-weight: 700 !important;
+}
+
+.masthead .masthead-subheading {
+	color: rgba(221, 211, 189, 0.78) !important;
+	letter-spacing: 0.04em;
+	font-style: italic;
+	font-family: var(--mf-display, "Cormorant Garamond", serif);
+	font-size: clamp(0.98rem, 0.85rem + 0.45vw, 1.22rem) !important;
+}
+
+.masthead .masthead-subheading strong {
+	color: var(--at-brass-1) !important;
+	font-style: normal;
+	font-family: var(--font-family-heading);
+	font-weight: 600;
+	letter-spacing: 0.08em;
+}
+
+/* ----- Universal card chrome — brass inner-glow on hover ----------------- */
+.gh-stat-card,
+.gh-repo-card,
+.edu-card,
+.timeline-panel,
+.lifestyle-card,
+a.portfolio-card,
+.portfolio-card,
+.skill-badge {
+	background: linear-gradient(180deg,
+		rgba(212, 175, 106, 0.022) 0%,
+		rgba(7, 7, 10, 0.4) 100%) !important;
+	box-shadow:
+		inset 0 1px 0 rgba(212, 175, 106, 0.06),
+		0 12px 40px rgba(0, 0, 0, 0.45) !important;
+}
+
+.gh-stat-card:hover,
+.gh-repo-card:hover,
+.edu-card:hover,
+.timeline-panel:hover,
+.lifestyle-card:hover,
+a.portfolio-card:hover,
+.portfolio-card:hover,
+.skill-badge:hover {
+	box-shadow:
+		inset 0 1px 0 rgba(212, 175, 106, 0.18),
+		0 18px 50px rgba(0, 0, 0, 0.55),
+		0 0 28px rgba(212, 175, 106, 0.10) !important;
+}
+
+a.portfolio-card.portfolio-card--featured {
+	background:
+		linear-gradient(180deg, rgba(212, 175, 106, 0.10) 0%, rgba(212, 175, 106, 0) 35%),
+		linear-gradient(180deg, rgba(212, 175, 106, 0.022), rgba(7, 7, 10, 0.4)) !important;
+	border-color: rgba(212, 175, 106, 0.32) !important;
+}
+
+a.portfolio-card.portfolio-card--featured:hover {
+	border-color: rgba(212, 175, 106, 0.65) !important;
+}
+
+/* ----- Lifestyle, education, repo titles in vellum/brass ----------------- */
+.lifestyle-body h5 { color: var(--at-vellum) !important; letter-spacing: 0.04em; }
+.lifestyle-body h5 i { color: var(--at-brass-1) !important; opacity: 0.9; }
+.edu-card h5 { color: var(--at-vellum) !important; }
+.edu-card-icon { color: var(--at-brass-1) !important; }
+.edu-extra-tag {
+	border: 1px solid rgba(212, 175, 106, 0.22) !important;
+	color: rgba(221, 211, 189, 0.55) !important;
+}
+
+/* ----- Reduced motion safety --------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	body::after { display: none; }
+}
+
+/* End of Atelier layer */
+
+/* ----- Bookshelf — alignment fix ----------------------------------------- */
+/* Original `.book-card { width: 140px }` with a `120px` cover centred inside
+   created a 10 px inset that read as misalignment between cards. Collapse
+   the card width to match the cover so every cover is flush at the same x-
+   position. The text below clamps to `120px` automatically. */
+.bookshelf-scroll .book-card {
+	width: 120px !important;
+}
+
+.bookshelf-scroll .book-cover-wrap {
+	margin: 0 0 0.65rem !important;   /* drop the auto-centring; flush to card edge */
+	width: 120px;
+	/* Open Library cover aspect ratios vary (1:1.32 to 1:1.58). With
+	   `object-fit: cover` the title was being clipped on tighter ratios
+	   (Psychology of Money was a casualty). Show the full artwork on a
+	   dark backdrop instead. */
+	background:
+		radial-gradient(ellipse at center, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.45) 100%),
+		#0a0b10;
+}
+
+.bookshelf-scroll .book-cover-wrap img {
+	object-fit: contain !important;
+	object-position: center center;
+}
+
+/* When there are few cards (the centred variant) keep `justify-content` only
+   on the wider viewports where the row genuinely fits. Once the cards
+   overflow, native scroll takes over and `justify-content` is a no-op. */
+.bookshelf--centered .bookshelf-scroll {
+	justify-content: center;
+}
+
+@media (max-width: 575px) {
+	.bookshelf--centered .bookshelf-scroll {
+		justify-content: flex-start;
+	}
+}
+
+/* Add a small left padding so the first card doesn't sit awkwardly flush
+   against the section's container edge. Mirrors what the filmshelf already
+   does via its outer card gap. */
+.bookshelf-scroll {
+	padding-left: 0.4rem !important;
+	padding-right: 0.4rem !important;
+}
+
+/* Brass 5★ badge — matches .film-rating exactly so the two shelves share
+   a visual vocabulary (rating in the bottom-right of every cover). */
+.book-rating {
+	position: absolute;
+	right: 6px;
+	bottom: 6px;
+	min-width: 30px;
+	height: 22px;
+	padding: 0 7px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(180deg, rgba(8, 9, 13, 0.92), rgba(8, 9, 13, 0.96));
+	border: 1px solid rgba(181, 151, 96, 0.6);
+	border-radius: 999px;
+	color: #f5e4b5;
+	font-family: var(--font-family-heading);
+	font-size: 0.66rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+	pointer-events: none;
+}
+
+/* On hover, 5★ books pick up the brass-rim treatment — same as film-card. */
+.book-card--star5:hover .book-cover-wrap {
+	box-shadow:
+		0 14px 32px rgba(0, 0, 0, 0.7),
+		0 0 0 1px rgba(181, 151, 96, 0.55);
+}
+
+/* The Berserk card author line is longer than usual; clamp to two lines so
+   no single shelf row breaks. */
+.book-card--star5 .book-author {
+	-webkit-line-clamp: 2;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+/* ----- Copyright bar — clean single-line layout ------------------------- */
+/* Replaces the older multi-line manifesto + colophon stack with a single
+   tight strip. The brass dot separator wraps gracefully on narrow screens. */
+
+.copyright {
+	background: #050507 !important;
+	border-top: 1px solid rgba(212, 175, 106, 0.10);
+	padding: 1.1rem 0 !important;
+}
+
+.copyright-line {
+	display: inline-flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 0.55rem 1rem;
+	font-family: var(--font-family-heading);
+	font-size: 0.74rem;
+	letter-spacing: 0.06em;
+	color: rgba(255, 255, 255, 0.55);
+	max-width: 100%;
+}
+
+.copyright-line .copyright-mark {
+	color: rgba(181, 151, 96, 0.85);
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	margin-left: 0.15rem;
+}
+
+.copyright-line .copyright-sep {
+	color: rgba(154, 122, 62, 0.5);
+	font-weight: 400;
+}
+
+/* Override the older `.legacy-link` block (mt-0.5rem rule) so it sits inline
+   with the copyright on the same line. */
+.copyright-line .legacy-link {
+	display: inline;
+	margin-top: 0;
+	font-size: 0.74rem;
+	color: rgba(255, 255, 255, 0.55);
+	letter-spacing: 0.04em;
+	text-decoration: none;
+	transition: color 0.25s ease;
+}
+
+.copyright-line .legacy-link:hover {
+	color: rgba(181, 151, 96, 0.95);
+	text-decoration: none;
+}
+
+/* Hide the lingering forge-manifesto + atelier-colophon if they ever come
+   back in cached HTML — defensive only, current markup doesn't have them. */
+.copyright .forge-manifesto,
+.copyright .atelier-colophon {
+	display: none;
+}
+
+/* ----- YouTube video skeleton — shimmer fill while latest videos load ---- */
+.beyond-video-skeleton {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(110deg,
+		rgba(255, 255, 255, 0.04) 8%,
+		rgba(255, 255, 255, 0.08) 18%,
+		rgba(255, 255, 255, 0.04) 33%);
+	background-size: 200% 100%;
+	animation: shimmer 1.6s linear infinite;
+}
+
+/* ============================================================================
+   ===== Typography polish — Apple-adjacent display rhythm ===================
+   ============================================================================
+   Goal: the page reads "premium tech site" rather than "dev resume". Levers:
+     1. Inter for headings (geometric, tight; matches Apple/Linear/Stripe).
+     2. Tight letter-spacing on big text (-0.02em); slightly loose on body.
+     3. Body line-height 1.7 + word-spacing 0.02em for a magazine cadence.
+     4. Hairline -0.03em on hero h1 (Apple's signature signature).
+     5. OpenType features: kerning, ligatures, contextual alts, tabular-nums
+        on metrics, opsz axis for crisp glyph at every size.
+   Additive only — every rule below either targets a class that already exists
+   or wins via specificity over an earlier-declared shorthand. ============= */
+
+/* Body cadence — Apple's reading text rhythm. Word-spacing is the secret
+   ingredient: 0.02em is enough to feel intentional but not a stretch. */
+body {
+	line-height: 1.7;
+	letter-spacing: 0.005em;
+	word-spacing: 0.02em;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+}
+
+/* Headings — tighter tracking, Inter, no all-caps stretch by default */
+h1, h2, h3, h4, h5, h6 {
+	letter-spacing: -0.015em;
+	font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1;
+	font-optical-sizing: auto;
+}
+
+/* Hero h1 — the page's biggest moment. Pulls in tighter than other headings. */
+.masthead-heading {
+	letter-spacing: -0.03em !important;
+	font-weight: 700 !important;
+	font-size: clamp(2.4rem, 6vw, 4rem) !important;
+	line-height: 1.04 !important;
+}
+
+/* Subheading — paper-italic-like restraint. Lato's italic is decent. */
+.masthead-subheading {
+	letter-spacing: -0.01em !important;
+	word-spacing: 0.04em;
+	font-weight: 300;
+	color: rgba(207, 210, 214, 0.85);
+}
+
+/* Section headings — pull tracking back from the loose +0.05em the
+   blue theme used. Inter's geometric forms read better tight. */
+.page-section .page-section-heading {
+	letter-spacing: -0.012em !important;
+	font-weight: 600 !important;
+	font-size: clamp(1.85rem, 3.4vw, 2.6rem) !important;
+	line-height: 1.1 !important;
+}
+
+/* Body paragraphs in the timeline / portfolio cards / edu cards — give them
+   the same comfortable reading rhythm. */
+.timeline-panel ul li,
+.timeline-panel p,
+.edu-card p,
+.portfolio-card-body p,
+.lifestyle-body p,
+.gh-repo-desc {
+	line-height: 1.72 !important;
+	letter-spacing: 0.005em;
+	word-spacing: 0.02em;
+}
+
+/* Beyond Code sub-section labels (Reading, Music, Coding Activity, etc.)
+   — these are deliberately tracked-caps for editorial contrast against the
+   tight Inter headings above. Use Montserrat (kept under --font-family-mono-display)
+   so the contrast reads "small caps as section dividers". */
+.beyond-sub {
+	font-family: var(--font-family-mono-display) !important;
+	letter-spacing: 0.28em !important;
+	font-size: 0.78rem !important;
+	font-weight: 500 !important;
+	color: rgba(255, 255, 255, 0.5) !important;
+	text-indent: 0.28em;  /* visually re-centre after the trailing tracking */
+}
+
+/* Buttons — tracked caps but slightly looser than before (more breathable),
+   and tightened weight so they feel premium not chunky. */
+.btn,
+.btn-outline-light,
+.btn-outline-light.btn-sm {
+	font-family: var(--font-family-mono-display);
+	letter-spacing: 0.18em;
+	font-weight: 500;
+	font-size: 0.82rem;
+}
+
+.btn-outline-light.btn-sm {
+	padding: 0.5rem 1.05rem;
+}
+
+/* Nav — loosen the link spacing to give them room. */
+#mainNav .navbar-nav .nav-link {
+	font-family: var(--font-family-mono-display);
+	letter-spacing: 0.15em;
+	font-weight: 500;
+}
+
+/* Numbers (the metrics) — switch to tabular monospaced figures for column
+   alignment, and pull spacing in tight so they look like dashboard counters. */
+.gh-stat-number,
+.lc-bar,
+.lc-streak-line,
+.gh-langs__summary {
+	font-family: var(--font-family-heading);
+	font-feature-settings: "tnum" 1, "lnum" 1, "ss01" 1, "kern" 1;
+	font-variant-numeric: tabular-nums lining-nums;
+	letter-spacing: -0.015em;
+}
+
+/* Card titles (timeline h4, edu h5, portfolio h5, etc.) — tighten and uplift. */
+.timeline-panel h4,
+.edu-card h5,
+.portfolio-card-body h5,
+.gh-repo-name,
+.lifestyle-body h5,
+.book-title,
+.film-title {
+	letter-spacing: -0.012em !important;
+}
+
+/* Cmdk + kbd — leave these tracked-caps Montserrat for the keyboard-shortcut
+   visual idiom. */
+.cmdk-input,
+.cmdk-item-title,
+.cmdk-kbd,
+.cmdk-item-kind {
+	font-family: var(--font-family-mono-display);
+}
+
+/* Press strip / footer manifesto / copyright — stay tracked Montserrat too. */
+.press-strip,
+.forge-manifesto,
+.copyright-line,
+.atelier-colophon {
+	font-family: var(--font-family-mono-display);
+}
+
+/* Reduce the all-caps shouting on the navbar brand: keep slightly tighter. */
+.navbar-brand {
+	font-family: var(--font-family-heading);
+	letter-spacing: -0.02em;
+	font-weight: 700;
+}
+
+/* End of Typography polish */
+
+/* ----- Scroll-to-top/bottom FAB — Midnight Forge palette ----------------- */
+/* The FAB existed but was rendering invisible because the body::before
+   whisper-vignette sits at z-index 9999 (above the FAB's 1042). Bump the
+   FAB above the vignette and recolor the ring/icon from steel-blue to brass
+   so it matches the rest of the page's atelier palette. */
+
+.scroll-fab {
+	z-index: 10000 !important;
+	background: rgba(8, 9, 13, 0.78) !important;
+	border-color: rgba(154, 122, 62, 0.35) !important;
+	box-shadow:
+		0 10px 28px rgba(0, 0, 0, 0.55),
+		0 0 0 1px rgba(154, 122, 62, 0.15),
+		0 0 22px rgba(154, 122, 62, 0.08) !important;
+}
+
+.scroll-fab:hover {
+	background: rgba(8, 9, 13, 0.92) !important;
+	border-color: rgba(181, 151, 96, 0.7) !important;
+	box-shadow:
+		0 14px 36px rgba(0, 0, 0, 0.6),
+		0 0 0 1px rgba(181, 151, 96, 0.45),
+		0 0 36px rgba(181, 151, 96, 0.18) !important;
+}
+
+.scroll-fab-track {
+	stroke: rgba(255, 255, 255, 0.06) !important;
+}
+
+.scroll-fab-progress {
+	stroke: #b59760 !important;       /* brass progress arc */
+	filter: drop-shadow(0 0 4px rgba(181, 151, 96, 0.45));
+}
+
+.scroll-fab-icon {
+	color: #b59760;
+	font-size: 0.92rem;
+}
+
+.scroll-fab-icon svg {
+	color: inherit;
+	fill: currentColor;
+}
+
+/* ----- Codeforces card — bump the logo 15% so it fills the card frame
+   like StopStalk and the other compact-variant cards. The compact variant
+   uses `object-fit: contain`, so without a transform the CF banner reads
+   smaller than its peers. ------------------------------------------------- */
+.portfolio-card-img--cf {
+	background: #ffffff !important;
+	padding: 0.9rem 1rem !important;   /* tighter padding since we removed
+	                                      the dark-card breathing room */
+}
+
+.portfolio-card-img--cf img {
+	transform: scale(1.12);
+	transition: transform 0.5s ease;
+}
+
+/* Preserve the hover-scale on top of the base zoom — it composes (the
+   selector below applies an extra `scale(1.08)` from `.portfolio-card:hover
+   .portfolio-card-img img`, so on hover the CF logo will land at
+   1.12 × 1.08 ≈ 1.21, still in good taste). */
+.portfolio-card:hover .portfolio-card-img--cf img {
+	transform: scale(1.21);
+}
+
+/* ----- Hero avatar — ensure clicks reach it ------------------------------ */
+/* The masthead-content::before brass aura at z-index 0 was ending up on
+   the same stacking layer as the avatar; with `pointer-events: none` it
+   shouldn't intercept, but giving the avatar an explicit z-index removes
+   any ambiguity and guarantees its click handler fires. */
+.masthead .masthead-avatar.zoomable,
+.masthead-avatar.zoomable {
+	position: relative;
+	z-index: 5;
+	cursor: zoom-in !important;
+	pointer-events: auto !important;
+}
+
+/* The masthead's parallax wrapper (`.masthead-content`) gets a JS-driven
+   `transform` on scroll, which establishes a new stacking context. Make sure
+   the wrapper itself accepts pointer events — earlier rules elsewhere put a
+   blanket pointer-events: none on `body:not(.ready) main`, which (combined
+   with the wrapper's transform creating a containing block) was leaving the
+   avatar non-clickable until after page-ready. The `pointer-events: auto`
+   here is belt-and-braces. */
+.masthead .masthead-content {
+	pointer-events: auto;
+}
+
+/* ----- AOS interaction guarantee --------------------------------------------
+   AOS (the scroll-triggered animation library) puts `pointer-events: none`
+   on un-animated `[data-aos]` elements and only flips them back to `auto`
+   once `aos-animate` is added. If AOS never fires for an element (race
+   conditions, intersection-observer not seeing it during a fast scroll, or
+   re-init timing), the element stays click-dead forever.
+
+   Force pointer-events back on for the elements that MUST stay clickable
+   regardless of animation state (lifestyle photos, portfolio cards, films,
+   books, awards, etc.). Visual entry animation still runs; only the click
+   gate is removed. */
+[data-aos] .lifestyle-img,
+[data-aos] .lifestyle-card,
+[data-aos].lifestyle-img,
+[data-aos] .portfolio-card,
+[data-aos] .film-card,
+[data-aos] .book-card,
+[data-aos] .zoomable,
+[data-aos] .zoomable-btn,
+[data-aos] .zoomable-figure,
+[data-aos] .portfolio-card-img--button,
+.lifestyle-img,
+.lifestyle-card,
+.portfolio-card,
+.film-card,
+.book-card,
+.zoomable-btn,
+.zoomable-figure {
+	pointer-events: auto !important;
+}
+
+/* AOS sets opacity:0 on the parent `[data-aos]` wrapper before animating.
+   For the lifestyle row specifically — the user reported the photos never
+   become clickable — we ensure the wrapper itself eventually reaches
+   opacity 1 even if intersection-observer never fires. AOS will still run
+   normally if it does fire (once-mode); this is the failsafe. */
+@keyframes aos-failsafe-reveal {
+	to { opacity: 1; transform: none; }
+}
+[data-aos]:not(.aos-animate) {
+	animation: aos-failsafe-reveal 0s ease 3s forwards;
+}
+
+/* End of Midnight Forge layer */

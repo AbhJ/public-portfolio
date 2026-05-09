@@ -27,8 +27,10 @@ function revealPage() {
 // By then all top-level IIFEs have registered their data sources.
 window.addEventListener("load", function () { dataSourceDone(); });
 
-// Safety net: if all per-fetch timeouts somehow fail, force reveal at 10s
-setTimeout(revealPage, 10000);
+// Safety net: if all per-fetch timeouts somehow fail, force reveal at 2.5s
+// (was 10s — that was a long time to stare at a blank screen if a single
+// proxy timed out). Real fetches respond in <1s; 2.5s is safely above p99.
+setTimeout(revealPage, 2500);
 
 // Fetch wrapper with per-request timeout (default 6s) — never hangs
 function fetchWithTimeout(url, opts, ms) {
@@ -45,6 +47,207 @@ function fetchWithTimeout(url, opts, ms) {
 		new Promise(function (_, reject) { setTimeout(function () { reject(new Error("Timeout")); }, ms); })
 	]);
 }
+
+/* =====================================================================
+   ABJ_HM — DOM-grid heatmap component (LeetCode/GitHub-style).
+   ---------------------------------------------------------------------
+   Why DOM and not canvas: the previous canvas implementation scaled the
+   element with `max-width: 100%` while the per-cell hit-test math stayed
+   in canvas-logical pixels. On narrow viewports the right edge clipped
+   (last month vanished) and tooltip mapping became wrong. A DOM grid
+   uses the browser's own layout & hit testing for free, scrolls
+   horizontally on small screens, and works perfectly on touch.
+
+   Public API:
+     var hm = ABJ_HM.create({
+       gridEl,             // container; will be filled with day cells
+       monthsEl,           // container for the month-label row
+       tooltipEl,          // shared tooltip element
+       weeks: 53,          // optional, defaults to 53
+       levelClass(count, cell) → "hm-l-2" / "hm-lc-3" / etc,
+       labelFor(cell) → string for the tooltip
+     });
+     hm.update(countsByDate, levelsByDate?);
+   ===================================================================== */
+window.ABJ_HM = (function () {
+	var MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+	function pad2(n) { return String(n).padStart(2, "0"); }
+	function dateKey(d) { return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()); }
+
+	function create(opts) {
+		var WEEKS = opts.weeks || 53;
+		var gridEl = opts.gridEl;
+		var monthsEl = opts.monthsEl;
+		var tooltipEl = opts.tooltipEl;
+		var levelClass = opts.levelClass || function () { return "hm-l-0"; };
+		var labelFor = opts.labelFor || function (c) { return c.key; };
+
+		// Build cells: WEEKS columns × 7 rows, ending today, aligned so the
+		// final column's bottom-right is "today" or one of today's weekdays.
+		var today = new Date(); today.setHours(0, 0, 0, 0);
+		var startDay = new Date(today);
+		// Sunday-first grid; (WEEKS*7-1) days back from today's column origin.
+		startDay.setDate(startDay.getDate() - (WEEKS * 7 - 1) - today.getDay());
+
+		var cells = []; // {date, key, count, level, el}
+		var byKey = {};
+		var d = new Date(startDay);
+		while (d <= today) {
+			var key = dateKey(d);
+			cells.push({ date: new Date(d), key: key, count: 0, level: 0 });
+			byKey[key] = cells.length - 1;
+			d.setDate(d.getDate() + 1);
+		}
+
+		var cols = Math.ceil(cells.length / 7);
+
+		// Render the day-cell grid. Each cell is a <button> for native focus,
+		// keyboard support, and (most importantly) reliable touch hit-testing.
+		gridEl.style.gridTemplateColumns = "repeat(" + cols + ", 1fr)";
+		gridEl.style.gridTemplateRows = "repeat(7, 1fr)";
+		gridEl.innerHTML = "";
+		var frag = document.createDocumentFragment();
+		for (var i = 0; i < cells.length; i++) {
+			var cell = cells[i];
+			var col = Math.floor(i / 7);
+			var row = i % 7;
+			var btn = document.createElement("button");
+			btn.type = "button";
+			btn.className = "hm-cell hm-l-0";
+			btn.style.gridColumn = (col + 1);
+			btn.style.gridRow = (row + 1);
+			btn.setAttribute("data-key", cell.key);
+			btn.setAttribute("aria-label", labelFor(cell));
+			btn.tabIndex = -1;
+			cell.el = btn;
+			frag.appendChild(btn);
+		}
+		gridEl.appendChild(frag);
+
+		// Render the month-label strip, aligned to the same N-column grid so
+		// labels line up exactly with the start of each month's first column.
+		if (monthsEl) {
+			monthsEl.style.gridTemplateColumns = "repeat(" + cols + ", 1fr)";
+			monthsEl.innerHTML = "";
+			var lastLabeledMonth = -1;
+			for (var c = 0; c < cols; c++) {
+				var ci = c * 7;
+				if (ci >= cells.length) break;
+				var colDate = cells[ci].date;
+				var span = document.createElement("span");
+				span.className = "hm-month";
+				span.style.gridColumn = (c + 1);
+				if (colDate.getDate() <= 7 && colDate.getMonth() !== lastLabeledMonth) {
+					span.textContent = MONTH_NAMES[colDate.getMonth()];
+					lastLabeledMonth = colDate.getMonth();
+				}
+				monthsEl.appendChild(span);
+			}
+		}
+
+		// ---- Tooltip handling — works for hover, click, AND touch tap. -----
+		// Strategy: a single shared tooltip element. Hovering positions it
+		// over the cell; clicking/tapping a cell pins it (visible until the
+		// user taps elsewhere or another cell). Outside-click dismisses.
+		var pinned = false;
+
+		function showTipFor(cell) {
+			if (!tooltipEl) return;
+			tooltipEl.textContent = labelFor(cell);
+			tooltipEl.classList.add("visible");
+			// Position the tooltip in the heatmap's wrap, above the target cell.
+			// We measure relative to the wrap so horizontal scroll doesn't break it.
+			var wrap = tooltipEl.parentElement; // .hm-wrap
+			if (!wrap) return;
+			var wrapRect = wrap.getBoundingClientRect();
+			var cellRect = cell.el.getBoundingClientRect();
+			var tipW = tooltipEl.offsetWidth;
+			var ideal = (cellRect.left - wrapRect.left) + (cellRect.width / 2) - (tipW / 2);
+			var clamped = Math.max(8, Math.min(ideal, wrap.offsetWidth - tipW - 8));
+			tooltipEl.style.left = clamped + "px";
+			tooltipEl.style.top = (cellRect.top - wrapRect.top - tooltipEl.offsetHeight - 6) + "px";
+		}
+
+		function hideTip() {
+			if (!tooltipEl) return;
+			tooltipEl.classList.remove("visible");
+			pinned = false;
+		}
+
+		// Hover (desktop only — touch devices won't fire this reliably).
+		gridEl.addEventListener("mouseover", function (e) {
+			if (pinned) return;
+			var btn = e.target.closest(".hm-cell");
+			if (!btn) return;
+			var k = btn.getAttribute("data-key");
+			if (k && byKey.hasOwnProperty(k)) showTipFor(cells[byKey[k]]);
+		});
+		gridEl.addEventListener("mouseleave", function () {
+			if (!pinned) hideTip();
+		});
+
+		// Click / tap — pin the tooltip. Works on every platform.
+		gridEl.addEventListener("click", function (e) {
+			var btn = e.target.closest(".hm-cell");
+			if (!btn) return;
+			e.preventDefault();
+			var k = btn.getAttribute("data-key");
+			if (!k || !byKey.hasOwnProperty(k)) return;
+			var cell = cells[byKey[k]];
+			// If this same cell is already pinned, treat it as a toggle off.
+			if (pinned && tooltipEl.dataset.pinnedKey === k) {
+				hideTip();
+				delete tooltipEl.dataset.pinnedKey;
+				return;
+			}
+			pinned = true;
+			tooltipEl.dataset.pinnedKey = k;
+			showTipFor(cell);
+		});
+
+		// Outside-tap dismisses the pinned tooltip.
+		document.addEventListener("click", function (e) {
+			if (!pinned) return;
+			if (e.target.closest(".hm-cell")) return;       // handled above
+			if (e.target === tooltipEl) return;
+			hideTip();
+			delete tooltipEl.dataset.pinnedKey;
+		}, true);
+
+		// ---- Public update method ----
+		// counts: { "YYYY-MM-DD": number }; levels: optional 0-4 per date.
+		function update(counts, levels) {
+			counts = counts || {};
+			levels = levels || {};
+			for (var i = 0; i < cells.length; i++) {
+				var cell = cells[i];
+				var c = counts[cell.key] | 0;
+				var l = levels[cell.key];
+				cell.count = c;
+				if (typeof l === "number") cell.level = l;
+				// Recompute class from count or level
+				cell.el.className = "hm-cell " + levelClass(cell.count, cell);
+				cell.el.setAttribute("aria-label", labelFor(cell));
+				// If a tooltip is currently shown for this cell, refresh its text.
+				if (pinned && tooltipEl && tooltipEl.dataset.pinnedKey === cell.key) {
+					tooltipEl.textContent = labelFor(cell);
+				}
+			}
+			// Auto-scroll to the right so the most-recent week is visible on
+			// narrow screens. Only run once on first non-empty update.
+			var scroller = gridEl.closest(".hm-scroll");
+			if (scroller && !scroller.dataset.scrolledRight) {
+				scroller.scrollLeft = scroller.scrollWidth;
+				scroller.dataset.scrolledRight = "1";
+			}
+		}
+
+		return { update: update, cells: cells };
+	}
+
+	return { create: create };
+})();
 
 (function ($) {
 	"use strict";
@@ -276,126 +479,43 @@ AOS.init({
 			.finally(dataSourceDone);
 	}
 
-	// ---- 2. Calendar heatmap ----
-	var canvas = document.getElementById("lc-heatmap");
+	// ---- 2. Calendar heatmap (DOM grid — LeetCode-style) ----
+	var hmGrid = document.getElementById("lc-hm-grid");
+	var hmMonths = document.getElementById("lc-hm-months");
 	var tooltip = document.getElementById("lc-heatmap-tooltip");
-	if (!canvas) return;
-	var ctx = canvas.getContext("2d");
-	var dpr = window.devicePixelRatio || 1;
-	var WEEKS = 52, CELL = 11, GAP = 2, RADIUS = 3, MARGIN_LEFT = 32, MARGIN_TOP = 20;
-	var COLORS = [
-		"rgba(255,255,255,0.04)",
-		"rgba(255,161,22,0.25)",
-		"rgba(255,161,22,0.45)",
-		"rgba(255,161,22,0.65)",
-		"rgba(255,161,22,0.85)",
-		"rgba(255,161,22,1.0)"
-	];
-	var DAY_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""];
-	var MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+	if (!hmGrid) return;
 
-	var today = new Date(); today.setHours(0,0,0,0);
-	var startDay = new Date(today);
-	startDay.setDate(startDay.getDate() - (WEEKS * 7 - 1) - today.getDay());
-
-	var grid = [];
-	var dateMap = {};
-	var d = new Date(startDay);
-	while (d <= today) {
-		var key = d.toISOString().slice(0, 10);
-		grid.push({ date: new Date(d), key: key, count: 0 });
-		dateMap[key] = grid.length - 1;
-		d.setDate(d.getDate() + 1);
-	}
-
-	var cols = Math.ceil(grid.length / 7);
-	var W = MARGIN_LEFT + cols * (CELL + GAP);
-	var H = MARGIN_TOP + 7 * (CELL + GAP);
-	canvas.width = W * dpr; canvas.height = H * dpr;
-	canvas.style.width = W + "px"; canvas.style.height = H + "px";
-	ctx.scale(dpr, dpr);
-
-	function getColor(count) {
-		if (count === 0) return COLORS[0];
-		if (count <= 2) return COLORS[1];
-		if (count <= 4) return COLORS[2];
-		if (count <= 6) return COLORS[3];
-		if (count <= 9) return COLORS[4];
-		return COLORS[5];
-	}
-
-	function drawGrid() {
-		ctx.clearRect(0, 0, W, H);
-		ctx.font = "10px -apple-system, BlinkMacSystemFont, sans-serif";
-		ctx.fillStyle = "rgba(255,255,255,0.3)";
-		ctx.textBaseline = "middle";
-		for (var r = 0; r < 7; r++) {
-			if (DAY_LABELS[r]) ctx.fillText(DAY_LABELS[r], 0, MARGIN_TOP + r * (CELL + GAP) + CELL / 2);
-		}
-		// Label a month only at the column whose Sunday falls within the first 7 days
-		// of that month. This matches GitHub's algorithm and guarantees ~4-cell spacing.
-		var lastLabeledMonth = -1;
-		for (var c = 0; c < cols; c++) {
-			var ci = c * 7;
-			if (ci >= grid.length) break;
-			var colDate = grid[ci].date;
-			if (colDate.getDate() > 7) continue;
-			var m = colDate.getMonth();
-			if (m === lastLabeledMonth) continue;
-			ctx.fillStyle = "rgba(255,255,255,0.3)";
-			ctx.fillText(MONTH_NAMES[m], MARGIN_LEFT + c * (CELL + GAP), 10);
-			lastLabeledMonth = m;
-		}
-		for (var i = 0; i < grid.length; i++) {
-			var col = Math.floor(i / 7), row = i % 7;
-			var x = MARGIN_LEFT + col * (CELL + GAP), y = MARGIN_TOP + row * (CELL + GAP);
-			ctx.beginPath();
-			ctx.roundRect(x, y, CELL, CELL, RADIUS);
-			ctx.fillStyle = getColor(grid[i].count);
-			ctx.fill();
-			grid[i].px = x; grid[i].py = y;
-		}
-	}
-
-	canvas.addEventListener("mousemove", function (e) {
-		var rect = canvas.getBoundingClientRect();
-		var mx = e.clientX - rect.left, my = e.clientY - rect.top;
-		var found = null;
-		for (var i = 0; i < grid.length; i++) {
-			if (mx >= grid[i].px && mx <= grid[i].px + CELL && my >= grid[i].py && my <= grid[i].py + CELL) {
-				found = grid[i]; break;
+	var hm = ABJ_HM.create({
+		gridEl: hmGrid,
+		monthsEl: hmMonths,
+		tooltipEl: tooltip,
+		levelClass: function (count) {
+			if (count === 0) return "hm-lc-0";
+			if (count <= 2) return "hm-lc-1";
+			if (count <= 4) return "hm-lc-2";
+			if (count <= 6) return "hm-lc-3";
+			return "hm-lc-4";
+		},
+		labelFor: function (cell) {
+			var dateStr = cell.date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+			if (cell.count > 0) {
+				return cell.count + " submission" + (cell.count !== 1 ? "s" : "") + " on " + dateStr;
 			}
-		}
-		if (found) {
-			var label = found.count > 0
-				? found.count + " submission" + (found.count !== 1 ? "s" : "") + " on " + found.date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
-				: "No submissions on " + found.date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-			tooltip.textContent = label;
-			tooltip.classList.add("visible");
-			var tipW = tooltip.offsetWidth;
-			var wrapW = canvas.parentElement ? canvas.parentElement.offsetWidth : W;
-			tooltip.style.left = Math.max(0, Math.min(found.px + CELL / 2 - tipW / 2, wrapW - tipW - 4)) + "px";
-			tooltip.style.top = (found.py - 30) + "px";
-		} else {
-			tooltip.classList.remove("visible");
+			return "No submissions on " + dateStr;
 		}
 	});
-	canvas.addEventListener("mouseleave", function () { tooltip.classList.remove("visible"); });
 
-	drawGrid(); // empty grid first
-
-	// ---- Apply calendar data to heatmap grid ----
+	// ---- Apply calendar data ----
 	function applyCalendar(cal, streak, activeDays) {
+		var counts = {};
 		Object.keys(cal).forEach(function (ts) {
 			var dt = new Date(parseInt(ts, 10) * 1000);
 			var key = dt.getFullYear() + "-" +
 				String(dt.getMonth() + 1).padStart(2, "0") + "-" +
 				String(dt.getDate()).padStart(2, "0");
-			if (dateMap.hasOwnProperty(key)) {
-				grid[dateMap[key]].count = cal[ts];
-			}
+			counts[key] = cal[ts];
 		});
-		drawGrid();
+		hm.update(counts);
 
 		var streakEl = document.getElementById("lc-streak");
 		if (streakEl && (streak || activeDays)) {
@@ -523,171 +643,55 @@ AOS.init({
 // This avoids the 60 req/hr unauthenticated API rate limit entirely.
 (function () {
 	var USERNAME = "AbhJ";
-	var WEEKS = 52; // Full year of columns (matches GitHub profile)
-	var CELL = 11;
-	var GAP = 2;
-	var RADIUS = 3;
-	var MARGIN_LEFT = 32;
-	var MARGIN_TOP = 20;
-	var canvas = document.getElementById("gh-heatmap");
+	var hmGridEl = document.getElementById("gh-hm-grid");
+	var hmMonthsEl = document.getElementById("gh-hm-months");
 	var tooltip = document.getElementById("gh-heatmap-tooltip");
 	var statusEl = document.getElementById("gh-heatmap-status");
-	if (!canvas) return;
-	var ctx = canvas.getContext("2d");
-	var dpr = window.devicePixelRatio || 1;
+	if (!hmGridEl) return;
 
-	// Color scale — GitHub dark-mode style with blue accent
-	var COLORS = [
-		"rgba(255,255,255,0.04)",   // 0 contributions
-		"rgba(66,170,245,0.25)",    // low
-		"rgba(66,170,245,0.45)",    // medium-low
-		"rgba(66,170,245,0.65)",    // medium
-		"rgba(66,170,245,0.85)",    // high
-		"rgba(66,170,245,1.0)"      // very high
-	];
-	var DAY_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""];
+	// Local refs to values that ABJ_HM also computes internally — used here
+	// for the GitHub `since=` query, and for resolving tooltip-parsed dates
+	// to grid years. Keeping them in this scope makes the IIFE self-contained.
 	var MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-
-	// Build the date grid: WEEKS columns x 7 rows, ending today
-	var today = new Date();
-	today.setHours(0,0,0,0);
-	var endDay = new Date(today);
-	// Start from (WEEKS * 7 - 1) days ago, aligned to Sunday
+	var today = new Date(); today.setHours(0, 0, 0, 0);
 	var startDay = new Date(today);
-	startDay.setDate(startDay.getDate() - (WEEKS * 7 - 1) - today.getDay());
-
-	var grid = []; // [{date, key, commits}]
-	var dateMap = {}; // "YYYY-MM-DD" -> index in grid
-	var d = new Date(startDay);
-	while (d <= endDay) {
-		var key = d.toISOString().slice(0, 10);
-		var idx = grid.length;
-		grid.push({ date: new Date(d), key: key, commits: 0, level: 0 });
-		dateMap[key] = idx;
-		d.setDate(d.getDate() + 1);
-	}
-
-	// Canvas sizing
-	var cols = Math.ceil(grid.length / 7);
-	var W = MARGIN_LEFT + cols * (CELL + GAP);
-	var H = MARGIN_TOP + 7 * (CELL + GAP);
-	canvas.width = W * dpr;
-	canvas.height = H * dpr;
-	canvas.style.width = W + "px";
-	canvas.style.height = H + "px";
-	ctx.scale(dpr, dpr);
-
-	// Color by level (GitHub's own 0-4 scale) or by commit count
-	function getColorByLevel(level) {
-		if (level <= 0) return COLORS[0];
-		if (level === 1) return COLORS[1];
-		if (level === 2) return COLORS[2];
-		if (level === 3) return COLORS[3];
-		return COLORS[4];
-	}
-
-	function getColorByCount(count) {
-		if (count === 0) return COLORS[0];
-		if (count <= 2) return COLORS[1];
-		if (count <= 5) return COLORS[2];
-		if (count <= 10) return COLORS[3];
-		if (count <= 20) return COLORS[4];
-		return COLORS[5];
-	}
+	// 53-week window, Sunday-aligned — matches ABJ_HM.create's internal default.
+	startDay.setDate(startDay.getDate() - (53 * 7 - 1) - today.getDay());
 
 	// useLevel flag — set to true when we have GitHub's level data
 	var useLevel = false;
 
-	function drawGrid() {
-		ctx.clearRect(0, 0, W, H);
-
-		// Day labels
-		ctx.font = "10px -apple-system, BlinkMacSystemFont, sans-serif";
-		ctx.fillStyle = "rgba(255,255,255,0.3)";
-		ctx.textBaseline = "middle";
-		for (var r = 0; r < 7; r++) {
-			if (DAY_LABELS[r]) {
-				ctx.fillText(DAY_LABELS[r], 0, MARGIN_TOP + r * (CELL + GAP) + CELL / 2);
-			}
-		}
-
-		// Month labels
-		// Label a month only at the column whose Sunday falls within the first 7 days
-		// of that month. This matches GitHub's algorithm and guarantees ~4-cell spacing.
-		var lastLabeledMonth = -1;
-		for (var c = 0; c < cols; c++) {
-			var cellIdx = c * 7;
-			if (cellIdx >= grid.length) break;
-			var colDate = grid[cellIdx].date;
-			if (colDate.getDate() > 7) continue;
-			var m = colDate.getMonth();
-			if (m === lastLabeledMonth) continue;
-			ctx.fillStyle = "rgba(255,255,255,0.3)";
-			ctx.fillText(MONTH_NAMES[m], MARGIN_LEFT + c * (CELL + GAP), 10);
-			lastLabeledMonth = m;
-		}
-
-		// Cells
-		for (var i = 0; i < grid.length; i++) {
-			var col = Math.floor(i / 7);
-			var row = i % 7;
-			var x = MARGIN_LEFT + col * (CELL + GAP);
-			var y = MARGIN_TOP + row * (CELL + GAP);
-
-			ctx.beginPath();
-			ctx.roundRect(x, y, CELL, CELL, RADIUS);
-			ctx.fillStyle = useLevel ? getColorByLevel(grid[i].level) : getColorByCount(grid[i].commits);
-			ctx.fill();
-
-			// Store position for tooltip
-			grid[i].px = x;
-			grid[i].py = y;
-		}
+	function levelClassByCount(count) {
+		if (count === 0) return "hm-l-0";
+		if (count <= 2) return "hm-l-1";
+		if (count <= 5) return "hm-l-2";
+		if (count <= 10) return "hm-l-3";
+		if (count <= 20) return "hm-l-4";
+		return "hm-l-4";
 	}
 
-	// Tooltip on hover
-	canvas.addEventListener("mousemove", function (e) {
-		var rect = canvas.getBoundingClientRect();
-		var mx = (e.clientX - rect.left);
-		var my = (e.clientY - rect.top);
+	function levelClassByLevel(level) {
+		return "hm-l-" + Math.max(0, Math.min(4, level | 0));
+	}
 
-		var found = null;
-		for (var i = 0; i < grid.length; i++) {
-			if (mx >= grid[i].px && mx <= grid[i].px + CELL &&
-				my >= grid[i].py && my <= grid[i].py + CELL) {
-				found = grid[i];
-				break;
+	var hm = ABJ_HM.create({
+		gridEl: hmGridEl,
+		monthsEl: hmMonthsEl,
+		tooltipEl: tooltip,
+		levelClass: function (count, cell) {
+			if (useLevel) return levelClassByLevel(cell.level || 0);
+			return levelClassByCount(count);
+		},
+		labelFor: function (cell) {
+			var dateStr = cell.date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+			if (cell.count > 0) {
+				return cell.count + " contribution" + (cell.count !== 1 ? "s" : "") + " on " + dateStr;
 			}
-		}
-
-		if (found) {
-			var count = found.commits;
-			var label;
-			if (count > 0) {
-				label = count + " contribution" + (count !== 1 ? "s" : "") +
-					" on " + found.date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-			} else if (found.level > 0) {
-				// We have level data but no exact count
-				label = "Contributions on " + found.date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-			} else {
-				label = "No contributions on " + found.date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+			if (cell.level > 0) {
+				return "Contributions on " + dateStr;
 			}
-			tooltip.textContent = label;
-			tooltip.classList.add("visible");
-			// Clamp tooltip so it doesn't overflow left or right edge
-			var tipW = tooltip.offsetWidth;
-			var wrapW = canvas.parentElement ? canvas.parentElement.offsetWidth : W;
-			var idealLeft = found.px + CELL / 2 - tipW / 2;
-			var clampedLeft = Math.max(0, Math.min(idealLeft, wrapW - tipW - 4));
-			tooltip.style.left = clampedLeft + "px";
-			tooltip.style.top = (found.py - 30) + "px";
-		} else {
-			tooltip.classList.remove("visible");
+			return "No contributions on " + dateStr;
 		}
-	});
-
-	canvas.addEventListener("mouseleave", function () {
-		tooltip.classList.remove("visible");
 	});
 
 	// ---- PRIMARY: Scrape GitHub contributions HTML via CORS proxy ----
@@ -820,8 +824,6 @@ AOS.init({
 		});
 	}
 
-	drawGrid(); // Draw empty grid immediately
-
 	// ---- Main fetch logic ----
 	// 1. Try GitHub contributions HTML via CORS proxy (official graph data)
 	// 2. ALWAYS also fetch direct repo commits (catches unlinked-email commits)
@@ -836,42 +838,38 @@ AOS.init({
 		sourcesDone++;
 		if (sourcesDone < totalSources) return; // wait for both
 
-		// 1. Apply contributions HTML data (if available)
+		// Build per-day data and feed it to the DOM heatmap.
+		var counts = {};   // date → count
+		var levels = {};   // date → level (0-4)
+
 		if (contribData) {
 			useLevel = true;
 			Object.keys(contribData).forEach(function (dateKey) {
-				if (dateMap.hasOwnProperty(dateKey)) {
-					grid[dateMap[dateKey]].level = contribData[dateKey].level;
-					grid[dateMap[dateKey]].commits = contribData[dateKey].count;
-				}
+				levels[dateKey] = contribData[dateKey].level;
+				counts[dateKey] = contribData[dateKey].count || 0;
 			});
 		}
 
-		// 2. Merge direct repo commits on top — take max per day
 		if (repoData) {
 			Object.keys(repoData).forEach(function (dateKey) {
-				if (dateMap.hasOwnProperty(dateKey)) {
-					var current = grid[dateMap[dateKey]].commits;
-					var fromRepo = repoData[dateKey];
-					if (fromRepo > current) {
-						grid[dateMap[dateKey]].commits = fromRepo;
-					}
-					// Also bump level if we found commits but level was 0
-					if (fromRepo > 0 && grid[dateMap[dateKey]].level === 0) {
-						if (fromRepo <= 2) grid[dateMap[dateKey]].level = 1;
-						else if (fromRepo <= 5) grid[dateMap[dateKey]].level = 2;
-						else if (fromRepo <= 10) grid[dateMap[dateKey]].level = 3;
-						else grid[dateMap[dateKey]].level = 4;
-					}
+				var fromRepo = repoData[dateKey];
+				// Take the higher count between contributions HTML and repo commits.
+				if (!counts[dateKey] || fromRepo > counts[dateKey]) counts[dateKey] = fromRepo;
+				// Promote level if we found commits but the HTML thought level=0.
+				if (fromRepo > 0 && (!levels[dateKey] || levels[dateKey] === 0)) {
+					if (fromRepo <= 2) levels[dateKey] = 1;
+					else if (fromRepo <= 5) levels[dateKey] = 2;
+					else if (fromRepo <= 10) levels[dateKey] = 3;
+					else levels[dateKey] = 4;
 				}
 			});
 		}
 
-		drawGrid();
+		hm.update(counts, levels);
 
-		// Update status
+		// Update status text with total contributions over the year.
 		var total = 0;
-		grid.forEach(function (g) { total += g.commits; });
+		Object.keys(counts).forEach(function (k) { total += counts[k] || 0; });
 		if (statusEl && total > 0) {
 			statusEl.textContent = "(" + total + " contributions)";
 		}
@@ -892,79 +890,99 @@ AOS.init({
 	});
 })();
 
-// ===== Beyond Code — Bookshelf via Open Library =====
+// ===== Beyond Code — Bookshelf =====
+// The shelf is now static HTML (a curated set of 5★ Goodreads picks)
+// — no fetch needed. Kept this stub for the structural comment trail.
+
+// ===== Beyond Code — Latest YouTube videos =====
+// Fetches the channel's public RSS feed via a CORS proxy, parses out the
+// two most recent videoIds, and swaps them into the placeholder slots. RSS
+// is preferred over the YouTube Data API because it's auth-free and
+// rate-limit-friendly. Cached in localStorage for an hour.
 (function () {
-	var bookshelfGrid = document.getElementById("bookshelf-grid");
-	if (!bookshelfGrid) return;
+	var row = document.getElementById("latest-yt-row");
+	if (!row) return;
+	var CHANNEL_ID = "UC48s7RmRZUXT1fpVULeUAOw";
+	var FEED = "https://www.youtube.com/feeds/videos.xml?channel_id=" + CHANNEL_ID;
+	var CACHE_KEY = "yt_latest_v1";
+	var CACHE_TTL = 60 * 60 * 1000;  // 1 hour
+	var slots = row.querySelectorAll("[data-yt-slot]");
+	if (slots.length < 2) return;
 
-	// Curated list of books from Goodreads profile — using Open Library edition keys or ISBNs
-	var BOOKS = [
-		{ title: "The Almanack of Naval Ravikant", author: "Eric Jorgenson", isbn: "9781544514215" },
-		{ title: "Atomic Habits", author: "James Clear", isbn: "9780735211292" },
-		{ title: "The Psychology of Money", author: "Morgan Housel", isbn: "9780857197689" },
-		{ title: "Deep Work", author: "Cal Newport", isbn: "9781455586691" },
-		{ title: "Sapiens", author: "Yuval Noah Harari", isbn: "9780062316097" },
-		{ title: "Thinking, Fast and Slow", author: "Daniel Kahneman", isbn: "9780374533557" },
-		{ title: "Clean Code", author: "Robert C. Martin", isbn: "9780132350884" },
-		{ title: "The Lean Startup", author: "Eric Ries", isbn: "9780307887894" },
-		{ title: "Only the Paranoid Survive", author: "Andrew S. Grove", isbn: "9780385483827" },
-		{ title: "Zero to One", author: "Peter Thiel", isbn: "9780804139298" },
-		{ title: "Rita Hayworth and Shawshank Redemption", author: "Stephen King", isbn: "9781982155759" },
-		{ title: "Rich Dad Poor Dad", author: "Robert T. Kiyosaki", isbn: "9781612680194" }
-	];
-
-	// Create placeholder slots with stable data-index so replacement is reliable
-	var slots = [];
-	BOOKS.forEach(function (book, idx) {
-		var placeholder = document.createElement("div");
-		placeholder.className = "book-skeleton";
-		placeholder.setAttribute("data-book-idx", idx);
-		placeholder.innerHTML = '<div class="book-cover-wrap"></div>';
-		bookshelfGrid.appendChild(placeholder);
-		slots.push(placeholder);
-	});
-
-	// Load each book cover and replace its specific slot
-	BOOKS.forEach(function (book, idx) {
-		var coverUrl = "https://covers.openlibrary.org/b/isbn/" + book.isbn + "-M.jpg";
-		var searchUrl = "https://www.google.com/search?q=" + encodeURIComponent(book.title + " " + book.author + " goodreads");
-
-		function buildCard(imgHtml) {
-			var card = document.createElement("a");
-			card.className = "book-card";
-			card.href = searchUrl;
-			card.target = "_blank";
-			card.rel = "noopener";
-			card.setAttribute("data-book-idx", idx);
-			card.innerHTML = imgHtml +
-				'<div class="book-title">' + book.title + '</div>' +
-				'<div class="book-author">' + book.author + '</div>';
-			return card;
+	function inject(items) {
+		for (var i = 0; i < Math.min(2, items.length); i++) {
+			var slot = slots[i];
+			if (!slot) continue;
+			var v = items[i];
+			slot.innerHTML =
+				'<iframe allowfullscreen ' +
+				'src="https://www.youtube.com/embed/' + v.id + '?rel=0" ' +
+				'title="' + (v.title || "YouTube video").replace(/"/g, "&quot;") + '" ' +
+				'loading="lazy"></iframe>';
 		}
+		// Hide any unfilled slot so we don't show a half-skeleton
+		for (var j = items.length; j < slots.length; j++) {
+			slots[j].parentElement.style.display = "none";
+		}
+	}
 
-		var img = new Image();
-		img.crossOrigin = "anonymous";
-		img.onload = function () {
-			var card = buildCard('<div class="book-cover-wrap"><img src="' + coverUrl + '" alt="' + book.title.replace(/"/g, '&quot;') + '"></div>');
-			var slot = bookshelfGrid.querySelector('[data-book-idx="' + idx + '"]');
-			if (slot) bookshelfGrid.replaceChild(card, slot);
-		};
-		img.onerror = function () {
-			var card = buildCard('<div class="book-cover-wrap" style="display:flex;align-items:center;justify-content:center;">' +
-				'<i class="fas fa-book" style="font-size:2rem;color:rgba(255,255,255,0.15);"></i></div>');
-			var slot = bookshelfGrid.querySelector('[data-book-idx="' + idx + '"]');
-			if (slot) bookshelfGrid.replaceChild(card, slot);
-		};
-		img.src = coverUrl;
-	});
+	// Try cache first
+	try {
+		var cached = localStorage.getItem(CACHE_KEY);
+		if (cached) {
+			var parsed = JSON.parse(cached);
+			if (parsed.ts && (Date.now() - parsed.ts) < CACHE_TTL && parsed.items) {
+				inject(parsed.items);
+				return;
+			}
+		}
+	} catch (e) { /* ignore */ }
+
+	dataSourceStarted();
+
+	function parseRSS(xmlText) {
+		var items = [];
+		// Each entry has <yt:videoId>VID</yt:videoId> and <title>...</title>
+		var entryRe = /<entry>([\s\S]*?)<\/entry>/g;
+		var m;
+		while ((m = entryRe.exec(xmlText)) !== null) {
+			var entry = m[1];
+			var idM = /<yt:videoId>([^<]+)<\/yt:videoId>/.exec(entry);
+			var titleM = /<title>([^<]+)<\/title>/.exec(entry);
+			if (idM) items.push({ id: idM[1], title: titleM ? titleM[1] : "" });
+			if (items.length >= 2) break;
+		}
+		return items;
+	}
+
+	// Use the existing CORS proxy already in this codebase (corsproxy.io).
+	var proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(FEED);
+	fetchWithTimeout(proxyUrl, {}, 7000)
+		.then(function (r) { return r.ok ? r.text() : ""; })
+		.then(function (xml) {
+			if (!xml || xml.indexOf("<entry>") < 0) throw new Error("Bad feed");
+			var items = parseRSS(xml);
+			if (!items.length) throw new Error("No videos");
+			inject(items);
+			try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items: items })); } catch (e) {}
+		})
+		.catch(function () {
+			// Graceful fallback: hide both slots (the channel button below
+			// stays visible so visitors can still get to the channel).
+			row.style.display = "none";
+		})
+		.finally(dataSourceDone);
 })();
 
 // ===== Resume Modal — in-page PDF viewer with download fallback =====
+// Uses event delegation at the document level so the click handler is wired
+// even if the page-ready sentinel never resolves (a hanging data source
+// would otherwise leave `<main>` with `pointer-events: none` until the 10s
+// safety net fires). The resume button must always be reachable.
 (function () {
-	var trigger = document.getElementById("openResume");
 	var modal = document.getElementById("resumeModal");
 	var frame = document.getElementById("resumeFrame");
-	if (!trigger || !modal || !frame) return;
+	if (!modal || !frame) return;
 	var closeBtn = modal.querySelector(".resume-modal-close");
 	var RESUME_URL = "assets/resume-abhj.pdf";
 
@@ -976,6 +994,12 @@ AOS.init({
 		modal.classList.add("open");
 		modal.setAttribute("aria-hidden", "false");
 		document.body.classList.add("resume-open");
+		// Force-reveal the page if it hasn't already revealed — the resume
+		// modal sits at z-index 100001 (above the preloader at 99999), but
+		// we don't want a partially-loaded site sitting behind it either.
+		if (!document.body.classList.contains("ready")) {
+			if (typeof revealPage === "function") revealPage();
+		}
 	}
 
 	function close() {
@@ -984,13 +1008,64 @@ AOS.init({
 		document.body.classList.remove("resume-open");
 	}
 
-	trigger.addEventListener("click", open);
+	// Delegate the open click to document so the trigger is reachable even
+	// while the page is in `body:not(.ready)` mode (which sets
+	// `pointer-events: none` on <main>). Capture phase ensures we run before
+	// any other handler that might preventDefault.
+	document.addEventListener("click", function (e) {
+		var trigger = e.target.closest("#openResume");
+		if (trigger) {
+			e.preventDefault();
+			open();
+		}
+	}, true);
+
 	if (closeBtn) closeBtn.addEventListener("click", close);
 	modal.addEventListener("click", function (e) {
 		if (e.target === modal) close();
 	});
 	document.addEventListener("keydown", function (e) {
 		if (e.key === "Escape" && modal.classList.contains("open")) close();
+	});
+})();
+
+/* Hard guarantee: the resume button stays clickable even when the rest of
+   <main> is in pointer-events: none state. Inserted via JS so it survives
+   any cached CSS. */
+(function () {
+	var style = document.createElement("style");
+	style.textContent = "#openResume{pointer-events:auto !important;position:relative;z-index:2}";
+	document.head.appendChild(style);
+})();
+
+// ===== WakaTime image error fallback =====
+// wakatime.com occasionally returns 502/timeouts on its share-SVG endpoints.
+// When the image fails to load, mark the card so CSS shows a friendly hint
+// instead of leaving an invisible 0-height blob. Also retry once after 4s
+// in case it was a transient hiccup.
+(function () {
+	var imgs = document.querySelectorAll(".wakatime-card img");
+	if (!imgs.length) return;
+	imgs.forEach(function (img) {
+		var attempted = false;
+		img.addEventListener("error", function () {
+			img.classList.add("wakatime-img-error");
+			img.parentElement && img.parentElement.classList.add("wakatime-card--error");
+			if (!attempted) {
+				attempted = true;
+				// Single retry with a cache-bust after 4s
+				setTimeout(function () {
+					var sep = img.src.indexOf("?") >= 0 ? "&" : "?";
+					var base = img.src.split(/[?&]_r=/)[0];
+					img.src = base + sep + "_r=" + Date.now();
+				}, 4000);
+			}
+		});
+		// If on retry it loads fine, drop the error classes
+		img.addEventListener("load", function () {
+			img.classList.remove("wakatime-img-error");
+			img.parentElement && img.parentElement.classList.remove("wakatime-card--error");
+		});
 	});
 })();
 
@@ -1028,7 +1103,11 @@ AOS.init({
 		}, 350);
 	}
 
-	// Any element with data-lightbox-src opens the lightbox
+	// Any element with data-lightbox-src opens the lightbox.
+	// Capture phase ensures we run before any other delegated handler that
+	// might preventDefault/stopPropagation on intermediate parents. Without
+	// capture, the hero avatar's click was getting swallowed somewhere in
+	// the masthead's smooth-scroll chain on certain build-ordering edge cases.
 	document.addEventListener("click", function (e) {
 		var trigger = e.target.closest("[data-lightbox-src]");
 		if (trigger) {
@@ -1040,7 +1119,7 @@ AOS.init({
 				trigger.getAttribute("data-lightbox-class")
 			);
 		}
-	});
+	}, true);
 
 	// Close on backdrop click, X button, or Escape
 	lightbox.addEventListener("click", function (e) {

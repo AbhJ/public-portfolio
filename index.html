@@ -29,8 +29,12 @@
 	<!-- Font Awesome -->
 	<script crossorigin="anonymous" src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
 
-	<!-- Google Fonts -->
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+	<!-- Google Fonts — Inter (display: tighter geometric, Apple/Linear/Stripe
+	     vocabulary), Lato (body: comfortable for long-form reading),
+	     Cormorant Garamond italic (editorial accents). Inter loads weights
+	     400/500/600/700 with the optical-sizing axis enabled so the OS picks
+	     the right glyph variant for each rendered size. -->
+	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400;1,500&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Montserrat:wght@500;600;700&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
 	<!-- AOS Animations -->
 	<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
@@ -358,7 +362,7 @@
 					</div>
 					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="200" data-aos-easing="ease-in-sine">
 						<a class="portfolio-card" href="https://codeforces.com/profile/abhj" target="_blank" rel="noopener">
-							<div class="portfolio-card-img portfolio-card-img--compact">
+							<div class="portfolio-card-img portfolio-card-img--compact portfolio-card-img--cf">
 								<img alt="Codeforces" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/force.png">
 								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
 							</div>
@@ -388,7 +392,7 @@
 							</div>
 							<div class="portfolio-card-body">
 								<h5>Quora</h5>
-								<p>Long-form answers on software engineering, careers, and life at the IITs.</p>
+								<p>Long-form answers on software engineering, careers, and life at the IITs &mdash; with over <strong>1 million cumulative views</strong> across the writing.</p>
 							</div>
 						</a>
 					</div>
@@ -543,9 +547,33 @@
 				</div>
 
 				<div class="text-center mt-5" data-aos="zoom-in">
-					<div id="gh-heatmap-wrap">
-						<canvas id="gh-heatmap"></canvas>
-						<div id="gh-heatmap-tooltip" class="gh-tooltip"></div>
+					<!-- DOM heatmap (LeetCode-style) — populated by main.js. The
+					     scroll wrapper handles small viewports without clipping
+					     the last month. The grid itself is `display: grid` with
+					     7 rows and N week-columns; each cell is a button so it's
+					     keyboard- + touch-accessible. -->
+					<div id="gh-heatmap-wrap" class="hm-wrap">
+						<div class="hm-scroll" tabindex="0">
+							<div class="hm">
+								<div class="hm-months" id="gh-hm-months" aria-hidden="true"></div>
+								<div class="hm-body">
+									<div class="hm-days" aria-hidden="true">
+										<span></span><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span>
+									</div>
+									<div class="hm-grid" id="gh-hm-grid" role="grid" aria-label="GitHub contributions over the past year"></div>
+								</div>
+								<div class="hm-legend">
+									<span class="hm-legend-text">Less</span>
+									<span class="hm-cell hm-l-0"></span>
+									<span class="hm-cell hm-l-1"></span>
+									<span class="hm-cell hm-l-2"></span>
+									<span class="hm-cell hm-l-3"></span>
+									<span class="hm-cell hm-l-4"></span>
+									<span class="hm-legend-text">More</span>
+								</div>
+							</div>
+						</div>
+						<div id="gh-heatmap-tooltip" class="gh-tooltip" role="tooltip"></div>
 					</div>
 				</div>
 				<div class="text-center mt-4 mb-6" data-aos="fade-up">
@@ -606,9 +634,28 @@
 				</div>
 
 				<div class="text-center mt-5" data-aos="zoom-in">
-					<div id="lc-heatmap-wrap">
-						<canvas id="lc-heatmap"></canvas>
-						<div id="lc-heatmap-tooltip" class="gh-tooltip"></div>
+					<div id="lc-heatmap-wrap" class="hm-wrap hm-wrap--lc">
+						<div class="hm-scroll" tabindex="0">
+							<div class="hm">
+								<div class="hm-months" id="lc-hm-months" aria-hidden="true"></div>
+								<div class="hm-body">
+									<div class="hm-days" aria-hidden="true">
+										<span></span><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span>
+									</div>
+									<div class="hm-grid" id="lc-hm-grid" role="grid" aria-label="LeetCode submissions over the past year"></div>
+								</div>
+								<div class="hm-legend">
+									<span class="hm-legend-text">Less</span>
+									<span class="hm-cell hm-lc-0"></span>
+									<span class="hm-cell hm-lc-1"></span>
+									<span class="hm-cell hm-lc-2"></span>
+									<span class="hm-cell hm-lc-3"></span>
+									<span class="hm-cell hm-lc-4"></span>
+									<span class="hm-legend-text">More</span>
+								</div>
+							</div>
+						</div>
+						<div id="lc-heatmap-tooltip" class="gh-tooltip" role="tooltip"></div>
 					</div>
 				</div>
 
@@ -708,7 +755,7 @@
 					<div class="divider-custom-line"></div>
 				</div>
 
-				<h5 class="beyond-sub text-center text-uppercase mb-4" data-aos="fade-up"><i class="fas fa-book-reader mr-2"></i>Reading</h5>
+				<h5 class="beyond-sub text-center text-uppercase mb-4" data-aos="fade-up"><i class="fas fa-book-reader mr-2"></i>Books</h5>
 
 				<div class="row text-center mb-4">
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in">
@@ -737,9 +784,109 @@
 					</div>
 				</div>
 
-				<div class="bookshelf" data-aos="fade-up">
+				<!-- 12 books I've actually rated on Goodreads. Cover URLs come
+				     straight from the Goodreads CDN; ratings are real star
+				     counts pulled from the public ratings feed. Cards link to
+				     each book's Goodreads page. The brass `.book-rating` badge
+				     mirrors the IMDb shelf's `.film-rating` for visual rhyme. -->
+				<div class="bookshelf bookshelf--centered" data-aos="fade-up">
 					<div class="bookshelf-scroll" id="bookshelf-grid">
-						<!-- Populated dynamically via Open Library covers -->
+						<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/54109255" target="_blank" rel="noopener" aria-label="System Design Interview — rated 5 of 5 on Goodreads">
+							<div class="book-cover-wrap">
+								<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1592265780l/54109255.jpg" alt="System Design Interview – An insider's guide" loading="lazy" decoding="async">
+								<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
+							</div>
+							<div class="book-title">System Design Interview</div>
+							<div class="book-author">Alex Xu</div>
+						</a>
+						<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/23692271" target="_blank" rel="noopener" aria-label="Sapiens — rated 5 of 5 on Goodreads">
+							<div class="book-cover-wrap">
+								<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1703329310l/23692271.jpg" alt="Sapiens: A Brief History of Humankind" loading="lazy" decoding="async">
+								<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
+							</div>
+							<div class="book-title">Sapiens</div>
+							<div class="book-author">Yuval Noah Harari</div>
+						</a>
+						<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/39664" target="_blank" rel="noopener" aria-label="Rita Hayworth and Shawshank Redemption — rated 5 of 5 on Goodreads">
+							<div class="book-cover-wrap">
+								<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1315100686l/39664.jpg" alt="Rita Hayworth and Shawshank Redemption" loading="lazy" decoding="async">
+								<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
+							</div>
+							<div class="book-title">Rita Hayworth & Shawshank</div>
+							<div class="book-author">Stephen King</div>
+						</a>
+						<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/10534" target="_blank" rel="noopener" aria-label="The Art of War — rated 5 of 5 on Goodreads">
+							<div class="book-cover-wrap">
+								<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1630683326l/10534.jpg" alt="The Art of War" loading="lazy" decoding="async">
+								<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
+							</div>
+							<div class="book-title">The Art of War</div>
+							<div class="book-author">Sun Tzu</div>
+						</a>
+						<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/49099937" target="_blank" rel="noopener" aria-label="No Rules Rules — rated 5 of 5 on Goodreads">
+							<div class="book-cover-wrap">
+								<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1595815356l/49099937.jpg" alt="No Rules Rules: Netflix and the Culture of Reinvention" loading="lazy" decoding="async">
+								<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
+							</div>
+							<div class="book-title">No Rules Rules</div>
+							<div class="book-author">Reed Hastings</div>
+						</a>
+						<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/38242135" target="_blank" rel="noopener" aria-label="AI Superpowers — rated 5 of 5 on Goodreads">
+							<div class="book-cover-wrap">
+								<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1521228712l/38242135.jpg" alt="AI Superpowers: China, Silicon Valley, and the New World Order" loading="lazy" decoding="async">
+								<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
+							</div>
+							<div class="book-title">AI Superpowers</div>
+							<div class="book-author">Kai-Fu Lee</div>
+						</a>
+						<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/102868" target="_blank" rel="noopener" aria-label="A Study in Scarlet — rated 5 of 5 on Goodreads">
+							<div class="book-cover-wrap">
+								<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1519031842l/102868.jpg" alt="A Study in Scarlet (Sherlock Holmes #1)" loading="lazy" decoding="async">
+								<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
+							</div>
+							<div class="book-title">A Study in Scarlet</div>
+							<div class="book-author">Arthur Conan Doyle</div>
+						</a>
+						<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248871" target="_blank" rel="noopener" aria-label="Berserk Volume 1 — rated 5 of 5 on Goodreads">
+							<div class="book-cover-wrap">
+								<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1501000017l/248871.jpg" alt="Berserk, Vol. 1" loading="lazy" decoding="async">
+								<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
+							</div>
+							<div class="book-title">Berserk, Vol. 1</div>
+							<div class="book-author">Kentaro Miura</div>
+						</a>
+						<a class="book-card" href="https://www.goodreads.com/book/show/18050143" target="_blank" rel="noopener" aria-label="Zero to One — rated 4 of 5 on Goodreads">
+							<div class="book-cover-wrap">
+								<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1630663027l/18050143.jpg" alt="Zero to One" loading="lazy" decoding="async">
+								<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
+							</div>
+							<div class="book-title">Zero to One</div>
+							<div class="book-author">Peter Thiel</div>
+						</a>
+						<a class="book-card" href="https://www.goodreads.com/book/show/106835" target="_blank" rel="noopener" aria-label="The Intelligent Investor — rated 4 of 5 on Goodreads">
+							<div class="book-cover-wrap">
+								<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1409602421l/106835.jpg" alt="The Intelligent Investor" loading="lazy" decoding="async">
+								<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
+							</div>
+							<div class="book-title">The Intelligent Investor</div>
+							<div class="book-author">Benjamin Graham</div>
+						</a>
+						<a class="book-card" href="https://www.goodreads.com/book/show/13496" target="_blank" rel="noopener" aria-label="A Game of Thrones — rated 4 of 5 on Goodreads">
+							<div class="book-cover-wrap">
+								<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1562726234l/13496.jpg" alt="A Game of Thrones" loading="lazy" decoding="async">
+								<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
+							</div>
+							<div class="book-title">A Game of Thrones</div>
+							<div class="book-author">George R.R. Martin</div>
+						</a>
+						<a class="book-card" href="https://www.goodreads.com/book/show/69571" target="_blank" rel="noopener" aria-label="Rich Dad Poor Dad — rated 4 of 5 on Goodreads">
+							<div class="book-cover-wrap">
+								<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1757619021l/69571.jpg" alt="Rich Dad Poor Dad" loading="lazy" decoding="async">
+								<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
+							</div>
+							<div class="book-title">Rich Dad Poor Dad</div>
+							<div class="book-author">Robert T. Kiyosaki</div>
+						</a>
 					</div>
 				</div>
 
@@ -777,6 +924,102 @@
 					</a>
 				</div>
 
+				<!-- ─── Watching ─── -->
+				<div class="divider-custom divider-light mb-4">
+					<div class="divider-custom-line"></div>
+					<div class="divider-custom-icon"><i class="fas fa-film"></i></div>
+					<div class="divider-custom-line"></div>
+				</div>
+
+				<h5 class="beyond-sub text-center text-uppercase mb-4" data-aos="fade-up"><i class="fas fa-film mr-2"></i>Titles</h5>
+
+				<!-- 10 titles I rated 9 or 10 on IMDb. Every poster URL was
+				     verified to return 200 from IMDb's media CDN (some titles
+				     use alternate poster IDs because the watchlist's primary
+				     URL had been deprecated). Cards link to IMDb. -->
+				<div class="filmshelf" data-aos="fade-up">
+					<div class="filmshelf-scroll" id="filmshelf-grid">
+						<a class="film-card" href="https://www.imdb.com/title/tt0816692/" target="_blank" rel="noopener" aria-label="Interstellar — rated 10 of 10 on IMDb">
+							<div class="film-poster-wrap">
+								<img src="https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_QL75_UX380_CR0,1,380,562_.jpg" alt="Interstellar" loading="lazy" decoding="async">
+								<span class="film-rating" aria-label="Rated 10 of 10">10</span>
+							</div>
+							<div class="film-title">Interstellar</div>
+							<div class="film-meta">2014 &middot; Nolan</div>
+						</a>
+						<a class="film-card" href="https://www.imdb.com/title/tt0903747/" target="_blank" rel="noopener" aria-label="Breaking Bad — rated 10 of 10 on IMDb">
+							<div class="film-poster-wrap">
+								<img src="https://m.media-amazon.com/images/M/MV5BMzU5ZGYzNmQtMTdhYy00OGRiLTg0NmQtYjVjNzliZTg1ZGE4XkEyXkFqcGc@._V1_.jpg" alt="Breaking Bad" loading="lazy" decoding="async">
+								<span class="film-rating" aria-label="Rated 10 of 10">10</span>
+							</div>
+							<div class="film-title">Breaking Bad</div>
+							<div class="film-meta">TV &middot; Gilligan</div>
+						</a>
+						<a class="film-card" href="https://www.imdb.com/title/tt0167260/" target="_blank" rel="noopener" aria-label="LOTR Return of the King — rated 10 of 10 on IMDb">
+							<div class="film-poster-wrap">
+								<img src="https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_QL75_UX380_CR0,3,380,562_.jpg" alt="The Lord of the Rings: The Return of the King" loading="lazy" decoding="async">
+								<span class="film-rating" aria-label="Rated 10 of 10">10</span>
+							</div>
+							<div class="film-title">LOTR: Return of the King</div>
+							<div class="film-meta">2003 &middot; Jackson</div>
+						</a>
+						<a class="film-card" href="https://www.imdb.com/title/tt0468569/" target="_blank" rel="noopener" aria-label="The Dark Knight — rated 9 of 10 on IMDb">
+							<div class="film-poster-wrap">
+								<img src="https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_QL75_UX380_CR0,1,380,562_.jpg" alt="The Dark Knight" loading="lazy" decoding="async">
+								<span class="film-rating" aria-label="Rated 9 of 10">9</span>
+							</div>
+							<div class="film-title">The Dark Knight</div>
+							<div class="film-meta">2008 &middot; Nolan</div>
+						</a>
+						<a class="film-card" href="https://www.imdb.com/title/tt1375666/" target="_blank" rel="noopener" aria-label="Inception — rated 9 of 10 on IMDb">
+							<div class="film-poster-wrap">
+								<img src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_QL75_UX380_CR0,2,380,562_.jpg" alt="Inception" loading="lazy" decoding="async">
+								<span class="film-rating" aria-label="Rated 9 of 10">9</span>
+							</div>
+							<div class="film-title">Inception</div>
+							<div class="film-meta">2010 &middot; Nolan</div>
+						</a>
+						<a class="film-card" href="https://www.imdb.com/title/tt6751668/" target="_blank" rel="noopener" aria-label="Parasite — rated 9 of 10 on IMDb">
+							<div class="film-poster-wrap">
+								<img src="https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_QL75_UX380_CR0,3,380,562_.jpg" alt="Parasite" loading="lazy" decoding="async">
+								<span class="film-rating" aria-label="Rated 9 of 10">9</span>
+							</div>
+							<div class="film-title">Parasite</div>
+							<div class="film-meta">2019 &middot; Bong Joon-ho</div>
+						</a>
+						<a class="film-card" href="https://www.imdb.com/title/tt15398776/" target="_blank" rel="noopener" aria-label="Oppenheimer — rated 9 of 10 on IMDb">
+							<div class="film-poster-wrap">
+								<img src="https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg" alt="Oppenheimer" loading="lazy" decoding="async">
+								<span class="film-rating" aria-label="Rated 9 of 10">9</span>
+							</div>
+							<div class="film-title">Oppenheimer</div>
+							<div class="film-meta">2023 &middot; Nolan</div>
+						</a>
+						<a class="film-card" href="https://www.imdb.com/title/tt0109830/" target="_blank" rel="noopener" aria-label="Forrest Gump — rated 9 of 10 on IMDb">
+							<div class="film-poster-wrap">
+								<img src="https://upload.wikimedia.org/wikipedia/en/6/67/Forrest_Gump_poster.jpg" alt="Forrest Gump" loading="lazy" decoding="async">
+								<span class="film-rating" aria-label="Rated 9 of 10">9</span>
+							</div>
+							<div class="film-title">Forrest Gump</div>
+							<div class="film-meta">1994 &middot; Zemeckis</div>
+						</a>
+						<a class="film-card" href="https://www.imdb.com/title/tt0110912/" target="_blank" rel="noopener" aria-label="Pulp Fiction — rated 9 of 10 on IMDb">
+							<div class="film-poster-wrap">
+								<img src="https://upload.wikimedia.org/wikipedia/en/3/3b/Pulp_Fiction_%281994%29_poster.jpg" alt="Pulp Fiction" loading="lazy" decoding="async">
+								<span class="film-rating" aria-label="Rated 9 of 10">9</span>
+							</div>
+							<div class="film-title">Pulp Fiction</div>
+							<div class="film-meta">1994 &middot; Tarantino</div>
+						</a>
+					</div>
+				</div>
+
+				<div class="text-center mt-4 mb-5" data-aos="fade-up" data-aos-delay="100">
+					<a class="btn btn-outline-light btn-sm" href="https://www.imdb.com/user/p.wfg2ldpigbxnlnkdabpv76dxpe/ratings/?ref_=tt_nv_rat" target="_blank" rel="noopener">
+						<i class="fab fa-imdb mr-2"></i> View Profile
+					</a>
+				</div>
+
 				<!-- ─── YouTube ─── -->
 				<div class="divider-custom divider-light mb-4">
 					<div class="divider-custom-line"></div>
@@ -785,15 +1028,19 @@
 				</div>
 
 				<h5 class="beyond-sub text-center text-uppercase mb-4" data-aos="fade-up"><i class="fab fa-youtube mr-2"></i>Video</h5>
-				<div class="row justify-content-center">
+				<!-- The latest two videos from the channel — populated at runtime
+				     from YouTube's public RSS feed (via CORS proxy). The slots
+				     fall back gracefully to the channel link below if the
+				     fetch fails or the feed has fewer than 2 videos. -->
+				<div class="row justify-content-center" id="latest-yt-row">
 					<div class="col-lg-6 col-md-6 mb-4" data-aos="fade-up">
-						<div class="beyond-video-wrap">
-							<iframe allowfullscreen src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPRaCCiBNFAI341YA85FNdQc" loading="lazy"></iframe>
+						<div class="beyond-video-wrap" data-yt-slot="0">
+							<div class="beyond-video-skeleton" aria-hidden="true"></div>
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="150">
-						<div class="beyond-video-wrap">
-							<iframe allowfullscreen src="https://www.youtube.com/embed/videoseries?list=PLpdWIY-kCEPTvyk_IQwn6YeywxVPf-qym" loading="lazy"></iframe>
+						<div class="beyond-video-wrap" data-yt-slot="1">
+							<div class="beyond-video-skeleton" aria-hidden="true"></div>
 						</div>
 					</div>
 				</div>
@@ -805,41 +1052,44 @@
 			</div>
 		</section>
 
-		<!-- Footer -->
-		<footer class="footer text-center">
+		<!-- Footer — compact 2-row layout. Row 1: social chips. Row 2: a single
+		     hairline-divided line with email · location. Drops the loud H4 column
+		     headings (they were pushing the footer to nearly a full screen tall). -->
+		<footer class="footer footer--compact text-center">
 			<div class="container">
-				<div class="row">
-					<div class="col-lg-4 mb-5 mb-lg-0">
-						<h4 class="text-uppercase mb-4">Email</h4>
-						<p class="lead mb-0 footer-emails">
-							<a href="mailto:abhijaymitraofficial@gmail.com">abhijaymitraofficial@gmail.com</a>
-							<a href="mailto:abhijay.mitra@iitkgp.ac.in">abhijay.mitra@iitkgp.ac.in</a>
-						</p>
-					</div>
-					<div class="col-lg-4 mb-5 mb-lg-0">
-						<h4 class="text-uppercase mb-4">Connect</h4>
-						<a class="btn btn-outline-light btn-social mx-1" href="https://github.com/AbhJ"><i class="fab fa-fw fa-github"></i></a>
-						<a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/abhj"><i class="fab fa-fw fa-linkedin-in"></i></a>
-						<a class="btn btn-outline-light btn-social mx-1" href="https://x.com/abjkgp"><span class="fa-fw" style="font-weight:900;font-size:1em;">𝕏</span></a>
-						<a class="btn btn-outline-light btn-social mx-1" href="https://www.youtube.com/channel/UC48s7RmRZUXT1fpVULeUAOw"><i class="fab fa-fw fa-youtube"></i></a>
-						<a class="btn btn-outline-light btn-social mx-1" href="https://www.instagram.com/abjkgp"><i class="fab fa-fw fa-instagram"></i></a>
-					</div>
-					<div class="col-lg-4">
-						<h4 class="text-uppercase mb-4">Location</h4>
-						<p class="lead mb-0">
-							<i class="fas fa-map-marker-alt mr-1"></i> Bangalore, India
-						</p>
-					</div>
+				<div class="footer-socials" data-aos="fade-up">
+					<a class="btn btn-outline-light btn-social mx-1" href="https://github.com/AbhJ" aria-label="GitHub"><i class="fab fa-fw fa-github"></i></a>
+					<a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/abhj" aria-label="LinkedIn"><i class="fab fa-fw fa-linkedin-in"></i></a>
+					<a class="btn btn-outline-light btn-social mx-1" href="https://x.com/abjkgp" aria-label="X (Twitter)"><span class="fa-fw" style="font-weight:900;font-size:1em;">𝕏</span></a>
+					<a class="btn btn-outline-light btn-social mx-1" href="https://www.youtube.com/channel/UC48s7RmRZUXT1fpVULeUAOw" aria-label="YouTube"><i class="fab fa-fw fa-youtube"></i></a>
+					<a class="btn btn-outline-light btn-social mx-1" href="https://www.instagram.com/abjkgp" aria-label="Instagram"><i class="fab fa-fw fa-instagram"></i></a>
+				</div>
+				<div class="footer-meta" data-aos="fade-up" data-aos-delay="80">
+					<a class="footer-meta-item" href="mailto:abhijaymitraofficial@gmail.com">
+						<i class="fas fa-envelope" aria-hidden="true"></i>
+						<span>abhijaymitraofficial@gmail.com</span>
+					</a>
+					<span class="footer-meta-sep" aria-hidden="true">·</span>
+					<span class="footer-meta-item">
+						<i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+						<span>Bangalore, India</span>
+					</span>
 				</div>
 			</div>
 		</footer>
 
-		<!-- Copyright -->
-		<div class="copyright py-4 text-center text-white">
+		<!-- Copyright — single tight line. Three discrete bits separated by
+		     hairline brass dots: the year + name, the legacy-portfolio link,
+		     and (only on small screens it wraps onto its own line). No
+		     manifesto, no colophon, no decorative junk. -->
+		<div class="copyright text-center">
 			<div class="container">
-				<small>&copy; Abhijay Mitra (AbJ) &middot; <span id="month"></span> <span id="year"></span></small>
-				<br>
-				<a href="legacy.html" class="legacy-link">View the old portfolio &rarr;</a>
+				<small class="copyright-line">
+					<span>&copy; <span id="year"></span> Abhijay Mitra <span class="copyright-mark">(AbJ)</span></span>
+					<span class="copyright-sep" aria-hidden="true">·</span>
+					<a class="legacy-link" href="legacy.html">View the old portfolio &rarr;</a>
+				</small>
+				<span id="month" hidden></span>
 			</div>
 		</div>
 
@@ -869,15 +1119,19 @@
 			</div>
 		</div>
 
-		<!-- Scroll Progress FAB — toggles between scroll-to-top / scroll-to-bottom -->
-		<button class="scroll-fab" id="scrollFab" aria-label="Scroll">
-			<svg class="scroll-fab-ring" viewBox="0 0 48 48" aria-hidden="true">
-				<circle class="scroll-fab-track" cx="24" cy="24" r="21"></circle>
-				<circle class="scroll-fab-progress" cx="24" cy="24" r="21"></circle>
-			</svg>
-			<i class="fas fa-chevron-up scroll-fab-icon"></i>
-		</button>
 	</main>
+
+	<!-- Scroll Progress FAB — toggles between scroll-to-top / scroll-to-bottom.
+	     Sits OUTSIDE <main> so the body-not-ready opacity gate (which targets
+	     `body:not(.ready) main`) cannot accidentally hide it if the readiness
+	     sentinel ever gets stuck. -->
+	<button class="scroll-fab" id="scrollFab" aria-label="Scroll">
+		<svg class="scroll-fab-ring" viewBox="0 0 48 48" aria-hidden="true">
+			<circle class="scroll-fab-track" cx="24" cy="24" r="21"></circle>
+			<circle class="scroll-fab-progress" cx="24" cy="24" r="21"></circle>
+		</svg>
+		<i class="fas fa-chevron-up scroll-fab-icon"></i>
+	</button>
 
 	<!-- Scripts -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
