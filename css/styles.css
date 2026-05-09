@@ -2598,6 +2598,20 @@ a.gh-repo-card:focus {
 	animation: shimmer 1.5s linear infinite;
 }
 
+/* Film-card skeleton — same shimmer device as `.book-skeleton`, sized to
+   the 130×195 poster wrap so the layout doesn't shift when real cards
+   replace these. Used while data/films.json is being fetched. */
+.film-skeleton {
+	flex-shrink: 0;
+	width: 150px;
+	text-align: center;
+}
+.film-skeleton .film-poster-wrap {
+	background: linear-gradient(110deg, rgba(255,255,255,0.04) 8%, rgba(255,255,255,0.08) 18%, rgba(255,255,255,0.04) 33%);
+	background-size: 200% 100%;
+	animation: shimmer 1.5s linear infinite;
+}
+
 /* ===== Beyond Code — Sub-section headings ===== */
 
 .beyond-sub {

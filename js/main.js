@@ -1343,6 +1343,17 @@ AOS.init({
 (function () {
 	var grid = document.getElementById("bookshelf-grid");
 	if (!grid) return;
+	// Paint skeleton tiles while we wait for the live fetch. Keeps the
+	// shelf height stable and signals "loading" to the user.
+	if (!grid.children.length) {
+		var n = parseInt(grid.getAttribute("data-shelf-skeleton") || "0", 10);
+		var skel = "";
+		for (var s = 0; s < n; s++) {
+			skel += '<div class="book-skeleton" aria-hidden="true">' +
+				'<div class="book-cover-wrap"></div></div>';
+		}
+		grid.innerHTML = skel;
+	}
 	var USER_ID = grid.getAttribute("data-gr-user") || "139705685";
 	// rss2json caps the free tier at 10 items per request, and the underlying
 	// Goodreads RSS feed obeys our sort/order params. To get a richer mix we
@@ -1365,9 +1376,18 @@ AOS.init({
 	//      not after the clubbed one.
 	// v7 = lowered MIN_RATING from 4 to 3 + filtered manga out of the Books
 	//      shelf (mangas now live in their own MAL-fed section).
-	var CACHE_KEY = "gr_books_v7";
+	// v8 = removed the static HTML fallback entirely (shelf is fully data-
+	//      driven now) and added paintBookStats() so the Books / Avg Rating
+	//      cells render from the same payload as the shelf.
+	// v9 = MIN_RATING dropped from 3 → 1 (every non-manga book renders).
+	//      Bump invalidates v8 caches that were partial 5-or-6-book sets.
+	var CACHE_KEY = "gr_books_v9";
 	var CACHE_TTL = 60 * 60 * 1000;  // 1 hour
-	var MIN_RATING = 3;              // show 3★, 4★ and 5★ books on the shelf
+	// Show every non-manga book on the read shelf, regardless of rating.
+	// (Earlier this was 4 — only highlighted 4★ and 5★ — which made the
+	// shelf feel sparse. We still highlight 5★ visually via a hover-glow
+	// but we no longer hide lower-rated books.)
+	var MIN_RATING = 1;
 
 	// Manga authors to exclude from the Books shelf — those entries already
 	// appear in the dedicated Manga section (MyAnimeList-fed), so showing
@@ -1665,10 +1685,6 @@ AOS.init({
 			}
 			var fivestar = b.rating === 5 ? " book-card--star5" : "";
 			var clubbed = count > 1 ? " book-card--series" : "";
-			var dateStr = formatDate(b.ratedAt);
-			var dateBlock = dateStr && count <= 1
-				? '<div class="book-date">Rated ' + escapeHTML(dateStr) + '</div>'
-				: "";
 			var titleText = count > 1 ? seriesName : b.displayTitle;
 			var seriesBadge = count > 1
 				? '<span class="book-series-count" aria-label="' + count + ' volumes in this series">' + count + ' vols</span>'
@@ -1688,13 +1704,31 @@ AOS.init({
 					'</div>' +
 					'<div class="book-title">' + escapeHTML(titleText) + '</div>' +
 					'<div class="book-author">' + escapeHTML(b.author) + '</div>' +
-					dateBlock +
 				'</a>'
 			);
 		}).join("");
 
 		// Atomic swap to avoid layout flash
 		grid.innerHTML = html;
+	}
+
+	// Update the Books stat cards (Books Read / Currently Reading / Avg
+	// Rating) from the same RSS payload. The to-read / Plan-to-Read cell
+	// has its own loader (it hits a different shelf URL).
+	function paintBookStats(books) {
+		// Total = everything on the read shelf, including manga (it's still
+		// "books read" — the user-facing count from Goodreads).
+		var total = books.length;
+		// Avg of the user's actual ratings on Goodreads (only entries with
+		// rating > 0). Skip manga from the average to mirror the shelf.
+		var rated = books.filter(function (b) { return b.rating > 0 && !isMangaAuthor(b.author); });
+		var avg = rated.length
+			? (rated.reduce(function (s, x) { return s + x.rating; }, 0) / rated.length)
+			: 0;
+		var elTotal = document.getElementById("books-read");
+		if (elTotal && total) elTotal.textContent = total;
+		var elAvg = document.getElementById("books-avg");
+		if (elAvg && avg) elAvg.innerHTML = avg.toFixed(2) + '<span class="gh-stat-unit">/ 5</span>';
 	}
 
 	// Count of cards `render()` would emit for a given book list, mirroring
@@ -1706,83 +1740,95 @@ AOS.init({
 		}).length;
 	}
 
-	// 1. Try cache first — but only if it has at least as many qualifying
-	//    books as the static fallback. Otherwise the cache would visibly
-	//    shrink the shelf on second load.
+	// `floor` = the minimum acceptable shelf size. We never render fewer
+	// books than this. The baked file (data/books.js) sets the floor; any
+	// other source — localStorage cache, live RSS — must beat it to win.
+	// This prevents a stale cache or a capped rss2json response from
+	// shrinking the shelf below the snapshot count.
+	var floor = 0;
+
+	// 1. Paint the baked snapshot from data/books.js. Never optional.
+	if (window.ABJ_BOOKS_DATA && Array.isArray(window.ABJ_BOOKS_DATA.books)) {
+		render(window.ABJ_BOOKS_DATA.books);
+		var baked = window.ABJ_BOOKS_DATA;
+		var elTotal = document.getElementById("books-read");
+		if (elTotal && baked.meta && baked.meta.totalRead) elTotal.textContent = baked.meta.totalRead;
+		var elAvg = document.getElementById("books-avg");
+		if (elAvg && baked.meta && baked.meta.avgRating) {
+			elAvg.innerHTML = baked.meta.avgRating.toFixed(2) + '<span class="gh-stat-unit">/ 5</span>';
+		}
+		floor = countRenderable(baked.books);
+	}
+
+	// 2. Consider the localStorage cache only if it BEATS the baked
+	//    snapshot. Otherwise a stale 6-book cache from before the
+	//    MIN_RATING change would clobber today's 18-book baked file.
 	try {
 		var cached = localStorage.getItem(CACHE_KEY);
 		if (cached) {
 			var parsed = JSON.parse(cached);
-			if (parsed.ts && (Date.now() - parsed.ts) < CACHE_TTL && parsed.books && parsed.books.length) {
-				// Static-DOM count is post-filter (the static clubber removes
-				// manga authors before this code path runs). To compare like-
-				// for-like, count only renderable entries on both sides.
-				var staticN = grid.querySelectorAll(".book-card").length;
-				if (countRenderable(parsed.books) >= staticN) {
-					render(parsed.books);
-					return;
-				}
+			if (parsed.ts && (Date.now() - parsed.ts) < CACHE_TTL &&
+			    parsed.books && parsed.books.length &&
+			    countRenderable(parsed.books) > floor) {
+				render(parsed.books);
+				paintBookStats(parsed.books);
+				floor = countRenderable(parsed.books);
 			}
 		}
 	} catch (e) { /* localStorage unavailable; ignore */ }
 
-	// 2. Fetch live — keep the static fallback markup if every endpoint fails.
-	//    We try the raw-XML CORS proxies FIRST so we get every book in one
-	//    request (rss2json caps at 10 items on the free tier and will only
-	//    show a tiny slice of the shelf).
+	// 3. Refresh from live RSS. Same rule: only overwrite the shelf when
+	//    the live source returns at least `floor` qualifying books.
 	dataSourceStarted();
-	// How many cards are currently in the static fallback. If the live fetch
-	// returns fewer, we deliberately do NOT clobber the page — the static
-	// markup already shows the full set, and replacing it with rss2json's
-	// 10-item slice would be a regression.
-	var staticCardCount = grid.querySelectorAll(".book-card").length;
 	fetchViaProxies()
 		.catch(function () { return fetchViaRss2Json(); })
 		.then(function (books) {
 			if (!books || !books.length) throw new Error("No rated books in feed");
-			if (countRenderable(books) < staticCardCount) {
-				// Live source is incomplete; keep the static fallback.
+			if (countRenderable(books) < floor) {
+				// Live source is incomplete (rss2json hit the 10-item cap,
+				// or a proxy returned a partial body). Keep the baked /
+				// cached render in place; it's already on screen.
 				return;
 			}
 			render(books);
+			paintBookStats(books);
 			try {
 				localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), books: books }));
 			} catch (e) {}
 		})
 		.catch(function (err) {
-			// Silent fail — static markup stays. Surface in console for debugging.
 			if (window.console) console.warn("Goodreads fetch failed:", err && err.message);
 		})
 		.finally(dataSourceDone);
 })();
 
-// ===== Beyond Code — Goodreads "Plan to Read" count =====
-// Fetches the user's `to-read` shelf via the same proxy chain the main
-// Goodreads loader uses, plus rss2json as a fourth fallback (rss2json caps
-// the items array at 10 on the free tier — fine for a small to-read shelf,
-// and we still get a real number when the raw-XML proxies are flaky).
-//
-// The cell ships a sensible static count so even with no network we don't
-// show a placeholder; the live fetch overwrites only when it returns a
-// positive number.
+// ===== Beyond Code — Goodreads shelf counters =====
+// Fetches `to-read` and `currently-reading` item counts from the user's
+// public Goodreads RSS, writing the numbers into the matching stat cards.
+// Uses the same proxy chain the main Goodreads loader uses + rss2json as
+// a final fallback. Each shelf is cached separately for an hour.
 (function () {
-	var el = document.getElementById("books-toread");
-	if (!el) return;
 	var USER_ID = "139705685";
-	var FEED = "https://www.goodreads.com/review/list_rss/" + USER_ID +
-		"?shelf=to-read&per_page=200";
-	var CACHE_KEY = "gr_toread_v2";
 	var CACHE_TTL = 60 * 60 * 1000;
-
+	var SHELVES = [
+		{ shelf: "to-read",           cellId: "books-toread",   cacheKey: "gr_toread_v2"  },
+		{ shelf: "currently-reading", cellId: "books-reading",  cacheKey: "gr_reading_v1" }
+	];
 	var PROXIES = [
 		function (u) { return "https://corsproxy.io/?" + encodeURIComponent(u); },
 		function (u) { return "https://api.allorigins.win/raw?url=" + encodeURIComponent(u); },
 		function (u) { return "https://api.codetabs.com/v1/proxy/?quest=" + encodeURIComponent(u); }
 	];
-	function tryProxies(idx) {
+
+	function feedUrl(shelf) {
+		return "https://www.goodreads.com/review/list_rss/" + USER_ID +
+			"?shelf=" + shelf + "&per_page=200";
+	}
+
+	function tryProxies(url, idx) {
 		idx = idx || 0;
-		if (idx >= PROXIES.length) return Promise.reject(new Error("toread: all proxies failed"));
-		return fetchWithTimeout(PROXIES[idx](FEED), {}, 8000)
+		if (idx >= PROXIES.length) return Promise.reject(new Error("all proxies failed"));
+		return fetchWithTimeout(PROXIES[idx](url), {}, 8000)
 			.then(function (r) { if (!r.ok) throw new Error("status " + r.status); return r.text(); })
 			.then(function (xml) {
 				if (!xml || xml.indexOf("<item>") < 0) throw new Error("empty");
@@ -1790,15 +1836,12 @@ AOS.init({
 				if (n <= 0) throw new Error("zero");
 				return n;
 			})
-			.catch(function () { return tryProxies(idx + 1); });
+			.catch(function () { return tryProxies(url, idx + 1); });
 	}
 
-	// rss2json fallback. Caps at 10 items but the items array is still a
-	// reliable signal of "feed responded with content" — and on tiny
-	// to-read shelves it returns the full count.
-	function tryRss2Json() {
-		var url = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(FEED);
-		return fetchWithTimeout(url, {}, 8000)
+	function tryRss2Json(url) {
+		var u = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(url);
+		return fetchWithTimeout(u, {}, 8000)
 			.then(function (r) { if (!r.ok) throw new Error("rss2json " + r.status); return r.json(); })
 			.then(function (j) {
 				if (!j || j.status !== "ok" || !Array.isArray(j.items) || !j.items.length) {
@@ -1808,28 +1851,121 @@ AOS.init({
 			});
 	}
 
-	// Only repaint when we get a positive number. A 0/falsy result means
-	// the proxy returned an empty body — keep the static fallback.
-	function paint(n) { if (typeof n === "number" && n > 0) el.textContent = n; }
+	function paint(cellId, n) {
+		var el = document.getElementById(cellId);
+		if (el && typeof n === "number" && n > 0) el.textContent = n;
+	}
 
-	// Cache hit — paint immediately.
-	try {
-		var cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
-		if (cached && cached.ts && (Date.now() - cached.ts) < CACHE_TTL) paint(cached.n);
-	} catch (e) {}
+	SHELVES.forEach(function (s) {
+		var el = document.getElementById(s.cellId);
+		if (!el) return;
+		var url = feedUrl(s.shelf);
 
-	dataSourceStarted();
-	tryProxies()
-		.catch(function () { return tryRss2Json(); })
-		.then(function (n) {
-			paint(n);
-			try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), n: n })); } catch (e) {}
-		})
-		.catch(function (err) {
-			if (window.console) console.warn("Plan-to-read fetch failed:", err && err.message);
-			// Static fallback (33) stays in place.
-		})
-		.finally(dataSourceDone);
+		try {
+			var cached = JSON.parse(localStorage.getItem(s.cacheKey) || "null");
+			if (cached && cached.ts && (Date.now() - cached.ts) < CACHE_TTL) paint(s.cellId, cached.n);
+		} catch (e) {}
+
+		dataSourceStarted();
+		tryProxies(url)
+			.catch(function () { return tryRss2Json(url); })
+			.then(function (n) {
+				paint(s.cellId, n);
+				try { localStorage.setItem(s.cacheKey, JSON.stringify({ ts: Date.now(), n: n })); } catch (e) {}
+			})
+			.catch(function (err) {
+				if (window.console) console.warn("Goodreads " + s.shelf + " fetch failed:", err && err.message);
+				// Cell stays at "—" if no cache and no live fetch.
+			})
+			.finally(dataSourceDone);
+	});
+})();
+
+// ===== Beyond Code — IMDb films shelf + stat cards (data-driven) =====
+// IMDb itself is CloudFront-WAF blocked from any static site (we tested
+// every CORS proxy + the IMDb GraphQL endpoint — both gated). So the
+// canonical source for this section is `data/films.js`, loaded as a
+// plain <script> tag in index.html so the page works on file:// too
+// (Chrome blocks fetch() on local files for security).
+//
+// Schema (window.ABJ_FILMS):
+//   {
+//     "updated": "YYYY-MM-DD",
+//     "meta": { "titlesRated": N, "currentlyWatching": N,
+//               "avgRating": N.N, "planToWatch": N },
+//     "films": [
+//       { "href": "...", "img": "...", "title": "...",
+//         "meta": "year · director", "rating": 9 }, …
+//     ]
+//   }
+(function () {
+	var grid = document.getElementById("filmshelf-grid");
+	if (!grid) return;
+
+	function escapeAttr(s) {
+		return String(s || "")
+			.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+			.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+	}
+
+	function renderShelf(films) {
+		// Sort by rating desc, then alpha — stable visual order.
+		films = films.slice().sort(function (a, b) {
+			if (b.rating !== a.rating) return b.rating - a.rating;
+			return (a.title || "").localeCompare(b.title || "");
+		});
+		grid.innerHTML = films.map(function (f) {
+			return (
+				'<a class="film-card" href="' + escapeAttr(f.href) + '" target="_blank" rel="noopener" ' +
+				'aria-label="' + escapeAttr(f.title) + ' — rated ' + f.rating + ' of 10 on IMDb">' +
+					'<div class="film-poster-wrap">' +
+						'<img src="' + escapeAttr(f.img) + '" alt="' + escapeAttr(f.title) + '" loading="lazy" decoding="async">' +
+						'<span class="film-rating" aria-label="Rated ' + f.rating + ' of 10">' + f.rating + '</span>' +
+					'</div>' +
+					'<div class="film-title">' + escapeAttr(f.title) + '</div>' +
+					(f.meta ? '<div class="film-meta">' + escapeAttr(f.meta) + '</div>' : '') +
+				'</a>'
+			);
+		}).join("");
+	}
+
+	function paintStats(meta) {
+		if (!meta) return;
+		var set = function (id, v) {
+			var el = document.getElementById(id);
+			if (el && v != null && v !== "") el.textContent = v;
+		};
+		var setRating = function (id, v) {
+			var el = document.getElementById(id);
+			if (!el || !v) return;
+			el.innerHTML = '' + v + '<span class="gh-stat-unit">/ 10</span>';
+		};
+		set("imdb-rated", meta.titlesRated);
+		set("imdb-watching", meta.currentlyWatching);
+		setRating("imdb-avg", typeof meta.avgRating === "number"
+			? meta.avgRating.toFixed(1) : meta.avgRating);
+		set("imdb-towatch", meta.planToWatch);
+	}
+
+	var data = window.ABJ_FILMS;
+	if (!data) {
+		// data/films.js didn't load (or didn't expose the global). Show a
+		// skeleton so the layout doesn't collapse.
+		if (!grid.children.length) {
+			var n = parseInt(grid.getAttribute("data-shelf-skeleton") || "0", 10);
+			var skel = "";
+			for (var s = 0; s < n; s++) {
+				skel += '<div class="film-skeleton" aria-hidden="true">' +
+					'<div class="film-poster-wrap"></div></div>';
+			}
+			grid.innerHTML = skel;
+		}
+		if (window.console) console.warn("ABJ_FILMS not defined — is data/films.js loaded?");
+		return;
+	}
+
+	if (Array.isArray(data.films)) renderShelf(data.films);
+	if (data.meta) paintStats(data.meta);
 })();
 
 // ===== Beyond Code — Static bookshelf series clubbing =====
@@ -2436,14 +2572,27 @@ AOS.init({
 	}
 
 	function renderManga(grid, items) {
-		// Status 1..4 = "engaged with" (reading / completed / on hold / dropped).
-		// 6 = plan-to-read, which the user has explicitly asked to skip.
+		// Show every entry in the user's MAL list (status 1..4 = engaged
+		// with, 6 = plan-to-read). Image is the only hard requirement —
+		// everything else falls into a sensible default. Engaged entries
+		// rank higher than plan-to-read; within each group, score desc.
+		function statusRank(s) {
+			// 1=reading, 2=completed: engaged-and-active first
+			if (s === 1 || s === 2) return 0;
+			// 3=on hold, 4=dropped: engaged but stalled
+			if (s === 3 || s === 4) return 1;
+			// 6=plan-to-read: queued
+			if (s === 6) return 2;
+			return 3;
+		}
 		var picks = items
 			.filter(function (it) {
-				return it.img && it.status >= 1 && it.status <= 4;
+				return it.img && (it.status >= 1 && it.status <= 4 || it.status === 6);
 			})
 			.sort(function (a, b) {
-				// Highest rated first; ones with no rating fall after.
+				var ra = statusRank(a.status), rb = statusRank(b.status);
+				if (ra !== rb) return ra - rb;
+				// Within a group: rated entries first, then by score desc.
 				if (b.score !== a.score) return b.score - a.score;
 				return 0;
 			});
@@ -2459,7 +2608,13 @@ AOS.init({
 			var ratingBadge = stars
 				? '<span class="book-rating" aria-label="Rated ' + stars + ' of 5">' + stars + '★</span>'
 				: '';
-			var subline = it.subline || (STATUS_LABEL.manga[it.status] || "");
+			// Sub-line: for plan-to-read entries, show the status label
+			// ("Plan to Read") rather than the manga's full volume count,
+			// since the user hasn't read any of it yet. For everything
+			// else, prefer the read-progress meta (e.g. "8 / 27 vols").
+			var subline = it.status === 6
+				? (STATUS_LABEL.manga[6] || "Plan to Read")
+				: (it.subline || (STATUS_LABEL.manga[it.status] || ""));
 			return (
 				'<a class="book-card' + fivestar + '" href="' + escapeAttr(it.url) +
 				'" target="_blank" rel="noopener" ' +
@@ -2532,8 +2687,11 @@ AOS.init({
 		if (!kind || !user) return;
 
 		// v2 = manga renderer switched to .book-card layout + status-based
-		// inclusion (anything started, not just rated 8+).
-		var CACHE_KEY = "mal_" + kind + "_v2_" + user;
+		//      inclusion (anything started, not just rated 8+).
+		// v3 = manga shelf now also includes plan-to-read entries (status
+		//      6) so the row isn't sparse when only a few books have been
+		//      started. Bumped so anyone with a v2 cache rerenders.
+		var CACHE_KEY = "mal_" + kind + "_v3_" + user;
 
 		// 1. Cache hit — render immediately, then refresh in background.
 		try {

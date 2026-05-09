@@ -798,28 +798,32 @@
 
 				<h5 class="beyond-sub text-center text-uppercase mb-4" data-aos="fade-up"><i class="fas fa-book-reader mr-2"></i>Books</h5>
 
+				<!-- Goodreads stat cells — fully live. The Goodreads loader in
+				     main.js writes all four numbers from the user's RSS feeds
+				     (read, currently-reading, to-read shelves), so editing
+				     ratings on Goodreads updates the page automatically. -->
 				<div class="row text-center mb-4">
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number" id="books-read">98</span>
+							<span class="gh-stat-number" id="books-read">&mdash;</span>
 							<span class="gh-stat-label">Books Read</span>
 						</div>
 					</div>
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="100">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number" id="books-reading">8</span>
+							<span class="gh-stat-number" id="books-reading">&mdash;</span>
 							<span class="gh-stat-label">Currently Reading</span>
 						</div>
 					</div>
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="200">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number">4.35<span class="gh-stat-unit">/ 5</span></span>
+							<span class="gh-stat-number" id="books-avg">&mdash;</span>
 							<span class="gh-stat-label">Avg Rating</span>
 						</div>
 					</div>
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="300">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number" id="books-toread">33</span>
+							<span class="gh-stat-number" id="books-toread">&mdash;</span>
 							<span class="gh-stat-label">Plan to Read</span>
 						</div>
 					</div>
@@ -831,600 +835,8 @@
 				     each book's Goodreads page. The brass `.book-rating` badge
 				     mirrors the IMDb shelf's `.film-rating` for visual rhyme. -->
 				<div class="bookshelf bookshelf--centered" data-aos="fade-up">
-					<div class="bookshelf-scroll" id="bookshelf-grid">
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/54109255" target="_blank" rel="noopener" aria-label="System Design Interview – An insider&#39;s guide — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1592265780l/54109255.jpg" alt="System Design Interview – An insider&#39;s guide" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">System Design Interview</div>
-								<div class="book-author">Alex Xu</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/102868" target="_blank" rel="noopener" aria-label="A Study in Scarlet (Sherlock Holmes, #1) — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1519031842l/102868.jpg" alt="A Study in Scarlet (Sherlock Holmes, #1)" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">A Study in Scarlet</div>
-								<div class="book-author">Arthur Conan Doyle</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/38242135" target="_blank" rel="noopener" aria-label="AI Superpowers: China, Silicon Valley, and the New World Order — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1521228712l/38242135.jpg" alt="AI Superpowers: China, Silicon Valley, and the New World Order" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">AI Superpowers</div>
-								<div class="book-author">Kai-Fu Lee</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248866" target="_blank" rel="noopener" aria-label="Berserk, Vol. 15 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403205732l/248866.jpg" alt="Berserk, Vol. 15" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 15</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248867" target="_blank" rel="noopener" aria-label="Berserk, Vol. 14 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403203484l/248867.jpg" alt="Berserk, Vol. 14" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 14</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248868" target="_blank" rel="noopener" aria-label="Berserk, Vol. 16 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403206743l/248868.jpg" alt="Berserk, Vol. 16" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 16</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248869" target="_blank" rel="noopener" aria-label="Berserk, Vol. 13 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403208499l/248869.jpg" alt="Berserk, Vol. 13" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 13</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248870" target="_blank" rel="noopener" aria-label="Berserk, Vol. 4 (Berserk, #4) — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1500999996l/248870.jpg" alt="Berserk, Vol. 4 (Berserk, #4)" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 4</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248871" target="_blank" rel="noopener" aria-label="Berserk, Vol. 1 (Berserk, #1) — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1501000017l/248871.jpg" alt="Berserk, Vol. 1 (Berserk, #1)" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 1</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248872" target="_blank" rel="noopener" aria-label="Berserk, Vol. 10 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403203502l/248872.jpg" alt="Berserk, Vol. 10" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 10</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248873" target="_blank" rel="noopener" aria-label="Berserk, Vol. 2 (Berserk, #2) — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1501000010l/248873.jpg" alt="Berserk, Vol. 2 (Berserk, #2)" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 2</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248874" target="_blank" rel="noopener" aria-label="Berserk, Vol. 3 (Berserk, #3) — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1501000003l/248874.jpg" alt="Berserk, Vol. 3 (Berserk, #3)" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 3</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248876" target="_blank" rel="noopener" aria-label="Berserk, Vol. 12 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403198999l/248876.jpg" alt="Berserk, Vol. 12" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 12</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248879" target="_blank" rel="noopener" aria-label="Berserk, Vol. 11 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403204918l/248879.jpg" alt="Berserk, Vol. 11" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 11</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248881" target="_blank" rel="noopener" aria-label="Berserk, Vol. 5 (Berserk, #5) — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403203829l/248881.jpg" alt="Berserk, Vol. 5 (Berserk, #5)" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 5</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248882" target="_blank" rel="noopener" aria-label="Berserk, Vol. 9 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403204833l/248882.jpg" alt="Berserk, Vol. 9" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 9</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248883" target="_blank" rel="noopener" aria-label="Berserk, Vol. 7 (Berserk, #7) — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403198541l/248883.jpg" alt="Berserk, Vol. 7 (Berserk, #7)" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 7</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248884" target="_blank" rel="noopener" aria-label="Berserk, Vol. 6 (Berserk, #6) — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403199873l/248884.jpg" alt="Berserk, Vol. 6 (Berserk, #6)" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 6</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248885" target="_blank" rel="noopener" aria-label="Berserk, Vol. 17 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403205998l/248885.jpg" alt="Berserk, Vol. 17" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 17</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248886" target="_blank" rel="noopener" aria-label="Berserk, Vol. 18 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403203548l/248886.jpg" alt="Berserk, Vol. 18" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 18</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248936" target="_blank" rel="noopener" aria-label="Berserk, Vol. 26 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1351817438l/248936.jpg" alt="Berserk, Vol. 26" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 26</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/248878" target="_blank" rel="noopener" aria-label="Berserk, Vol. 8 (Berserk, #8) — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403206127l/248878.jpg" alt="Berserk, Vol. 8 (Berserk, #8)" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 8</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/1501850" target="_blank" rel="noopener" aria-label="Berserk, Vol. 19 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403199860l/1501850.jpg" alt="Berserk, Vol. 19" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 19</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/1875541" target="_blank" rel="noopener" aria-label="Berserk, Vol. 31 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1351818148l/1875541.jpg" alt="Berserk, Vol. 31" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 31</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/1898914" target="_blank" rel="noopener" aria-label="Berserk, Vol. 20 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403207961l/1898914.jpg" alt="Berserk, Vol. 20" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 20</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/2001695" target="_blank" rel="noopener" aria-label="Berserk, Vol. 21 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403206338l/2001695.jpg" alt="Berserk, Vol. 21" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 21</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/2571920" target="_blank" rel="noopener" aria-label="Berserk, Vol. 22 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403207741l/2571920.jpg" alt="Berserk, Vol. 22" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 22</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/3586999" target="_blank" rel="noopener" aria-label="Berserk, Vol. 25 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403204826l/3586999.jpg" alt="Berserk, Vol. 25" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 25</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/5083852" target="_blank" rel="noopener" aria-label="Berserk, Vol. 27 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403199023l/5083852.jpg" alt="Berserk, Vol. 27" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 27</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/5083854" target="_blank" rel="noopener" aria-label="Berserk, Vol. 28 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403204235l/5083854.jpg" alt="Berserk, Vol. 28" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 28</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/6276142" target="_blank" rel="noopener" aria-label="Berserk, Vol. 29 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403203911l/6276142.jpg" alt="Berserk, Vol. 29" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 29</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/6337758" target="_blank" rel="noopener" aria-label="Berserk, Vol. 30 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1351817757l/6337758.jpg" alt="Berserk, Vol. 30" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 30</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/8728667" target="_blank" rel="noopener" aria-label="Berserk, Vol. 34 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403198850l/8728667.jpg" alt="Berserk, Vol. 34" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 34</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/7608213" target="_blank" rel="noopener" aria-label="Berserk, Vol. 33 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403199750l/7608213.jpg" alt="Berserk, Vol. 33" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 33</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/7399514" target="_blank" rel="noopener" aria-label="Berserk, Vol. 32 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403209527l/7399514.jpg" alt="Berserk, Vol. 32" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 32</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/11452849" target="_blank" rel="noopener" aria-label="Berserk, Vol. 35 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403206238l/11452849.jpg" alt="Berserk, Vol. 35" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 35</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/15894058" target="_blank" rel="noopener" aria-label="Berserk, Vol. 36 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403198685l/15894058.jpg" alt="Berserk, Vol. 36" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 36</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/18208495" target="_blank" rel="noopener" aria-label="Berserk, Vol. 37 — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403206798l/18208495.jpg" alt="Berserk, Vol. 37" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 37</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/35524848" target="_blank" rel="noopener" aria-label="ベルセルク 39 [Berserk 39] — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1502417203l/35524848.jpg" alt="ベルセルク 39 [Berserk 39]" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">ベルセルク 39 [Berserk 39]</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/33253014" target="_blank" rel="noopener" aria-label="Berserk, Vol. 38 (Berserk, #38) — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1501768442l/33253014.jpg" alt="Berserk, Vol. 38 (Berserk, #38)" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Berserk, Vol. 38</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/41540926" target="_blank" rel="noopener" aria-label="ベルセルク 40 [Berserk 40] — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1535383004l/41540926.jpg" alt="ベルセルク 40 [Berserk 40]" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">ベルセルク 40 [Berserk 40]</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/53318143" target="_blank" rel="noopener" aria-label="Берсерк. Том 1 (ベルセルク / Berserk #1-2) — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1588507794l/53318143.jpg" alt="Берсерк. Том 1 (ベルセルク / Berserk #1-2)" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Берсерк. Том 1</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/54739527" target="_blank" rel="noopener" aria-label="ベルセルク 41 [Berserk 41] — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1639492674l/54739527.jpg" alt="ベルセルク 41 [Berserk 41]" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">ベルセルク 41 [Berserk 41]</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/49099937" target="_blank" rel="noopener" aria-label="No Rules Rules: Netflix and the Culture of Reinvention — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1595815356l/49099937.jpg" alt="No Rules Rules: Netflix and the Culture of Reinvention" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">No Rules Rules</div>
-								<div class="book-author">Reed Hastings</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/39664" target="_blank" rel="noopener" aria-label="Rita Hayworth and Shawshank Redemption — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1315100686l/39664.jpg" alt="Rita Hayworth and Shawshank Redemption" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Rita Hayworth and Shawshank Redemption</div>
-								<div class="book-author">Stephen  King</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/10534" target="_blank" rel="noopener" aria-label="The Art of War — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1630683326l/10534.jpg" alt="The Art of War" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">The Art of War</div>
-								<div class="book-author">Sun Tzu</div>
-							</a>
-							<a class="book-card book-card--star5" href="https://www.goodreads.com/book/show/23692271" target="_blank" rel="noopener" aria-label="Sapiens: A Brief History of Humankind — rated 5 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1703329310l/23692271.jpg" alt="Sapiens: A Brief History of Humankind" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 5 of 5">5★</span>
-								</div>
-								<div class="book-title">Sapiens: A Brief History of Humankind</div>
-								<div class="book-author">Yuval Noah Harari</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/106835" target="_blank" rel="noopener" aria-label="The Intelligent Investor — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1409602421l/106835.jpg" alt="The Intelligent Investor" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">The Intelligent Investor</div>
-								<div class="book-author">Benjamin Graham</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/625432" target="_blank" rel="noopener" aria-label="Fist of the North Star 3 — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387741267l/625432.jpg" alt="Fist of the North Star 3" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">Fist of the North Star 3</div>
-								<div class="book-author">Buronson</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/662667" target="_blank" rel="noopener" aria-label="Fist of the North Star: Master Edition, Volume 2 — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387349243l/662667.jpg" alt="Fist of the North Star: Master Edition, Volume 2" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">Fist of the North Star</div>
-								<div class="book-author">Buronson</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/10846111" target="_blank" rel="noopener" aria-label="北斗の拳（4）(First of the North Star, #4) — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1397570230l/10846111.jpg" alt="北斗の拳（4）(First of the North Star, #4)" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">北斗の拳（4）</div>
-								<div class="book-author">Buronson</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/6226296" target="_blank" rel="noopener" aria-label="Fist of the North Star 1 — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1400524726l/6226296.jpg" alt="Fist of the North Star 1" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">Fist of the North Star 1</div>
-								<div class="book-author">Buronson</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/364949" target="_blank" rel="noopener" aria-label="One Piece, Volume 13: It&#39;s All Right! — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388797285l/364949.jpg" alt="One Piece, Volume 13: It&#39;s All Right!" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Volume 13</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/364951" target="_blank" rel="noopener" aria-label="One Piece, Volume 5: For Whom the Bell Tolls — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388289134l/364951.jpg" alt="One Piece, Volume 5: For Whom the Bell Tolls" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Volume 5</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/364960" target="_blank" rel="noopener" aria-label="One Piece, Volume 10: OK, Let&#39;s Stand Up! — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1630569260l/364960.jpg" alt="One Piece, Volume 10: OK, Let&#39;s Stand Up!" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Volume 10</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/1237398" target="_blank" rel="noopener" aria-label="One Piece, Volume 1: Romance Dawn — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1318523719l/1237398.jpg" alt="One Piece, Volume 1: Romance Dawn" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Volume 1</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/364950" target="_blank" rel="noopener" aria-label="One Piece, Volume 6: The Oath — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1572271006l/364950.jpg" alt="One Piece, Volume 6: The Oath" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Volume 6</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/364957" target="_blank" rel="noopener" aria-label="One Piece, Volume 3: Don&#39;t Get Fooled Again — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388531492l/364957.jpg" alt="One Piece, Volume 3: Don&#39;t Get Fooled Again" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Volume 3</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/364953" target="_blank" rel="noopener" aria-label="One Piece, Volume 14: Instinct — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388965064l/364953.jpg" alt="One Piece, Volume 14: Instinct" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Volume 14</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/19366773" target="_blank" rel="noopener" aria-label="One Piece, Vol. 21: Utopia — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1572273788l/19366773.jpg" alt="One Piece, Vol. 21: Utopia" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Vol. 21</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/364955" target="_blank" rel="noopener" aria-label="One Piece, Volume 8: I Won&#39;t Die — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1630542699l/364955.jpg" alt="One Piece, Volume 8: I Won&#39;t Die" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Volume 8</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/364959" target="_blank" rel="noopener" aria-label="One Piece, Volume 12: The Legend Begins — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1572272143l/364959.jpg" alt="One Piece, Volume 12: The Legend Begins" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Volume 12</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/364958" target="_blank" rel="noopener" aria-label="One Piece, Volume 9: Tears — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1391641798l/364958.jpg" alt="One Piece, Volume 9: Tears" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Volume 9</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/662986" target="_blank" rel="noopener" aria-label="One Piece, Volume 16: Carrying On His Will — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1572271230l/662986.jpg" alt="One Piece, Volume 16: Carrying On His Will" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Volume 16</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/364956" target="_blank" rel="noopener" aria-label="One Piece, Volume 2: Buggy the Clown — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388531494l/364956.jpg" alt="One Piece, Volume 2: Buggy the Clown" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Volume 2</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/364954" target="_blank" rel="noopener" aria-label="One Piece, Volume 7: The Crap-Geezer — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1389640440l/364954.jpg" alt="One Piece, Volume 7: The Crap-Geezer" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Volume 7</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/662985" target="_blank" rel="noopener" aria-label="One Piece, Volume 11: The Meanest Man in the East — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388289119l/662985.jpg" alt="One Piece, Volume 11: The Meanest Man in the East" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Volume 11</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/2382362" target="_blank" rel="noopener" aria-label="One Piece, Volume 18: Ace Arrives — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1572271401l/2382362.jpg" alt="One Piece, Volume 18: Ace Arrives" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Volume 18</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/3430775" target="_blank" rel="noopener" aria-label="One Piece, Volume 19: Rebellion — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1572271415l/3430775.jpg" alt="One Piece, Volume 19: Rebellion" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Volume 19</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/5071433" target="_blank" rel="noopener" aria-label="One Piece, Vol. 20: Showdown at Alubarna — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1572271428l/5071433.jpg" alt="One Piece, Vol. 20: Showdown at Alubarna" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">One Piece, Vol. 20</div>
-								<div class="book-author">Eiichiro Oda</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/1052" target="_blank" rel="noopener" aria-label="The Richest Man in Babylon — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348336780l/1052.jpg" alt="The Richest Man in Babylon" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">The Richest Man in Babylon</div>
-								<div class="book-author">George S. Clason</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/55695709" target="_blank" rel="noopener" aria-label="Berserk Deluxe Edition, Volume 8 — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1602908626l/55695709.jpg" alt="Berserk Deluxe Edition, Volume 8" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">Berserk Deluxe Edition, Volume 8</div>
-								<div class="book-author">Kentaro Miura</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/18050143" target="_blank" rel="noopener" aria-label="Zero to One: Notes on Startups, or How to Build the Future — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1630663027l/18050143.jpg" alt="Zero to One: Notes on Startups, or How to Build the Future" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">Zero to One</div>
-								<div class="book-author">Peter Thiel</div>
-							</a>
-							<a class="book-card" href="https://www.goodreads.com/book/show/69571" target="_blank" rel="noopener" aria-label="Rich Dad Poor Dad: What the Rich Teach Their Kids About Money—That the Poor and Middle Class Do Not! — rated 4 of 5 on Goodreads">
-								<div class="book-cover-wrap">
-									<img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1757619021l/69571.jpg" alt="Rich Dad Poor Dad: What the Rich Teach Their Kids About Money—That the Poor and Middle Class Do Not!" loading="lazy" decoding="async">
-									<span class="book-rating" aria-label="Rated 4 of 5">4★</span>
-								</div>
-								<div class="book-title">Rich Dad Poor Dad</div>
-								<div class="book-author">Robert T. Kiyosaki</div>
-							</a>
-					</div>
+					<!-- Bookshelf — populated live from Goodreads via the JS in main.js. The container ships empty + a single skeleton row so the layout space is reserved while the fetch resolves. -->
+					<div class="bookshelf-scroll" id="bookshelf-grid" data-shelf-skeleton="6"></div>
 				</div>
 
 				<div class="text-center mb-5 mt-4" data-aos="fade-up" data-aos-delay="100">
@@ -1447,28 +859,33 @@
 				     ratings page is bot-gated, so the values are static; they
 				     are kept up to date manually when the rating profile is
 				     synced. -->
+				<!-- IMDb stat cells — all four numbers come from data/films.json
+				     (the same file that feeds the shelf below) plus a tiny
+				     `meta.totals` block in that file. Editing the JSON updates
+				     both the cards and the cells in lockstep — no two-place
+				     sync issues. -->
 				<div class="row text-center mb-4">
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number" id="imdb-rated">224</span>
+							<span class="gh-stat-number" id="imdb-rated">&mdash;</span>
 							<span class="gh-stat-label">Titles Rated</span>
 						</div>
 					</div>
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="100">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number" id="imdb-watching">3</span>
+							<span class="gh-stat-number" id="imdb-watching">&mdash;</span>
 							<span class="gh-stat-label">Currently Watching</span>
 						</div>
 					</div>
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="200">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number">7.6<span class="gh-stat-unit">/ 10</span></span>
+							<span class="gh-stat-number" id="imdb-avg">&mdash;</span>
 							<span class="gh-stat-label">Avg Rating</span>
 						</div>
 					</div>
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="300">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number" id="imdb-towatch">42</span>
+							<span class="gh-stat-number" id="imdb-towatch">&mdash;</span>
 							<span class="gh-stat-label">Plan to Watch</span>
 						</div>
 					</div>
@@ -1479,304 +896,12 @@
 				     use alternate poster IDs because the watchlist's primary
 				     URL had been deprecated). Cards link to IMDb. -->
 				<div class="filmshelf" data-aos="fade-up">
-					<div class="filmshelf-scroll" id="filmshelf-grid">
-							<a class="film-card" href="https://www.imdb.com/title/tt7405458/" target="_blank" rel="noopener" aria-label="A Man Called Otto — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BNjY5YWJjODYtNDUzNy00ZGMyLTk3NTQtN2EzZmFhZTFmMDNiXkEyXkFqcGc@._V1_.jpg" alt="A Man Called Otto" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">A Man Called Otto</div>
-								<div class="film-meta">2022 &middot; Marc Forster</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt31806037/" target="_blank" rel="noopener" aria-label="Adolescence — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BNGY1YjBiNzMtYWZhNC00OWViLWE0MzItNjc4YzczOGNiM2I0XkEyXkFqcGc@._V1_.jpg" alt="Adolescence" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Adolescence</div>
-								<div class="film-meta">2025 &middot; Stephen Graham</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt10795658/" target="_blank" rel="noopener" aria-label="Alice in Borderland — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BYmMzODA4M2MtMjBmNC00YjFhLTg4NzgtODgyNzE4NWQxMThmXkEyXkFqcGc@._V1_.jpg" alt="Alice in Borderland" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Alice in Borderland</div>
-								<div class="film-meta">2020 &middot; Haro Aso</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt1016150/" target="_blank" rel="noopener" aria-label="All Quiet on the Western Front — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BOWJiYWMyYTktZThhOS00ZjgxLWE0YTQtZDMyNTQxMjMyYjI2XkEyXkFqcGc@._V1_.jpg" alt="All Quiet on the Western Front" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">All Quiet on the Western Front</div>
-								<div class="film-meta">2022 &middot; Edward Berger</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt14512938/" target="_blank" rel="noopener" aria-label="Alma Matters: Inside the IIT Dream — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BN2NjZDMxYTgtYzBjYy00YjczLThkOTUtYjgyY2JhNjA4NDcwXkEyXkFqcGc@._V1_.jpg" alt="Alma Matters: Inside the IIT Dream" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Alma Matters</div>
-								<div class="film-meta">2021</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt0144084/" target="_blank" rel="noopener" aria-label="American Psycho — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BNzBjM2I5ZjUtNmIzNy00OGNkLWIwZDMtOTAwYWUwMzA2YjdlXkEyXkFqcGc@._V1_.jpg" alt="American Psycho" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">American Psycho</div>
-								<div class="film-meta">2000 &middot; Mary Harron</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt11126994/" target="_blank" rel="noopener" aria-label="Arcane — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BYjA2NzhlMDItNWRmZC00MzRjLWE3ZjAtZjBlZDAwOWY2ODdjXkEyXkFqcGc@._V1_.jpg" alt="Arcane" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Arcane</div>
-								<div class="film-meta">2021</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt12923630/" target="_blank" rel="noopener" aria-label="Bad Boy Billionaires: India — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BNjUzMGI5MmEtY2RmYy00ZGI5LWI0YjktNmJlMWI1ZDMyOTU3XkEyXkFqcGc@._V1_.jpg" alt="Bad Boy Billionaires: India" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Bad Boy Billionaires</div>
-								<div class="film-meta">2020</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt13309742/" target="_blank" rel="noopener" aria-label="Blue Eye Samurai — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BY2E4ZGIwZWYtMGRiMS00NGI2LTgwYzAtZGY5NGVhNzY3Yjk0XkEyXkFqcGc@._V1_.jpg" alt="Blue Eye Samurai" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Blue Eye Samurai</div>
-								<div class="film-meta">2023 &middot; Michael Green</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt1727824/" target="_blank" rel="noopener" aria-label="Bohemian Rhapsody — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BMTA2NDc3Njg5NDVeQTJeQWpwZ15BbWU4MDc1NDcxNTUz._V1_.jpg" alt="Bohemian Rhapsody" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Bohemian Rhapsody</div>
-								<div class="film-meta">2018 &middot; Bryan Singer</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt0903747/" target="_blank" rel="noopener" aria-label="Breaking Bad — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BMzU5ZGYzNmQtMTdhYy00OGRiLTg0NmQtYjVjNzliZTg1ZGE4XkEyXkFqcGc@._V1_.jpg" alt="Breaking Bad" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Breaking Bad</div>
-								<div class="film-meta">TV &middot; Gilligan</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt33014583/" target="_blank" rel="noopener" aria-label="Dhurandhar — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BMzFiNTVkZjYtM2I3Yi00MGNjLWEyYTAtMGViNGExZmMzMGMzXkEyXkFqcGc@._V1_.jpg" alt="Dhurandhar" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Dhurandhar</div>
-								<div class="film-meta">2025 &middot; Aditya Dhar</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt32331294/" target="_blank" rel="noopener" aria-label="Hitler and the Nazis: Evil on Trial — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BZjMzNWJlY2YtNzdkMS00Yjc2LTg4YjMtNjk4MDNhMWVjODQwXkEyXkFqcGc@._V1_.jpg" alt="Hitler and the Nazis: Evil on Trial" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Hitler and the Nazis</div>
-								<div class="film-meta">2024</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt0816692/" target="_blank" rel="noopener" aria-label="Interstellar — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_QL75_UX380_CR0,1,380,562_.jpg" alt="Interstellar" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Interstellar</div>
-								<div class="film-meta">2014 &middot; Nolan</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt7286456/" target="_blank" rel="noopener" aria-label="Joker — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BNzY3OWQ5NDktNWQ2OC00ZjdlLThkMmItMDhhNDk3NTFiZGU4XkEyXkFqcGc@._V1_.jpg" alt="Joker" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Joker</div>
-								<div class="film-meta">2019 &middot; Todd Phillips</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt2707408/" target="_blank" rel="noopener" aria-label="Narcos — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BNzQwOTcwMzIwN15BMl5BanBnXkFtZTgwMjYxMTA0NjE@._V1_.jpg" alt="Narcos" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Narcos</div>
-								<div class="film-meta">2015 &middot; Carlo Bernard</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt0364569/" target="_blank" rel="noopener" aria-label="Oldboy — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BMTAwNzNjYWItZmI0Ni00ZTcyLWIwNWMtZjlmNGMxZTEyYTJmXkEyXkFqcGc@._V1_.jpg" alt="Oldboy" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Oldboy</div>
-								<div class="film-meta">2003 &middot; Park Chan-wook</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt0473075/" target="_blank" rel="noopener" aria-label="Prince of Persia: The Sands of Time — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BMTMwNDg0NzcyMV5BMl5BanBnXkFtZTcwNjg4MjQyMw@@._V1_.jpg" alt="Prince of Persia: The Sands of Time" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Prince of Persia</div>
-								<div class="film-meta">2010 &middot; Mike Newell</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt1392214/" target="_blank" rel="noopener" aria-label="Prisoners — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BMTg0NTIzMjQ1NV5BMl5BanBnXkFtZTcwNDc3MzM5OQ@@._V1_.jpg" alt="Prisoners" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Prisoners</div>
-								<div class="film-meta">2013 &middot; Denis Villeneuve</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt1677720/" target="_blank" rel="noopener" aria-label="Ready Player One — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BNzVkMTgzODQtMWIwZC00NzE4LTgzZjYtMzAwM2I5OGZhNjE4XkEyXkFqcGc@._V1_.jpg" alt="Ready Player One" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Ready Player One</div>
-								<div class="film-meta">2018 &middot; Steven Spielberg</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt12392504/" target="_blank" rel="noopener" aria-label="Scam 1992: The Harshad Mehta Story — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BNGRkOTVjODgtNTBmZS00MDQ3LWE3ZjQtM2ZiNDQ3OWJkMjM2XkEyXkFqcGc@._V1_.jpg" alt="Scam 1992: The Harshad Mehta Story" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Scam 1992</div>
-								<div class="film-meta">2020</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt38598912/" target="_blank" rel="noopener" aria-label="Skyscraper Live — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BMWZhN2FiZmEtOTczMi00MDYwLWIyMTYtZWE2N2M2NTk1YWQ1XkEyXkFqcGc@._V1_.jpg" alt="Skyscraper Live" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Skyscraper Live</div>
-								<div class="film-meta">2026 &middot; Joe DeMaio</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt2080374/" target="_blank" rel="noopener" aria-label="Steve Jobs — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BMjE0NTA2MTEwOV5BMl5BanBnXkFtZTgwNzg4NzU2NjE@._V1_.jpg" alt="Steve Jobs" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Steve Jobs</div>
-								<div class="film-meta">2015 &middot; Danny Boyle</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt15392100/" target="_blank" rel="noopener" aria-label="The Billion Dollar Code — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BYzVmYWFkNDQtMWI1MC00ZWQyLTkzNzktZWQ0MTZkZTZhMTE0XkEyXkFqcGc@._V1_.jpg" alt="The Billion Dollar Code" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">The Billion Dollar Code</div>
-								<div class="film-meta">2021</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt6905542/" target="_blank" rel="noopener" aria-label="The Dark Crystal: Age of Resistance — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BYzU4ODc0M2QtZmRiOC00Y2Q5LWI4NzctNDhhNzBlOGQyYjgyXkEyXkFqcGc@._V1_.jpg" alt="The Dark Crystal: Age of Resistance" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Dark Crystal: Age of Resistance</div>
-								<div class="film-meta">2019 &middot; Jeffrey Addiss</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt7984766/" target="_blank" rel="noopener" aria-label="The King — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BOTFhZTY4YWUtMmJjMy00OTE0LTlmZjctMDg5MTk4N2ZjZWNjXkEyXkFqcGc@._V1_.jpg" alt="The King" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">The King</div>
-								<div class="film-meta">2019 &middot; David Michôd</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt0419887/" target="_blank" rel="noopener" aria-label="The Kite Runner — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BMmRmZmU3YzgtN2ZhYi00ZmUxLWJhYzUtYjFlMmJlZDZmNTBiXkEyXkFqcGc@._V1_.jpg" alt="The Kite Runner" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">The Kite Runner</div>
-								<div class="film-meta">2007 &middot; Marc Forster</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt0167260/" target="_blank" rel="noopener" aria-label="The Lord of the Rings: The Return of the King — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_QL75_UX380_CR0,3,380,562_.jpg" alt="The Lord of the Rings: The Return of the King" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">LOTR: Return of the King</div>
-								<div class="film-meta">2003 &middot; Jackson</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt8228288/" target="_blank" rel="noopener" aria-label="The Platform — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BYjUyZjNmYmMtNjA1My00ZWMyLTliZGQtODgzZjIxM2Y4NGI1XkEyXkFqcGc@._V1_.jpg" alt="The Platform" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">The Platform</div>
-								<div class="film-meta">2019 &middot; Galder Gaztelu-Urrutia</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt5700672/" target="_blank" rel="noopener" aria-label="Train to Busan — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BMTkwOTQ4OTg0OV5BMl5BanBnXkFtZTgwMzQyOTM0OTE@._V1_.jpg" alt="Train to Busan" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">Train to Busan</div>
-								<div class="film-meta">2016 &middot; Yeon Sang-ho</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt0248606/" target="_blank" rel="noopener" aria-label="WWF SmackDown! — rated 10 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BMmM3MDgzZmUtMTNiNi00NDkwLWIzOTktMGFhOGNlMzYyYzdmXkEyXkFqcGc@._V1_.jpg" alt="WWF SmackDown!" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 10 of 10">10</span>
-								</div>
-								<div class="film-title">WWF SmackDown!</div>
-								<div class="film-meta">1999 &middot; Vince McMahon</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt0109830/" target="_blank" rel="noopener" aria-label="Forrest Gump — rated 9 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://upload.wikimedia.org/wikipedia/en/6/67/Forrest_Gump_poster.jpg" alt="Forrest Gump" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 9 of 10">9</span>
-								</div>
-								<div class="film-title">Forrest Gump</div>
-								<div class="film-meta">1994 &middot; Zemeckis</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt1375666/" target="_blank" rel="noopener" aria-label="Inception — rated 9 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_QL75_UX380_CR0,2,380,562_.jpg" alt="Inception" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 9 of 10">9</span>
-								</div>
-								<div class="film-title">Inception</div>
-								<div class="film-meta">2010 &middot; Nolan</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt15398776/" target="_blank" rel="noopener" aria-label="Oppenheimer — rated 9 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg" alt="Oppenheimer" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 9 of 10">9</span>
-								</div>
-								<div class="film-title">Oppenheimer</div>
-								<div class="film-meta">2023 &middot; Nolan</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt6751668/" target="_blank" rel="noopener" aria-label="Parasite — rated 9 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_QL75_UX380_CR0,3,380,562_.jpg" alt="Parasite" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 9 of 10">9</span>
-								</div>
-								<div class="film-title">Parasite</div>
-								<div class="film-meta">2019 &middot; Bong Joon-ho</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt0110912/" target="_blank" rel="noopener" aria-label="Pulp Fiction — rated 9 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://upload.wikimedia.org/wikipedia/en/3/3b/Pulp_Fiction_%281994%29_poster.jpg" alt="Pulp Fiction" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 9 of 10">9</span>
-								</div>
-								<div class="film-title">Pulp Fiction</div>
-								<div class="film-meta">1994 &middot; Tarantino</div>
-							</a>
-							<a class="film-card" href="https://www.imdb.com/title/tt0468569/" target="_blank" rel="noopener" aria-label="The Dark Knight — rated 9 of 10 on IMDb">
-								<div class="film-poster-wrap">
-									<img src="https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_QL75_UX380_CR0,1,380,562_.jpg" alt="The Dark Knight" loading="lazy" decoding="async">
-									<span class="film-rating" aria-label="Rated 9 of 10">9</span>
-								</div>
-								<div class="film-title">The Dark Knight</div>
-								<div class="film-meta">2008 &middot; Nolan</div>
-							</a>
-					</div>
+					<!-- Filmshelf — populated from data/films.js (loaded as a
+					     plain script so the page works on file:// too).
+					     Edit that file to update the shelf + the four
+					     IMDb stat cells above; main.js renders everything
+					     from the same data. -->
+					<div class="filmshelf-scroll" id="filmshelf-grid" data-shelf-skeleton="6"></div>
 				</div>
 
 				<div class="text-center mt-4 mb-5" data-aos="fade-up" data-aos-delay="100">
@@ -2026,6 +1151,11 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 	<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+	<!-- Static data sources — script-tag loaded so the page works on
+	     file:// (where fetch() is blocked by Chrome's same-origin policy
+	     for local files). Each file exposes a single window.* global. -->
+	<script src="data/films.js"></script>
+	<script src="data/books.js"></script>
 	<script src="js/main.js"></script>
 </body>
 </html>
