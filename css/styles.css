@@ -518,8 +518,15 @@ a.text-secondary:focus {
 /* ===== Navbar ===== */
 
 #mainNav {
-	padding-top: 1rem;
+	/* iOS notch/Dynamic-Island handling: extend the navbar's blurred surface
+	   up into the status-bar safe area so the page content can never show
+	   through above it. `viewport-fit=cover` is set in the meta tag so this
+	   inset value is non-zero on devices that need it. The bottom padding
+	   stays as the design baseline. */
+	padding-top: calc(1rem + env(safe-area-inset-top, 0px));
 	padding-bottom: 1rem;
+	padding-left: env(safe-area-inset-left, 0px);
+	padding-right: env(safe-area-inset-right, 0px);
 	font-family: var(--font-family-heading);
 	font-weight: 700;
 	background-color: rgba(10, 10, 35, 0.55);
@@ -578,7 +585,7 @@ a.text-secondary:focus {
 
 @media (min-width: 992px) {
 	#mainNav {
-		padding-top: 1.2rem;
+		padding-top: calc(1.2rem + env(safe-area-inset-top, 0px));
 		padding-bottom: 1.2rem;
 		transition: padding-top 0.3s, padding-bottom 0.3s;
 	}
@@ -600,7 +607,7 @@ a.text-secondary:focus {
 		background: transparent;
 	}
 	#mainNav.navbar-shrink {
-		padding-top: 0.5rem;
+		padding-top: calc(0.5rem + env(safe-area-inset-top, 0px));
 		padding-bottom: 0.5rem;
 	}
 	#mainNav.navbar-shrink .navbar-brand {
@@ -611,7 +618,10 @@ a.text-secondary:focus {
 /* ===== Masthead / Hero ===== */
 
 .masthead {
-	padding-top: calc(4rem + 74px);
+	/* The mobile navbar now reserves space for the iOS status-bar safe area
+	   (env(safe-area-inset-top)). Add the same allowance to the hero's top
+	   padding so the avatar doesn't tuck under the taller fixed nav. */
+	padding-top: calc(4rem + 74px + env(safe-area-inset-top, 0px));
 	padding-bottom: 3rem;
 	background: linear-gradient(135deg, #05060a 0%, #0a0c14 40%, #080a10 100%);
 	position: relative;
@@ -678,7 +688,7 @@ a.text-secondary:focus {
 
 @media (min-width: 992px) {
 	.masthead {
-		padding-top: calc(5rem + 80px);
+		padding-top: calc(5rem + 80px + env(safe-area-inset-top, 0px));
 		padding-bottom: 4rem;
 	}
 	.masthead .masthead-avatar {
