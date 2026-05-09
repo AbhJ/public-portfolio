@@ -518,11 +518,17 @@ a.text-secondary:focus {
 /* ===== Navbar ===== */
 
 #mainNav {
-	/* iOS notch/Dynamic-Island handling: extend the navbar's blurred surface
-	   up into the status-bar safe area so the page content can never show
-	   through above it. `viewport-fit=cover` is set in the meta tag so this
-	   inset value is non-zero on devices that need it. The bottom padding
-	   stays as the design baseline. */
+	/* iOS notch/Dynamic-Island handling: pull the navbar UP so its top edge
+	   sits at the absolute top of the screen (covering the status-bar safe
+	   area), then push the inner content back down with padding equal to
+	   the safe-area inset. Negative `top` is required because Bootstrap's
+	   `.fixed-top` sets `top: 0` which (in `viewport-fit=cover` rendering
+	   on iOS) actually positions the navbar at the top of the page area,
+	   leaving the safe area exposed above it.
+
+	   Doing both — `top: 0` AND `padding-top: env(safe-area-inset-top)` —
+	   is the combination Apple's HIG recommends for fixed headers in
+	   web content that opted into edge-to-edge with `viewport-fit=cover`. */
 	padding-top: calc(1rem + env(safe-area-inset-top, 0px));
 	padding-bottom: 1rem;
 	padding-left: env(safe-area-inset-left, 0px);
@@ -534,6 +540,46 @@ a.text-secondary:focus {
 	-webkit-backdrop-filter: saturate(180%) blur(20px);
 	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05), 0 4px 20px rgba(0, 0, 0, 0.25);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Failsafe — paint a solid bar across the safe-area region above the
+   navbar even on browsers/configurations where `padding-top:
+   env(safe-area-inset-top)` doesn't visibly extend the navbar's own
+   surface (e.g. when scroll has not yet kicked in and the status-bar
+   region is still showing the body background through the fixed nav).
+
+   This `::before` pseudo-element lives at the SAME position-fixed layer
+   as the navbar, painted directly on top of the safe-area cutout.
+   Pointer-events disabled so it never intercepts taps. */
+#mainNav::before {
+	content: "";
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: env(safe-area-inset-top, 0px);
+	background-color: rgba(10, 10, 35, 0.95);
+	-webkit-backdrop-filter: saturate(180%) blur(20px);
+	backdrop-filter: saturate(180%) blur(20px);
+	z-index: 1031;       /* one above Bootstrap's .fixed-top (1030) */
+	pointer-events: none;
+}
+
+/* Belt-and-braces: also paint an opaque safe-area cap at the body level.
+   On some iOS versions the navbar's pseudo-element renders below the
+   status-bar overlay region; a `body::after` painted at z-index 10001
+   (above body::before vignette at 9999, below the lightbox at 100000)
+   guarantees the cap shows. Hidden when there's no notch. */
+html::after {
+	content: "";
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: env(safe-area-inset-top, 0px);
+	background: #0a0a23;
+	z-index: 10001;
+	pointer-events: none;
 }
 
 #mainNav .navbar-brand {
