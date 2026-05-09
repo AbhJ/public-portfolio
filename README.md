@@ -2,7 +2,11 @@
 
 My personal portfolio site. Hosted at https://abhj.github.io/public-portfolio.
 
-A single-page site showcasing work at Salesforce, achievements, competitive-programming profiles, and interests beyond code — designed with a quiet, Apple-inspired dark aesthetic.
+A single-page static site showcasing work at Salesforce, achievements,
+competitive-programming profiles, books, films, anime, manga, music,
+and vlogs. Designed with a quiet, brass-on-dark editorial aesthetic.
+
+> **Reading this as an AI assistant?** Skip ahead to [Manual sync surface area](#manual-sync-surface-area-the-only-places-you-edit). It lists every file and constant that needs to be touched when the user asks for a content update — nowhere else.
 
 ---
 
@@ -17,58 +21,258 @@ A single-page site showcasing work at Salesforce, achievements, competitive-prog
   <img alt="GitHub Pages" src="https://img.shields.io/badge/GitHub_Pages-222?style=for-the-badge&logo=github&logoColor=white">
 </p>
 
-### Core
-- **HTML5 / CSS3 / vanilla JavaScript** — no framework runtime. Just hand-written code.
-- **[Bootstrap 4.1](https://getbootstrap.com/)** — grid system and a handful of utility classes; everything else is custom CSS.
-- **[Font Awesome 5](https://fontawesome.com/)** — icon set for all UI glyphs.
-- **[AOS — Animate On Scroll](https://michalsnik.github.io/aos/)** — subtle fade/slide-in reveals as sections enter the viewport.
-- **[Google Fonts](https://fonts.google.com/)** — Montserrat (display) + Lato (body).
+- **HTML5 / CSS3 / vanilla JavaScript** — no framework runtime.
+- **[Bootstrap 4.1](https://getbootstrap.com/)** — grid system + a handful
+  of utility classes; everything else is custom CSS.
+- **[Font Awesome 5](https://fontawesome.com/)** — icons.
+- **[AOS](https://michalsnik.github.io/aos/)** — scroll-reveal animations.
+- **[Google Fonts](https://fonts.google.com/)** — Cormorant Garamond
+  (display italic) + system stack for body.
+- **[GitHub Pages](https://pages.github.com/)** for deploy. Push → live.
 
-### Dynamic data
-The site pulls live stats from several sources at runtime — no backend, no build step required:
-
-- **GitHub profile & contribution graph** — scraped from the public profile HTML via CORS proxy (codetabs, allorigins, corsproxy), with cached repo-commit data as a fallback. Avoids the 60 req/hr unauthenticated API rate limit.
-- **LeetCode solve counts & submission heatmap** — multi-strategy fetch: localStorage cache → third-party API (`alfa-leetcode-api`, `leetcode-api-faisalshehbaz`) → native GraphQL via CORS proxy. 2-hour TTL on cache.
-- **WakaTime coding activity** — embedded SVG charts (languages, editors, OS, coding activity) filtered via CSS `invert` + `hue-rotate` to match the dark theme.
-- **Open Library book covers** — Goodreads-synced bookshelf, covers loaded by ISBN at runtime with graceful fallback when a cover isn't available.
-- **Apple Music & YouTube embeds** — iframe-based, responsive 16:9.
-
-Each of the above is wrapped in a `fetchWithTimeout()` helper (`AbortController`, 6 s default) so the page never stalls on a slow third-party dependency.
-
-### UX engineering
-- **Preloader with coordinated reveal** — spinner stays up until every declared data source resolves or times out. Sentinel counter prevents premature reveals when caches hit synchronously.
-- **Lightbox** — any gallery image (avatar, lifestyle photos, WakaTime SVG, T&P Award photo) opens in a fullscreen viewer with backdrop blur, ESC-to-close, and per-image filter preservation.
-- **Scroll progress FAB** — a small circular button that fills as you scroll; flips direction based on viewport position (scroll to top / scroll to bottom).
-- **Section scroll-fade** — CSS-variable driven; every section fades as the viewport leaves it, matching the Apple Keynote feel.
-- **Smooth anchor scrolling** — measures the navbar height dynamically so nav clicks always land flush under it.
-- **GitHub & LeetCode contribution heatmaps** — drawn on `<canvas>` with DPR-aware scaling, tooltip-on-hover, and GitHub-style level colors.
-- **Responsive image zoom** — small images still render at a meaningful minimum size when opened.
-
-### Styling
-- **Hand-written CSS** (`css/styles.css`) — no preprocessor, no CSS-in-JS.
-- **CSS custom properties** for theme tokens (`--primary`, `--secondary`, `--accent`).
-- **Glass-morphic navbar** — `backdrop-filter: saturate(180%) blur(20px)`.
-- **Soft aurora gradients** behind each section via animated pseudo-elements.
-- **Dark mode only** — the palette and gradients are designed for a premium dark reading surface.
-
-### Deployment
-- **[GitHub Pages](https://pages.github.com/)** — served as a static site; no build step.
-- Push to `master` → Pages picks it up → live site updates within a minute.
+No build step. The page is `index.html`, `css/styles.css`, `js/main.js`,
+and three small data files in `data/`.
 
 ---
 
-## Pages
+## How the page gets its data
 
-| Path | Purpose |
-|---|---|
-| `/` (`index.html`) | The current portfolio — Experience, Education, Skills, Highlights, Code Stats, Beyond Code |
-| `/legacy.html` | Preserved older version for archival reference |
+Every section pulls from one of three places:
+
+| Source kind | What it means | Example sections |
+|---|---|---|
+| **Live network** | Fetched from the third-party site on every page load (with a 1 h `localStorage` cache so revisits are instant). No code change needed when the underlying account updates. | Codeforces, CodeChef, AtCoder, LeetCode, GitHub, Goodreads, Apple Music, MyAnimeList (manga + anime), YouTube |
+| **Baked snapshot in `data/*.js`** | A small JS file loaded as a `<script>` tag. Source of truth for sites that block static fetches (IMDb), or as a `file://`-friendly fallback that survives flaky CORS proxies (Goodreads). Edit the JS, refresh the page. | IMDb (`films.js`), Goodreads fallback (`books.js`) |
+| **Static markup in `index.html`** | Plain HTML that doesn't change unless the user explicitly edits the page. | Experience, Education, Skills, Highlights, hero/avatar links, social handles |
+
+The split exists because not every site lets a static page read it
+freely. IMDb is CloudFront-WAF-blocked from any proxy. Goodreads RSS works
+through CORS proxies but those proxies sometimes time out and the free
+rss2json fallback caps responses at 10 items, so we keep a baked safety
+net on disk.
+
+---
+
+## Manual sync surface area (the only places you edit)
+
+Everything below this line is a list of **the exact files and constants
+to touch when the user asks for a content update**. If a value isn't on
+this list, it's already live — no edit required.
+
+### 1. `data/films.js` &nbsp; ← IMDb stat cells + film-shelf
+
+**Why this is hardcoded:** IMDb actively blocks every static-site path
+(CloudFront WAF on the HTML, terms-of-service forbid the GraphQL API,
+no public RSS or per-user JSON export). There is no live source we can
+read from a browser.
+
+**Schema** (one global, `window.ABJ_FILMS`):
+
+```js
+window.ABJ_FILMS = {
+  "updated": "YYYY-MM-DD",
+  "meta": {
+    "titlesRated": 224,        // → "Titles Rated" stat card
+    "currentlyWatching": 3,    // → "Currently Watching" stat card
+    "avgRating": 7.6,          // → "Avg Rating" stat card (rendered as "/ 10")
+    "planToWatch": 42          // → "Plan to Watch" stat card
+  },
+  "films": [
+    {
+      "href":   "https://www.imdb.com/title/tt7405458/",
+      "img":    "https://m.media-amazon.com/images/M/...jpg",
+      "title":  "A Man Called Otto",
+      "meta":   "2022 · Marc Forster",   // year · director, optional
+      "rating": 10                        // 1..10
+    },
+    …
+  ]
+};
+```
+
+**When to update:** whenever you re-rate a film on IMDb, finish a
+title, or change your watchlist. Recommended: keep only 9★/10★ entries
+in the `films` array (the shelf is curated, not a dump).
+
+---
+
+### 2. `data/books.js` &nbsp; ← Goodreads books shelf safety net
+
+**Why this is baked:** Goodreads RSS works through CORS proxies — but
+not on `file://` (Chrome blocks `fetch()` for local files), and the
+`rss2json` fallback caps at 10 items per response. Without a baked
+snapshot, the page would render a 6-book shelf the moment the proxy
+chain hiccups. The baked file is the floor; the live RSS fetch
+**replaces** it whenever the full feed comes back.
+
+**Schema** (one global, `window.ABJ_BOOKS_DATA`):
+
+```js
+window.ABJ_BOOKS_DATA = {
+  "updated": "YYYY-MM-DD",
+  "meta": {
+    "totalRead":  98,    // → "Books Read" stat card
+    "avgRating":  4.35   // → "Avg Rating" stat card (rendered as "/ 5")
+  },
+  "books": [
+    {
+      "id":           "54109255",
+      "title":        "System Design Interview – An insider's guide",
+      "displayTitle": "System Design Interview",
+      "author":       "Alex Xu",
+      "image":        "https://i.gr-assets.com/.../54109255.jpg",
+      "rating":       5,                       // 1..5
+      "ratedAt":      "Mon, 25 Mar 2026 ..."   // optional
+    },
+    …
+  ]
+};
+```
+
+**When to regenerate:** after any meaningful Goodreads change. Easiest
+recipe — open a terminal at the repo root and run:
+
+```bash
+curl -sL "https://www.goodreads.com/review/list_rss/139705685?shelf=read&per_page=200&sort=rating&order=d" \
+  -A "Mozilla/5.0" -o /tmp/r.xml
+
+# Then run the small Python regenerator we use; it filters out manga
+# authors, sorts by rating, and writes data/books.js. Source the recipe
+# from git history (last successful regeneration: 2026-05-10).
+```
+
+The live RSS fetch will pick up newer ratings on its own; you only need
+to regenerate when you want the `file://`-loaded view to stay current,
+or when the full proxy chain is flaky in your region.
+
+---
+
+### 3. `MANGA_AUTHORS` allow-list &nbsp; ← `js/main.js`, line ~1396
+
+```js
+var MANGA_AUTHORS = {
+    "kentaro miura": 1, "eiichiro oda": 1, "buronson": 1,
+    …
+};
+```
+
+**Why hardcoded:** Goodreads RSS doesn't expose a "format" or "category"
+field. We tell manga from books by author name, against this allow-list.
+
+**When to add a name:** if you start reading manga by an author whose
+work shouldn't appear on the Books shelf (manga lives in its own MAL-fed
+section, so we filter manga authors out of Books). Add the lowercase
+name as a key with value `1`.
+
+---
+
+### 4. Profile handles &nbsp; ← `index.html` (CP cards) + a few JS constants
+
+These are platform usernames embedded in the markup. The live fetchers
+read them, so changing them re-points the live data sources.
+
+| Section | Where | Current value |
+|---|---|---|
+| Codeforces | `index.html` `data-cp-handle` on the Codeforces card + `href` | `abj` |
+| CodeChef   | `index.html` `data-cp-handle` on the CodeChef card + `href` | `abhj` |
+| AtCoder    | `index.html` `data-cp-handle` on the AtCoder card + `href` | `abj` |
+| SPOJ       | `index.html` `data-cp-handle` on the SPOJ card + `href` (Cloudflare-gated, count is static `100+`) | `abhj` |
+| LeetCode   | `index.html` `View Profile` button + `js/main.js` `LC_USER` | `abhjkgp` |
+| GitHub     | `js/main.js` `var USERNAME = "AbhJ"` (top of GitHub-stats IIFE) | `AbhJ` |
+| Goodreads  | `js/main.js` `var USER_ID = "139705685"` (two places — main loader + shelf-counters loader) | `139705685` |
+| Apple Music | `index.html` `data-music-playlist` on `#music-grid` (and the "View Profile" button below it) | Lounge playlist URL |
+| MyAnimeList | `index.html` `data-mal-user` on both `#mangashelf-grid` and `#animeshelf-grid` | `abhj` |
+| YouTube     | `js/main.js` `var CHANNEL_ID = "UC48s7RmRZUXT1fpVULeUAOw"` (vlogs IIFE) | the channel ID |
+| IMDb        | `index.html` IMDb "View Profile" button (the watchlist link only — data lives in `films.js`) | `p.wfg2ldpigbxnlnkdabpv76dxpe` |
+
+If a handle is wrong, that one section will silently render a placeholder.
+The live data is correct as soon as the handle is.
+
+---
+
+### 5. Static narrative content &nbsp; ← `index.html`
+
+These never auto-update. Rewrite directly in `index.html`:
+
+- Hero / "I'm Abhijay" copy and subtitle
+- Experience timeline (Salesforce, internships)
+- Education cards (IIT Kharagpur, schools)
+- Skills strip
+- Highlights tiles (T&P All-Star award, Codeforces, CodeChef, Quora, StopStalk, ABJ Blogs)
+- Section dividers and dek lines
+- Footer email + city + social handles
+
+Most of these sit between `<!-- ABOUT -->` style comment markers in the
+HTML; search for the section heading text to find them.
+
+### 6. Local images &nbsp; ← `assets/`
+
+Hero portrait, lifestyle photos, T&P plaque, resume PDF. Replace the
+file at the same path; the markup picks up the new asset on next load.
+
+---
+
+## What's NOT on the manual list (already live)
+
+- **Codeforces problems solved** — counts distinct OK verdicts from
+  `codeforces.com/api/user.status`.
+- **CodeChef problems solved** — scrapes "Total Problems Solved: N"
+  from the profile page through CORS proxies.
+- **AtCoder rated contests** — counts `IsRated:true` entries from
+  `atcoder.jp/users/<handle>/history/json`.
+- **LeetCode total / easy / medium / hard / heatmap / streak** —
+  multiple third-party APIs, with cache and graceful fallback.
+- **GitHub repo count, followers, contribution heatmap, language
+  bar** — `api.github.com` + a contribution-graph scrape via proxy.
+- **Goodreads "Currently Reading", "Plan to Read" counts** — separate
+  RSS feed per shelf.
+- **Goodreads books shelf (live path)** — same RSS as the counts;
+  whenever the live fetch returns more books than the baked snapshot,
+  it overwrites. So in practice the shelf reflects today's Goodreads.
+- **Goodreads "Books Read" + "Avg Rating"** — counted from the read
+  shelf RSS. Avg includes manga to match the number Goodreads shows
+  on the profile page.
+- **Apple Music — 6 random tracks from your Lounge playlist** —
+  scraped from the playlist HTML on every load; randomized client-side.
+- **MyAnimeList — manga + anime shelves and stat cells** —
+  `myanimelist.net/{anime,manga}list/<user>/load.json` through the
+  CORS proxy chain. Manga shows everything you've at least started
+  *plus* plan-to-read; anime shows entries rated 8+.
+- **YouTube vlogs** — `youtube.com/feeds/videos.xml?channel_id=…`
+  through CORS proxies; pulls the two latest videos.
+
+If any of these is showing a stale or wrong number, the fix is **on the
+source site, not in this repo** — re-rate the book on Goodreads, log a
+contest on Codeforces, push commits to GitHub, etc. The page picks it up
+within an hour (cache TTL) on next visit.
+
+---
+
+## File layout
+
+```
+public-portfolio/
+├── index.html             ← main portfolio page (~1100 lines, was 2000+
+│                            before the data-driven refactor)
+├── legacy.html            ← earlier archived version
+├── css/styles.css         ← all custom styles (~4400 lines)
+├── js/main.js             ← data fetchers, heatmaps, lightbox, scroll FX
+├── data/
+│   ├── films.js           ← IMDb shelf + stat-cell numbers (manual)
+│   └── books.js           ← Goodreads safety net (regenerate periodically)
+├── assets/                ← local images + PDF resume
+│   ├── abj_new_dp.jpg
+│   ├── tp-allstar-award.jpg
+│   ├── gym.jpg / travel.jpg / bike.jpg
+│   └── resume-abhj.pdf
+└── README.md              ← this file
+```
 
 ---
 
 ## Local development
 
-No build step needed. Just serve the directory:
+No build step. Serve the directory:
 
 ```bash
 # Option A: Python's built-in
@@ -78,36 +282,27 @@ python3 -m http.server 3000
 npx serve .
 ```
 
-Then open http://localhost:3000 in your browser.
+Then open http://localhost:3000.
 
-### Dev dependencies
+You can also open `index.html` directly via `file://` — the data files
+are loaded as `<script>` tags specifically so this works. CORS proxies
+that the live fetchers depend on may not work from `file://` on every
+network, which is why `data/books.js` exists as a baked safety net.
 
-Only one — `aos` for the scroll-reveal animations (pulled at runtime from unpkg, but kept in `package.json` for version locking):
+### Cache invalidation
 
-```bash
-npm install      # optional — only needed if you bundle AOS locally
-```
+Stat cards and shelves are cached in `localStorage` for 1 hour.
+If you've just updated a profile and want to see it reflected
+immediately, open DevTools → Application → Local Storage and clear the
+keys prefixed with `gr_`, `imdb_`, `mal_`, `cp_`, or `gh_`. The page
+re-fetches on next load.
 
 ---
 
-## File layout
+## Deployment
 
-```
-public-portfolio-master/
-├── index.html                 ← main portfolio page
-├── legacy.html                ← earlier archived version
-├── css/
-│   └── styles.css             ← all custom styles (~2200 lines)
-├── js/
-│   └── main.js                ← data fetchers, heatmaps, lightbox, scroll FX
-├── assets/                    ← local images + PDF resume
-│   ├── abj_new_dp.jpg
-│   ├── tp-allstar-award.jpg
-│   ├── abj-blog-preview.jpg   ← screenshot of the modern blog theme
-│   ├── gym.jpg / travel.jpg / bike.jpg
-│   └── resume-abhj.pdf
-└── README.md
-```
+Push to `master` on the `public-portfolio` repo. GitHub Pages picks it
+up within a minute. There's nothing to build.
 
 ---
 
@@ -116,4 +311,6 @@ public-portfolio-master/
 - Hero avatar, trophy photograph, lifestyle photos — my own.
 - T&P All Star Award press release — [Salesforce Engineering](https://engineering.salesforce.com/celebrating-our-technology-and-products-all-stars-4dba20137cb).
 - Icons — [Font Awesome 5](https://fontawesome.com/) and inline SVG.
-- Book covers served via [Open Library](https://openlibrary.org/dev/docs/api/covers).
+- Book covers served via the [Goodreads CDN](https://i.gr-assets.com/).
+- Film posters via [IMDb's media CDN](https://m.media-amazon.com/).
+- Manga / anime art via the [MyAnimeList CDN](https://cdn.myanimelist.net/).
