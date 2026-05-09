@@ -158,13 +158,13 @@ h1, h2, h3, h4, h5, h6,
 /* ===== Page Sections ===== */
 
 .page-section {
-	padding: 7.5rem 0;
+	padding: 4.25rem 0;
 	position: relative;
 }
 
 @media (min-width: 992px) {
 	.page-section {
-		padding: 9rem 0;
+		padding: 5.25rem 0;
 	}
 }
 
@@ -1733,8 +1733,10 @@ body.resume-open {
 /* ===== Footer ===== */
 
 .footer {
-	padding-top: 6.5rem;
-	padding-bottom: 6.5rem;
+	/* `.footer--oneline` overrides padding to a tight 1.4rem; this base rule
+	   only supplies the surface color and text color now. */
+	padding-top: 1.4rem;
+	padding-bottom: 1.4rem;
 	background-color: var(--secondary);
 	color: #fff;
 }
@@ -1939,6 +1941,19 @@ body.resume-open {
 	font-weight: 700;
 	color: #fff;
 	line-height: 1.2;
+}
+
+/* Inline unit suffix for ratings — "4.35 / 5" reads at a glance which scale
+   the average is on. Sits inline with the number, smaller + muted so the
+   headline figure still owns the cell. Used on Books (Goodreads, /5),
+   Titles (IMDb, /10), Anime + Manga (MAL, /10). */
+.gh-stat-unit {
+	display: inline;
+	font-size: 0.95rem;
+	font-weight: 500;
+	color: rgba(255, 255, 255, 0.4);
+	margin-left: 0.18rem;
+	letter-spacing: 0.02em;
 }
 
 .gh-stat-label {
@@ -2558,6 +2573,18 @@ a.gh-repo-card:focus {
 	overflow: hidden;
 }
 
+/* Date a book was rated — sits below the author in a brass-tinted micro-line.
+   Mirrors `.film-meta`'s placement on the IMDb shelf (year · director). */
+.book-date {
+	font-size: 0.6rem;
+	color: rgba(212, 175, 106, 0.55);
+	line-height: 1.2;
+	letter-spacing: 0.02em;
+	margin-top: 0.18rem;
+	font-family: var(--font-family-heading, inherit);
+	font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
 /* Skeleton loader for books */
 .book-skeleton {
 	flex-shrink: 0;
@@ -3050,10 +3077,11 @@ a.portfolio-card:hover::after,
 }
 
 /* When there are only a few cards, centre them on the row instead of
-   left-aligning them. On small screens the natural `overflow-x: auto`
-   takes over and the row scrolls. */
+   left-aligning them. `safe center` makes the browser fall back to
+   `flex-start` whenever content overflows, so the leftmost card never
+   gets clipped behind the scroll origin. */
 .filmshelf--centered .filmshelf-scroll {
-	justify-content: center;
+	justify-content: safe center;
 }
 
 /* If the cards overflow on a small viewport, fall back to scroll-flush-left
@@ -3165,61 +3193,100 @@ a.portfolio-card:hover::after,
 	letter-spacing: 0.02em;
 }
 
-/* ----- Footer — compact form (no big H4 columns) ------------------------- */
-footer.footer.footer--compact {
-	padding: 2.2rem 0 1.6rem !important;
+/* ----- Footer — one clean three-cell line ------------------------------- */
+/* email · © year + name · social icons.
+   CSS Grid `1fr auto 1fr` so the centre cell stays optically centred even
+   when the email and the social row aren't symmetric in width. Single
+   brass hairline at the top is the only chrome. Wraps gracefully on
+   narrow viewports. */
+
+footer.footer.footer--oneline {
+	position: relative;
+	padding: 1.2rem 0 !important;
+	border-top: 1px solid rgba(212, 175, 106, 0.14);
 }
 
-.footer-socials {
-	display: flex;
-	justify-content: center;
-	gap: 0.4rem;
-	margin-bottom: 1.2rem;
-}
-
-.footer-meta {
-	display: inline-flex;
-	flex-wrap: wrap;
-	justify-content: center;
+.footer-line {
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
 	align-items: center;
-	gap: 0.7rem;
-	max-width: 100%;
-	color: rgba(255, 255, 255, 0.55);
-	font-size: 0.85rem;
+	gap: 1rem 1.6rem;
 	font-family: var(--font-family-heading);
-	letter-spacing: 0.02em;
-	padding-top: 1rem;
-	border-top: 1px solid rgba(255, 255, 255, 0.08);
-	width: 100%;
-	max-width: 720px;
-	margin: 0 auto;
+	font-size: 0.78rem;
+	letter-spacing: 0.06em;
+	color: rgba(221, 211, 189, 0.55);
 }
 
-.footer-meta-item {
+/* Left cell — email. Pinned to the start. */
+.footer-email {
+	justify-self: start;
 	display: inline-flex;
 	align-items: center;
-	gap: 0.5rem;
-	color: rgba(255, 255, 255, 0.7);
+	gap: 0.45rem;
+	color: rgba(221, 211, 189, 0.55);
 	text-decoration: none !important;
-	transition: color 0.25s ease;
+	transition: color 0.2s ease;
+	white-space: nowrap;
 }
+.footer-email i { color: var(--mf-brass-pale, #b59760); font-size: 0.85rem; }
+.footer-email:hover { color: var(--mf-brass-pale, #b59760); }
 
-.footer-meta-item:hover {
-	color: var(--mf-brass-pale);
+/* Centre cell — copyright + legacy link. Auto-sized so it stays put. */
+.footer-copy {
+	justify-self: center;
+	white-space: nowrap;
 }
-
-.footer-meta-item i {
-	color: var(--mf-brass-pale);
-	font-size: 0.85rem;
+.footer-copy-mark {
+	color: rgba(181, 151, 96, 0.85);
+	font-weight: 600;
+	margin-left: 0.15rem;
 }
-
-.footer-meta-sep {
+.footer-line-sep {
 	color: rgba(154, 122, 62, 0.5);
-	font-weight: 400;
+	margin: 0 0.55rem;
+}
+.footer-legacy {
+	color: rgba(221, 211, 189, 0.55);
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+.footer-legacy:hover { color: var(--mf-brass-pale, #b59760); }
+
+/* Right cell — socials. Pinned to the end. */
+.footer-socials {
+	justify-self: end;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.9rem;
+}
+.footer-social {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.6rem;
+	height: 1.6rem;
+	font-size: 0.95rem;
+	color: rgba(221, 211, 189, 0.55);
+	text-decoration: none !important;
+	transition: color 0.2s ease, transform 0.2s ease;
+}
+.footer-social:hover {
+	color: var(--mf-brass-pale, #b59760);
+	transform: translateY(-1px);
 }
 
-@media (max-width: 575px) {
-	.footer-meta { gap: 0.4rem 0.7rem; font-size: 0.78rem; }
+/* Below ~820px the three cells stack so the email + the long copyright
+   line don't crash into each other. Centred as a column. */
+@media (max-width: 820px) {
+	.footer-line {
+		grid-template-columns: 1fr;
+		justify-items: center;
+		gap: 0.7rem;
+	}
+	.footer-email,
+	.footer-copy,
+	.footer-socials { justify-self: center; }
+	.footer-copy { white-space: normal; }
 }
 
 
@@ -3472,9 +3539,26 @@ body::after {
 	color: rgba(212, 175, 106, 0.72);
 }
 
-/* ----- Generous chapter rhythm + brass thread between sections ----------- */
+/* ----- Tight Vlogs → Footer transition ---------------------------------- */
+/* The Beyond Code section ends with the Vlogs grid; the next sibling is the
+   compact footer. Halving the bottom padding here closes the visual dead
+   space the user flagged without affecting any other section. */
+#beyond.page-section {
+	padding-bottom: 2.25rem;
+}
 @media (min-width: 992px) {
-	.page-section { padding-top: 8.5rem; padding-bottom: 8.5rem; }
+	#beyond.page-section {
+		padding-bottom: 3rem;
+	}
+}
+
+/* ----- Section rhythm + brass thread between sections -------------------- */
+/* Halved from the original 8.5rem top+bottom (which was producing huge dead
+   space between every section, particularly noticeable below the Vlogs grid
+   where the next sibling is the compact footer). 5rem matches what the
+   "Atelier" desktop pass intended. */
+@media (min-width: 992px) {
+	.page-section { padding-top: 5rem; padding-bottom: 5rem; }
 }
 
 .page-section { position: relative; }
@@ -3647,16 +3731,18 @@ body::after {
 
 /* ----- Footer + colophon ------------------------------------------------- */
 .footer {
-	border-top: 1px solid rgba(212, 175, 106, 0.16);
+	/* No hard border-top — the brass thread + diamond pseudo-elements on
+	   `.footer--compact` (in the layered Footer pass below) own the
+	   chapter break. */
+	border-top: 0;
 	background:
-		radial-gradient(ellipse at 50% 0%, rgba(212, 175, 106, 0.04), transparent 60%),
+		radial-gradient(ellipse at 50% 0%, rgba(212, 175, 106, 0.05), transparent 65%),
 		var(--secondary) !important;
 }
 
-.copyright {
-	background: #050507 !important;
-	border-top: 1px solid rgba(212, 175, 106, 0.10);
-}
+/* `.copyright` is no longer rendered — the footer owns the year line.
+   Defensive reset kept in case any legacy markup ever slips back in. */
+.copyright { display: none !important; }
 
 .atelier-colophon {
 	display: block;
@@ -3798,11 +3884,15 @@ a.portfolio-card.portfolio-card--featured:hover {
 	object-position: center center;
 }
 
-/* When there are few cards (the centred variant) keep `justify-content` only
-   on the wider viewports where the row genuinely fits. Once the cards
-   overflow, native scroll takes over and `justify-content` is a no-op. */
+/* When there are few cards the centred variant looks tidy; when there are
+   many the row scrolls horizontally. The naïve `justify-content: center`
+   bug-traps the leftmost card behind the scroll origin (centred overflow
+   gets clipped equally on both sides, but you can only scroll right). The
+   `safe` keyword tells the browser to fall back to `flex-start` whenever
+   content overflows — so 4 cards stay centred and 14 cards align left and
+   scroll cleanly. */
 .bookshelf--centered .bookshelf-scroll {
-	justify-content: center;
+	justify-content: safe center;
 }
 
 @media (max-width: 575px) {
@@ -3859,14 +3949,101 @@ a.portfolio-card.portfolio-card--featured:hover {
 	overflow: hidden;
 }
 
-/* ----- Copyright bar — clean single-line layout ------------------------- */
-/* Replaces the older multi-line manifesto + colophon stack with a single
-   tight strip. The brass dot separator wraps gracefully on narrow screens. */
+/* ----- Series-clubbed book card — single cover + "× N vols" badge ------- */
+/* When the renderer (or the static-DOM clubber) collapses a multi-volume
+   series like Berserk into a single card, we mark it with .book-card--series
+   and stamp a brass-toned count badge in the top-left of the cover. The
+   badge mirrors `.book-rating` (bottom-right) for visual rhyme — same
+   pill, same brass border, same font — so the two corners read as a pair. */
+.book-series-count {
+	position: absolute;
+	left: 6px;
+	top: 6px;
+	min-width: 30px;
+	height: 22px;
+	padding: 0 8px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(180deg, rgba(8, 9, 13, 0.92), rgba(8, 9, 13, 0.96));
+	border: 1px solid rgba(181, 151, 96, 0.6);
+	border-radius: 999px;
+	color: #f5e4b5;
+	font-family: var(--font-family-heading);
+	font-size: 0.62rem;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	text-transform: lowercase;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+	pointer-events: none;
+}
+
+/* Subtle layered-paper effect so a clubbed series card visibly reads as
+   "this is a stack of books" not "this is one book". A pair of pseudo-
+   shadows fans out behind the cover. */
+.bookshelf-scroll .book-card--series .book-cover-wrap {
+	box-shadow:
+		0 14px 28px rgba(0, 0, 0, 0.55),
+		3px 3px 0 -1px rgba(20, 16, 10, 0.85),
+		6px 6px 0 -2px rgba(20, 16, 10, 0.7);
+}
+
+.bookshelf-scroll .book-card--series:hover .book-cover-wrap {
+	box-shadow:
+		0 18px 36px rgba(0, 0, 0, 0.7),
+		3px 3px 0 -1px rgba(30, 24, 14, 0.9),
+		6px 6px 0 -2px rgba(30, 24, 14, 0.78),
+		0 0 0 1px rgba(181, 151, 96, 0.55);
+}
+
+/* ----- Section sub-deks — short prose under a `.beyond-sub` heading ----- */
+.beyond-sub-dek {
+	font-size: 0.86rem;
+	color: rgba(255, 255, 255, 0.5);
+	letter-spacing: 0.01em;
+	margin: -0.5rem auto 1.4rem;
+	max-width: 38rem;
+}
+
+.beyond-sub-dek .link-amber,
+.link-amber {
+	color: rgba(212, 175, 106, 0.85);
+	text-decoration: none;
+	border-bottom: 1px solid rgba(212, 175, 106, 0.35);
+	transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.beyond-sub-dek .link-amber:hover,
+.link-amber:hover {
+	color: #f5e4b5;
+	border-bottom-color: rgba(245, 228, 181, 0.7);
+}
+
+/* ----- Copyright bar — retired (footer owns the year line now) ---------- */
+/* The single-line footer shows year + name + legacy link inline with the
+   socials; this old `.copyright` block is only kept here so any cached
+   page that still contains the old `<div class="copyright">` markup
+   stays invisible instead of stacking under the footer. */
 
 .copyright {
-	background: #050507 !important;
-	border-top: 1px solid rgba(212, 175, 106, 0.10);
-	padding: 1.1rem 0 !important;
+	display: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+.copyright .container {
+	position: relative;
+}
+.copyright .container::before {
+	content: '';
+	display: block;
+	width: clamp(4rem, 12vw, 8rem);
+	height: 1px;
+	background: linear-gradient(90deg,
+		transparent 0%,
+		rgba(154, 122, 62, 0.35) 50%,
+		transparent 100%);
+	margin: 0 auto 1.1rem;
 }
 
 .copyright-line {
@@ -4216,6 +4393,99 @@ h1, h2, h3, h4, h5, h6 {
 }
 [data-aos]:not(.aos-animate) {
 	animation: aos-failsafe-reveal 0s ease 3s forwards;
+}
+
+/* ============================================================================
+   ===== Per-repo meta strip + language chips + CP stat cards =================
+   ============================================================================
+   Replaces the old `.gh-repo-footer` row (single language pill + activity
+   indicator) with a richer two-row footer:
+     1. `.gh-repo-meta` — LOC count and creation date
+     2. `.gh-repo-langs` — up to 3 language chips
+   Both populated by JS at runtime via the GitHub API. The static "—"
+   placeholders are styled to look intentional even before the fetch lands.
+
+   `.cp-stat-card` is a hoverable variant of `.gh-stat-card` used in the
+   competitive-programming section so the four platform numbers behave
+   like links (cursor, lift on hover, subtle brass border on focus).
+   ============================================================================ */
+
+.gh-repo-meta {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	font-size: 0.72rem;
+	color: rgba(255, 255, 255, 0.45);
+	padding-top: 0.55rem;
+	border-top: 1px solid rgba(255, 255, 255, 0.05);
+	letter-spacing: 0.04em;
+	margin-top: auto;     /* pin to bottom of flex card */
+	font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+.gh-repo-meta__loc,
+.gh-repo-meta__date {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3rem;
+	white-space: nowrap;
+}
+
+.gh-repo-meta__loc i,
+.gh-repo-meta__date i {
+	color: rgba(212, 175, 106, 0.55);
+	font-size: 0.78em;
+}
+
+.gh-repo-langs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.45rem;
+	margin-top: 0.6rem;
+	min-height: 1.4rem;        /* hold space before fetch lands */
+}
+
+.gh-lang-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.32rem;
+	font-size: 0.7rem;
+	color: rgba(255, 255, 255, 0.55);
+	background: rgba(255, 255, 255, 0.03);
+	border: 1px solid rgba(255, 255, 255, 0.06);
+	padding: 0.18rem 0.55rem;
+	border-radius: 999px;
+	letter-spacing: 0.02em;
+	transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+.gh-repo-card:hover .gh-lang-chip {
+	background: rgba(255, 255, 255, 0.05);
+	border-color: rgba(154, 122, 62, 0.25);
+	color: rgba(255, 255, 255, 0.75);
+}
+
+/* ----- Competitive-programming stat cards — clickable variant of .gh-stat-card */
+.cp-stat-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	text-decoration: none !important;
+	transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease, border-color 0.25s ease, box-shadow 0.35s ease;
+}
+.cp-stat-card:hover,
+.cp-stat-card:focus {
+	transform: translateY(-3px);
+	background: rgba(255, 255, 255, 0.04);
+	border-color: rgba(154, 122, 62, 0.35);
+	box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45),
+		0 0 0 1px rgba(154, 122, 62, 0.18);
+	text-decoration: none !important;
+}
+.cp-stat-card .gh-stat-label i {
+	color: rgba(212, 175, 106, 0.7);
 }
 
 /* End of Midnight Forge layer */
