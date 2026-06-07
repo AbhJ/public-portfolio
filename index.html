@@ -75,6 +75,7 @@
 					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-1 rounded js-scroll-trigger" href="#portfolio">Highlights</a></li>
 					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-1 rounded js-scroll-trigger" href="#codeStats">Code Stats</a></li>
 					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link py-3 px-0 px-lg-1 rounded js-scroll-trigger" href="#beyond">Beyond Code</a></li>
+					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link nav-link--blog py-3 px-0 px-lg-1 rounded" href="https://abhj.github.io/lld-learn" target="_blank" rel="noopener">LLD &nearr;</a></li>
 					<li class="nav-item mx-0 mx-lg-0"><a class="nav-link nav-link--blog py-3 px-0 px-lg-1 rounded" href="https://abhj.github.io/abj-blogs" target="_blank" rel="noopener">Blog &nearr;</a></li>
 				</ul>
 			</div>
@@ -232,6 +233,7 @@
 
 				<div class="education-cards">
 					<div class="row justify-content-center">
+						<!-- IIT Kharagpur -->
 						<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
 							<div class="edu-card">
 								<div class="edu-card-accent"></div>
@@ -252,36 +254,55 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
-							<div class="edu-card">
+						<!-- DPS + South Point stacked vertically -->
+						<div class="col-lg-4 col-md-5 mb-4 d-flex flex-column" data-aos="fade-up" data-aos-delay="100" style="gap: 0.75rem;">
+							<div class="edu-card w-100">
 								<div class="edu-card-accent"></div>
 								<div class="edu-card-body">
 									<div class="edu-card-icon"><i class="fas fa-school"></i></div>
 									<h5>DPS Ruby Park, Kolkata</h5>
-									<p class="edu-degree">Senior Secondary (Class XII) — CBSE</p>
+									<p class="edu-degree">Class XII — CBSE</p>
 									<p class="edu-detail"><strong>Score:</strong> 84.4%</p>
 									<p class="edu-date">2016 — 2018</p>
-									<div class="edu-extras">
-										<span class="edu-extra-tag">JEE Adv. AIR 2157</span>
-										<span class="edu-extra-tag">JEE Main AIR 5444</span>
-										<span class="edu-extra-tag">WBJEE Rank 92</span>
-										<span class="edu-extra-tag">JEE Adv. 99.9%ile</span>
-									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
-							<div class="edu-card">
+							<div class="edu-card w-100">
 								<div class="edu-card-accent"></div>
 								<div class="edu-card-body">
 									<div class="edu-card-icon"><i class="fas fa-school"></i></div>
-									<h5>South Point High School, Kolkata</h5>
-									<p class="edu-degree">Secondary (Class X) — CBSE</p>
+									<h5>South Point, Kolkata</h5>
+									<p class="edu-degree">Class X — CBSE</p>
 									<p class="edu-detail"><strong>CGPA:</strong> 10 / 10</p>
 									<p class="edu-date">2003 — 2016</p>
-									<div class="edu-extras">
-										<span class="edu-extra-tag">Perfect Score</span>
-									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Exam scores — 2×2 grid, equal sized -->
+						<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+							<div class="edu-exam-grid">
+								<div class="exam-card">
+									<div class="exam-card-icon"><i class="fas fa-language"></i></div>
+									<h6 class="exam-card-title">TOEFL iBT</h6>
+									<span class="exam-card-score">110<span class="exam-card-max"> / 120</span></span>
+									<span class="exam-card-detail">CEFR C1 &middot; 2026</span>
+								</div>
+								<div class="exam-card">
+									<div class="exam-card-icon"><i class="fas fa-atom"></i></div>
+									<h6 class="exam-card-title">JEE Advanced</h6>
+									<span class="exam-card-score">AIR 2157</span>
+									<span class="exam-card-detail">99.9%ile &middot; 2018</span>
+								</div>
+								<div class="exam-card">
+									<div class="exam-card-icon"><i class="fas fa-pen-fancy"></i></div>
+									<h6 class="exam-card-title">JEE Main</h6>
+									<span class="exam-card-score">AIR 5444</span>
+									<span class="exam-card-detail">99.7%ile &middot; 2018</span>
+								</div>
+								<div class="exam-card">
+									<div class="exam-card-icon"><i class="fas fa-award"></i></div>
+									<h6 class="exam-card-title">WBJEE</h6>
+									<span class="exam-card-score">Rank 92</span>
+									<span class="exam-card-detail">99.9%ile &middot; 2018</span>
 								</div>
 							</div>
 						</div>
@@ -352,6 +373,19 @@
 							</div>
 						</a>
 					</div>
+					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="50" data-aos-easing="ease-in-sine">
+						<a class="portfolio-card portfolio-card--featured" href="https://abhj.github.io/lld-learn" target="_blank" rel="noopener">
+							<div class="portfolio-card-img">
+								<img alt="LLD Problems — tests running in browser" class="img-fluid" src="assets/lld-showcase.svg">
+								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
+							</div>
+							<div class="portfolio-card-body">
+								<span class="portfolio-card-badge">Featured</span>
+								<h5>LLD Problems &rarr;</h5>
+								<p>50 low-level design problems in Java — practice locally in the browser, run tests in real time, and learn design patterns hands-on. No signup needed.</p>
+							</div>
+						</a>
+					</div>
 					<div class="col-md-6 col-lg-4 mb-5" id="allstar-card" data-aos="fade-up" data-aos-delay="100" data-aos-easing="ease-in-sine">
 						<div class="portfolio-card portfolio-card--split">
 							<button type="button" class="portfolio-card-img portfolio-card-img--portrait portfolio-card-img--button" style="background-image: url('assets/tp-allstar-award.jpg');" data-lightbox-src="assets/tp-allstar-award.jpg" data-lightbox-alt="T&amp;P All Star Award — Abhijay Mitra (AbJ), FY26" aria-label="View full-size award photo">
@@ -364,30 +398,6 @@
 								<p>Salesforce's highest peer-nominated honor for top performers — only 169 chosen across the entire 20,000+ Technology &amp; Product organization, and one of just two MTS-level recipients in the Bangalore office.</p>
 							</a>
 						</div>
-					</div>
-					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="200" data-aos-easing="ease-in-sine">
-						<a class="portfolio-card" href="https://codeforces.com/profile/abhj" target="_blank" rel="noopener">
-							<div class="portfolio-card-img portfolio-card-img--compact portfolio-card-img--cf">
-								<img alt="Codeforces" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/force.png">
-								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
-							</div>
-							<div class="portfolio-card-body">
-								<h5>Codeforces</h5>
-								<p>Competitive programmer since 2019 — peak rating of 1877 (Expert), working toward Candidate Master.</p>
-							</div>
-						</a>
-					</div>
-					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="100" data-aos-easing="ease-in-sine">
-						<a class="portfolio-card" href="https://www.codechef.com/users/abhj" target="_blank" rel="noopener">
-							<div class="portfolio-card-img">
-								<img alt="CodeChef" class="img-fluid" src="https://raw.githubusercontent.com/AbhJ/abhj/master/image/chef.jpeg">
-								<div class="portfolio-card-overlay"><i class="fas fa-external-link-alt fa-lg"></i></div>
-							</div>
-							<div class="portfolio-card-body">
-								<h5>CodeChef</h5>
-								<p>5★ rated with a peak of 2030 — sustained contest participation and problem solving over five years.</p>
-							</div>
-						</a>
 					</div>
 					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="200" data-aos-easing="ease-in-sine">
 						<a class="portfolio-card" href="https://www.quora.com/profile/Abhijay-Mitra" target="_blank" rel="noopener">
@@ -472,6 +482,19 @@
 				<h6 class="text-center text-uppercase mt-5 mb-4" style="letter-spacing: 0.22em; color: rgba(255,255,255,0.4); font-size: 0.75rem; font-weight: 500;">Featured Repositories</h6>
 				<div class="row">
 					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+						<a class="gh-repo-card" href="https://github.com/AbhJ/lld-learn" target="_blank" rel="noopener">
+							<div class="gh-repo-header">
+								<i class="fas fa-drafting-compass gh-repo-icon"></i>
+								<span class="gh-repo-name">lld-learn</span>
+							</div>
+							<p class="gh-repo-desc">50 low-level design problems in Java — practice locally in the browser, run tests in real time, learn design patterns hands-on.</p>
+							<div class="gh-repo-footer">
+								<span class="gh-repo-lang"><span class="gh-lang-dot" style="background: #b07219;"></span> Java</span>
+								<span class="gh-repo-stars"><i class="fas fa-flask"></i> Active</span>
+							</div>
+						</a>
+					</div>
+					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
 						<a class="gh-repo-card" href="https://github.com/AbhJ/public-portfolio" target="_blank" rel="noopener">
 							<div class="gh-repo-header">
 								<i class="fas fa-user-circle gh-repo-icon"></i>
@@ -481,6 +504,19 @@
 							<div class="gh-repo-footer">
 								<span class="gh-repo-lang"><span class="gh-lang-dot" style="background: #e34c26;"></span> HTML</span>
 								<span class="gh-repo-stars"><i class="fas fa-code-branch"></i> Active</span>
+							</div>
+						</a>
+					</div>
+					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+						<a class="gh-repo-card" href="https://github.com/AbhJ/abj-blogs" target="_blank" rel="noopener">
+							<div class="gh-repo-header">
+								<i class="fas fa-book-open gh-repo-icon"></i>
+								<span class="gh-repo-name">abj-blogs</span>
+							</div>
+							<p class="gh-repo-desc">My personal blog — Vite + React 18 + TypeScript. Posts are Markdown files; drop one in and it publishes automatically.</p>
+							<div class="gh-repo-footer">
+								<span class="gh-repo-lang"><span class="gh-lang-dot" style="background: #3178c6;"></span> TypeScript</span>
+								<span class="gh-repo-stars"><i class="fas fa-pen-nib"></i> Writing</span>
 							</div>
 						</a>
 					</div>
@@ -510,7 +546,7 @@
 							</div>
 						</a>
 					</div>
-					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
 						<a class="gh-repo-card" href="https://github.com/AbhJ/Line-Drawing-Brassenham" target="_blank" rel="noopener">
 							<div class="gh-repo-header">
 								<i class="fas fa-draw-polygon gh-repo-icon"></i>
@@ -520,32 +556,6 @@
 							<div class="gh-repo-footer">
 								<span class="gh-repo-lang"><span class="gh-lang-dot" style="background: #f34b7d;"></span> C++</span>
 								<span class="gh-repo-stars"><i class="fas fa-pencil-ruler"></i> Graphics</span>
-							</div>
-						</a>
-					</div>
-					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
-						<a class="gh-repo-card" href="https://github.com/AbhJ/abj-blogs" target="_blank" rel="noopener">
-							<div class="gh-repo-header">
-								<i class="fas fa-book-open gh-repo-icon"></i>
-								<span class="gh-repo-name">abj-blogs</span>
-							</div>
-							<p class="gh-repo-desc">My personal blog — Vite + React 18 + TypeScript. Posts are Markdown files; drop one in and it publishes automatically.</p>
-							<div class="gh-repo-footer">
-								<span class="gh-repo-lang"><span class="gh-lang-dot" style="background: #3178c6;"></span> TypeScript</span>
-								<span class="gh-repo-stars"><i class="fas fa-pen-nib"></i> Writing</span>
-							</div>
-						</a>
-					</div>
-					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
-						<a class="gh-repo-card" href="https://github.com/AbhJ/sublime-text-config-files" target="_blank" rel="noopener">
-							<div class="gh-repo-header">
-								<i class="fas fa-cog gh-repo-icon"></i>
-								<span class="gh-repo-name">sublime-text-config-files</span>
-							</div>
-							<p class="gh-repo-desc">Custom Sublime Text configuration — build systems, snippets and keybindings for competitive programming workflows.</p>
-							<div class="gh-repo-footer">
-								<span class="gh-repo-lang"><span class="gh-lang-dot" style="background: #4d8a4a;"></span> JSON</span>
-								<span class="gh-repo-stars"><i class="fas fa-keyboard"></i> Config</span>
 							</div>
 						</a>
 					</div>
@@ -601,17 +611,19 @@
 						<a class="gh-stat-card cp-stat-card" href="https://codeforces.com/profile/abj" target="_blank" rel="noopener" data-cp-platform="codeforces" data-cp-handle="abj">
 							<span class="gh-stat-number" id="cp-cf-solved">&mdash;</span>
 							<span class="gh-stat-label"><i class="fas fa-bolt mr-1"></i>Codeforces &middot; Problems Solved</span>
+							<span class="cp-peak">Peak: <strong>1877</strong> (Expert)</span>
 						</a>
 					</div>
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="100">
 						<a class="gh-stat-card cp-stat-card" href="https://www.codechef.com/users/abhj" target="_blank" rel="noopener" data-cp-platform="codechef" data-cp-handle="abhj">
-							<span class="gh-stat-number" id="cp-cc-solved">&mdash;</span>
+							<span class="gh-stat-number" id="cp-cc-solved">500+</span>
 							<span class="gh-stat-label"><i class="fas fa-utensils mr-1"></i>CodeChef &middot; Problems Solved</span>
+							<span class="cp-peak">Peak: <strong>2030</strong> (5★)</span>
 						</a>
 					</div>
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="200">
 						<a class="gh-stat-card cp-stat-card" href="https://atcoder.jp/users/abj" target="_blank" rel="noopener" data-cp-platform="atcoder" data-cp-handle="abj">
-							<span class="gh-stat-number" id="cp-ac-solved">&mdash;</span>
+							<span class="gh-stat-number" id="cp-ac-solved">52</span>
 							<span class="gh-stat-label"><i class="fas fa-flag-checkered mr-1"></i>AtCoder &middot; Rated Contests</span>
 						</a>
 					</div>
@@ -829,13 +841,10 @@
 					</div>
 				</div>
 
-				<!-- 12 books I've actually rated on Goodreads. Cover URLs come
-				     straight from the Goodreads CDN; ratings are real star
-				     counts pulled from the public ratings feed. Cards link to
-				     each book's Goodreads page. The brass `.book-rating` badge
-				     mirrors the IMDb shelf's `.film-rating` for visual rhyme. -->
+				<!-- Single bookshelf — currently-reading books appear first
+				     (with a green badge), followed by rated books. All rendered
+				     by main.js from data/books.js. -->
 				<div class="bookshelf bookshelf--centered" data-aos="fade-up">
-					<!-- Bookshelf — populated live from Goodreads via the JS in main.js. The container ships empty + a single skeleton row so the layout space is reserved while the fetch resolves. -->
 					<div class="bookshelf-scroll" id="bookshelf-grid" data-shelf-skeleton="6"></div>
 				</div>
 
@@ -927,25 +936,25 @@
 				<div class="row text-center mb-4" data-mal-stats="manga">
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number" id="mal-manga-total">&mdash;</span>
+							<span class="gh-stat-number" id="mal-manga-total">5</span>
 							<span class="gh-stat-label">Manga Read</span>
 						</div>
 					</div>
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="100">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number" id="mal-manga-reading">&mdash;</span>
+							<span class="gh-stat-number" id="mal-manga-reading">3</span>
 							<span class="gh-stat-label">Currently Reading</span>
 						</div>
 					</div>
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="200">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number" id="mal-manga-avg">&mdash;</span>
+							<span class="gh-stat-number" id="mal-manga-avg">9.2</span>
 							<span class="gh-stat-label">Avg Rating</span>
 						</div>
 					</div>
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="300">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number" id="mal-manga-planned">&mdash;</span>
+							<span class="gh-stat-number" id="mal-manga-planned">16</span>
 							<span class="gh-stat-label">Plan to Read</span>
 						</div>
 					</div>
@@ -977,25 +986,25 @@
 				<div class="row text-center mb-4" data-mal-stats="anime">
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number" id="mal-anime-total">&mdash;</span>
+							<span class="gh-stat-number" id="mal-anime-total">60</span>
 							<span class="gh-stat-label">Anime Watched</span>
 						</div>
 					</div>
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="100">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number" id="mal-anime-watching">&mdash;</span>
+							<span class="gh-stat-number" id="mal-anime-watching">2</span>
 							<span class="gh-stat-label">Currently Watching</span>
 						</div>
 					</div>
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="200">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number" id="mal-anime-avg">&mdash;</span>
+							<span class="gh-stat-number" id="mal-anime-avg">8.5</span>
 							<span class="gh-stat-label">Avg Rating</span>
 						</div>
 					</div>
 					<div class="col-md-3 col-6 mb-3" data-aos="zoom-in" data-aos-delay="300">
 						<div class="gh-stat-card">
-							<span class="gh-stat-number" id="mal-anime-planned">&mdash;</span>
+							<span class="gh-stat-number" id="mal-anime-planned">28</span>
 							<span class="gh-stat-label">Plan to Watch</span>
 						</div>
 					</div>
@@ -1024,23 +1033,39 @@
 				<p class="beyond-sub-dek text-center" data-aos="fade-up">A fresh six from my <a class="link-amber" href="https://music.apple.com/in/playlist/lounge/pl.u-leyl0Y6tMVexVX2" target="_blank" rel="noopener">Lounge</a> playlist on every load.</p>
 
 				<!-- 6 random tracks from the Lounge playlist; populated by JS at
-				     runtime. The three fallback embeds below ship in the static
+				     runtime. The six fallback embeds below ship in the static
 				     markup so the section is never empty if the network blocks
 				     the playlist scrape. -->
+				<!-- Music grid — JS replaces these with 6 random tracks from
+				     the Lounge playlist on every load (via CORS proxy on HTTPS).
+				     The 3 static embeds below are verified Lounge songs shown
+				     as fallback on file:// or when the proxy is down. -->
 				<div class="row justify-content-center mb-4" id="music-grid"
 				     data-music-playlist="https://music.apple.com/in/playlist/lounge/pl.u-leyl0Y6tMVexVX2"
 				     data-music-count="6">
-					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-						<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" class="apple-music-song" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/a-horse-with-no-name/301027593?i=301027918" loading="lazy"></iframe>
+					<div class="col-lg-4 col-md-6 mb-4">
+						<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" class="apple-music-song" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/in/album/a-horse-with-no-name/301027593?i=301027918" loading="lazy"></iframe>
 						<p class="song-label">A Horse with No Name — America</p>
 					</div>
-					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
-						<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" class="apple-music-song" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/gods-eyes/1696357011?i=1696357034" loading="lazy"></iframe>
+					<div class="col-lg-4 col-md-6 mb-4">
+						<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" class="apple-music-song" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/in/album/gods-eyes/1696357011?i=1696357034" loading="lazy"></iframe>
 						<p class="song-label">God's Eyes — Dax</p>
 					</div>
-					<div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
-						<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" class="apple-music-song" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/against-the-wind/1440830467?i=1440830799" loading="lazy"></iframe>
+					<div class="col-lg-4 col-md-6 mb-4">
+						<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" class="apple-music-song" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/in/album/against-the-wind/1440830467?i=1440830799" loading="lazy"></iframe>
 						<p class="song-label">Against the Wind — Bob Seger</p>
+					</div>
+					<div class="col-lg-4 col-md-6 mb-4">
+						<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" class="apple-music-song" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/in/album/tujhe-dekha-to/1352481624?i=1352484512" loading="lazy"></iframe>
+						<p class="song-label">Tujhe Dekha Toh — Kumar Sanu &amp; Lata</p>
+					</div>
+					<div class="col-lg-4 col-md-6 mb-4">
+						<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" class="apple-music-song" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/in/album/kal-ho-naa-ho/300388644?i=300388792" loading="lazy"></iframe>
+						<p class="song-label">Kal Ho Naa Ho — Sonu Nigam</p>
+					</div>
+					<div class="col-lg-4 col-md-6 mb-4">
+						<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" class="apple-music-song" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/in/album/tum-hi-ho/1073359412?i=1073359419" loading="lazy"></iframe>
+						<p class="song-label">Tum Hi Ho — Arijit Singh</p>
 					</div>
 				</div>
 				<div class="text-center mt-4 mb-5" data-aos="fade-up" data-aos-delay="100">
@@ -1156,6 +1181,8 @@
 	     for local files). Each file exposes a single window.* global. -->
 	<script src="data/films.js"></script>
 	<script src="data/books.js"></script>
+	<script src="data/music.js"></script>
+	<script src="data/mal.js"></script>
 	<script src="js/main.js"></script>
 </body>
 </html>

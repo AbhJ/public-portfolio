@@ -1757,6 +1757,29 @@ AOS.init({
 		if (elAvg && baked.meta && baked.meta.avgRating) {
 			elAvg.innerHTML = baked.meta.avgRating.toFixed(2) + '<span class="gh-stat-unit">/ 5</span>';
 		}
+		var elReading = document.getElementById("books-reading");
+		if (elReading && baked.meta && baked.meta.currentlyReading) elReading.textContent = baked.meta.currentlyReading;
+		var elToRead = document.getElementById("books-toread");
+		if (elToRead && baked.meta && baked.meta.planToRead) elToRead.textContent = baked.meta.planToRead;
+		// Prepend currently-reading books to the main bookshelf grid
+		if (baked.currentlyReading && baked.currentlyReading.length) {
+			var shelfGrid = document.getElementById("bookshelf-grid");
+			if (shelfGrid) {
+				var readingHtml = baked.currentlyReading.map(function (b) {
+					var href = "https://www.goodreads.com/book/show/" + b.id;
+					var display = b.displayTitle || b.title;
+					return '<a class="book-card" href="' + href + '" target="_blank" rel="noopener" aria-label="' + display + ' — currently reading">' +
+						'<div class="book-cover-wrap">' +
+						'<img src="' + b.image + '" alt="' + display + '" loading="lazy" decoding="async">' +
+						'<span class="book-rating book-rating--reading" aria-label="Currently reading"><i class="fas fa-book-open"></i></span>' +
+						'</div>' +
+						'<div class="book-title">' + display + '</div>' +
+						'<div class="book-author">' + b.author + '</div>' +
+						'</a>';
+				}).join("");
+				shelfGrid.insertAdjacentHTML("afterbegin", readingHtml);
+			}
+		}
 		floor = countRenderable(baked.books);
 	}
 
@@ -1853,7 +1876,12 @@ AOS.init({
 
 	function paint(cellId, n) {
 		var el = document.getElementById(cellId);
-		if (el && typeof n === "number" && n > 0) el.textContent = n;
+		if (!el || typeof n !== "number" || n <= 0) return;
+		// Only overwrite if the live count is higher than the baked value
+		// (RSS feeds are capped and may return fewer items than reality).
+		var existing = parseInt(el.textContent, 10);
+		if (!isNaN(existing) && existing >= n) return;
+		el.textContent = n;
 	}
 
 	SHELVES.forEach(function (s) {
@@ -1909,11 +1937,7 @@ AOS.init({
 	}
 
 	function renderShelf(films) {
-		// Sort by rating desc, then alpha — stable visual order.
-		films = films.slice().sort(function (a, b) {
-			if (b.rating !== a.rating) return b.rating - a.rating;
-			return (a.title || "").localeCompare(b.title || "");
-		});
+		// Preserve source order (most recently rated first in data/films.js).
 		grid.innerHTML = films.map(function (f) {
 			return (
 				'<a class="film-card" href="' + escapeAttr(f.href) + '" target="_blank" rel="noopener" ' +
@@ -2113,8 +2137,8 @@ AOS.init({
 	}
 })();
 
-// ===== Beyond Code — Music: 5 random tracks from the Lounge playlist =====
-// Replaces the hand-picked 3-song fallback in #music-grid with 5 tracks
+// ===== Beyond Code — Music: 6 random tracks from the Lounge playlist =====
+// Replaces the hand-picked 6-song fallback in #music-grid with 6 tracks
 // drawn at random (per page load) from a public Apple Music playlist URL
 // declared via `data-music-playlist` on the grid.
 //
@@ -2139,7 +2163,7 @@ AOS.init({
 	// Apple doesn't actually emit for playlist pages) to the
 	// `serialized-server-data` blob — anything cached under v1 is broken.
 	var CACHE_KEY = "music_lounge_v2";
-	var CACHE_TTL = 60 * 60 * 1000; // 1 hour
+	var CACHE_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days (playlist doesn't change often)
 	var PROXIES = [
 		function (u) { return "https://corsproxy.io/?" + encodeURIComponent(u); },
 		function (u) { return "https://api.allorigins.win/raw?url=" + encodeURIComponent(u); },
@@ -2399,7 +2423,12 @@ AOS.init({
 			.catch(function () { return tryProxies(idx + 1); });
 	}
 
-	// 1. Try cache first — but always re-pick a random subset.
+	// 1. Render immediately from baked data (data/music.js) — always fresh shuffle.
+	if (window.ABJ_MUSIC && window.ABJ_MUSIC.tracks && window.ABJ_MUSIC.tracks.length >= COUNT) {
+		render(shuffledPool(window.ABJ_MUSIC.tracks, COUNT), COUNT);
+	}
+
+	// 2. Try localStorage cache (from a prior live fetch) — overwrite if fresher.
 	try {
 		var cached = localStorage.getItem(CACHE_KEY);
 		if (cached) {
@@ -2411,6 +2440,7 @@ AOS.init({
 		}
 	} catch (e) { /* localStorage unavailable; ignore */ }
 
+	// 3. Try live fetch to refresh the cache (runs silently in background).
 	dataSourceStarted();
 	tryProxies()
 		.then(function (tracks) {
@@ -2421,7 +2451,7 @@ AOS.init({
 		})
 		.catch(function (err) {
 			if (window.console) console.warn("Lounge playlist fetch failed:", err && err.message);
-			// Static fallback (3 hand-picked songs) stays in place.
+			// Baked data already rendered above — nothing to do.
 		})
 		.finally(dataSourceDone);
 })();
@@ -2693,6 +2723,39 @@ AOS.init({
 		//      started. Bumped so anyone with a v2 cache rerenders.
 		var CACHE_KEY = "mal_" + kind + "_v3_" + user;
 
+		// 0. Baked data from data/mal.js — render immediately so shelves
+		//    are never empty on file:// or when all proxies fail.
+		if (window.ABJ_MAL && window.ABJ_MAL[kind] && window.ABJ_MAL[kind].entries) {
+			var baked = window.ABJ_MAL[kind].entries.map(function (e) {
+				var url = e.url || "";
+				if (url && url.indexOf("http") !== 0) url = "https://myanimelist.net" + url;
+				var subline = "";
+				if (kind === "manga") {
+					var readVol = e.num_read_volumes || 0;
+					var totalVol = e.manga_num_volumes || 0;
+					var readCh = e.num_read_chapters || 0;
+					var totalCh = e.manga_num_chapters || 0;
+					if (readVol && totalVol) subline = readVol + " / " + totalVol + " vols";
+					else if (readCh && totalCh) subline = readCh + " / " + totalCh + " ch";
+					else if (readCh) subline = readCh + " ch";
+					else if (totalVol) subline = totalVol + " vols";
+				} else {
+					var eps = e.anime_num_episodes || 0;
+					if (eps) subline = eps + (eps === 1 ? " ep" : " eps");
+				}
+				return {
+					title: e.title,
+					img: normalizeImg(e.image),
+					score: e.score,
+					status: e.status,
+					url: url,
+					meta: subline,
+					subline: subline
+				};
+			});
+			render(grid, kind, baked);
+		}
+
 		// 1. Cache hit — render immediately, then refresh in background.
 		try {
 			var cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
@@ -2713,9 +2776,7 @@ AOS.init({
 			})
 			.catch(function (err) {
 				if (window.console) console.warn("MAL " + kind + " fetch failed:", err && err.message);
-				// If nothing rendered (no cache, fetch failed), hide the
-				// empty grid so the page doesn't ship with a blank shelf.
-				if (!grid.children.length) grid.style.display = "none";
+				// Baked data already rendered above — no need to hide.
 			})
 			.finally(dataSourceDone);
 	});

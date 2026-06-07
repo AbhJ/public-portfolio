@@ -708,7 +708,11 @@ html::after {
 }
 
 .hero-rotating {
-	min-height: 1.6em;
+	min-height: 1.4em;
+	line-height: 1.4;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	transition: opacity 0.4s ease;
 }
 
@@ -1813,7 +1817,6 @@ body.resume-open {
 	border: 1px solid rgba(255, 255, 255, 0.08);
 	border-radius: 16px;
 	overflow: hidden;
-	height: 100%;
 	display: flex;
 	flex-direction: column;
 	transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
@@ -1832,45 +1835,45 @@ body.resume-open {
 }
 
 .edu-card-body {
-	padding: 2rem 1.75rem 1.9rem;
+	padding: 1.1rem 1.3rem 1rem;
 	flex: 1;
 	display: flex;
 	flex-direction: column;
 }
 
 .edu-card-icon {
-	font-size: 1.8rem;
+	font-size: 1.5rem;
 	color: var(--primary);
-	margin-bottom: 1.1rem;
+	margin-bottom: 0.6rem;
 }
 
 .edu-card h5 {
-	font-size: 1.1rem;
+	font-size: 1rem;
 	color: #fff;
-	margin-bottom: 0.55rem;
+	margin-bottom: 0.4rem;
 	font-weight: 600;
 	letter-spacing: 0.01em;
 }
 
 .edu-degree {
-	font-size: 0.9rem;
+	font-size: 0.82rem;
 	color: rgba(255, 255, 255, 0.7);
-	margin-bottom: 0.3rem;
-	line-height: 1.55;
+	margin-bottom: 0.2rem;
+	line-height: 1.4;
 }
 
 .edu-minor {
-	font-size: 0.9rem;
+	font-size: 0.82rem;
 	color: rgba(255, 255, 255, 0.7);
-	margin-bottom: 0.75rem;
-	line-height: 1.55;
+	margin-bottom: 0.5rem;
+	line-height: 1.4;
 }
 
 .edu-detail {
-	font-size: 0.88rem;
+	font-size: 0.82rem;
 	color: rgba(255, 255, 255, 0.8);
-	margin-bottom: 0.45rem;
-	line-height: 1.55;
+	margin-bottom: 0.3rem;
+	line-height: 1.4;
 }
 
 .edu-detail strong {
@@ -1879,9 +1882,9 @@ body.resume-open {
 }
 
 .edu-date {
-	font-size: 0.75rem;
+	font-size: 0.72rem;
 	color: rgba(255, 255, 255, 0.4);
-	margin-bottom: 1.25rem;
+	margin-bottom: 0.6rem;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 }
@@ -1906,6 +1909,51 @@ body.resume-open {
 	padding: 0.3rem 0.75rem;
 }
 
+.edu-exam-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	gap: 0.75rem;
+}
+
+.edu-exam-grid .exam-card {
+	height: 100%;
+	padding: 1rem 0.75rem;
+	justify-content: center;
+}
+
+@media (max-width: 575.98px) {
+	.edu-exam-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+.edu-card--compact .edu-card-body {
+	padding: 1rem;
+}
+
+.edu-card--compact h5 {
+	font-size: 0.9rem;
+}
+
+.edu-card--compact .edu-degree {
+	font-size: 0.72rem;
+}
+
+.edu-card--compact .edu-detail {
+	font-size: 0.72rem;
+	margin-bottom: 0.2rem;
+}
+
+.edu-card--compact .edu-date {
+	font-size: 0.65rem;
+}
+
+.edu-card--compact .edu-card-icon {
+	font-size: 1.2rem;
+	margin-bottom: 0.5rem;
+}
+
 /* ===== Education row — equal height ===== */
 
 .education-cards .row {
@@ -1915,6 +1963,244 @@ body.resume-open {
 
 .education-cards .row > [class*="col-"] {
 	display: flex;
+}
+
+.education-cards {
+	max-width: 920px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* ===== Exam Score Cards ===== */
+
+.exam-card {
+	background: linear-gradient(135deg, rgba(90, 120, 145, 0.12), rgba(90, 120, 145, 0.06));
+	border: 1px solid rgba(90, 120, 145, 0.25);
+	border-radius: 14px;
+	padding: 1rem 0.75rem;
+	text-align: center;
+	backdrop-filter: blur(12px);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.25rem;
+}
+
+.exam-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 10px 30px rgba(90, 120, 145, 0.15);
+	border-color: rgba(90, 120, 145, 0.4);
+}
+
+.exam-card-icon {
+	width: 32px;
+	height: 32px;
+	border-radius: 8px;
+	background: linear-gradient(135deg, rgba(90, 120, 145, 0.5), rgba(90, 120, 145, 0.3));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.85rem;
+	color: #fff;
+	margin-bottom: 0.2rem;
+}
+
+.exam-card-title {
+	font-family: var(--font-family-heading);
+	font-size: 0.78rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: rgba(255, 255, 255, 0.6);
+	margin: 0;
+}
+
+.exam-card-score {
+	font-family: var(--font-family-heading);
+	font-size: 1.25rem;
+	font-weight: 700;
+	color: #fff;
+	line-height: 1.2;
+}
+
+.exam-card-max {
+	font-size: 0.8rem;
+	font-weight: 400;
+	color: rgba(255, 255, 255, 0.4);
+}
+
+.exam-card-detail {
+	font-size: 0.7rem;
+	color: rgba(255, 255, 255, 0.4);
+	letter-spacing: 0.02em;
+}
+
+/* ===== TOEFL Card (legacy — kept for potential future use) ===== */
+
+.toefl-card {
+	background: linear-gradient(135deg, rgba(20, 22, 30, 0.92), rgba(30, 33, 45, 0.88));
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 18px;
+	padding: 1.8rem 2rem;
+	backdrop-filter: blur(12px);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.toefl-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.toefl-header {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin-bottom: 1.5rem;
+	flex-wrap: wrap;
+}
+
+.toefl-logo {
+	width: 48px;
+	height: 48px;
+	border-radius: 12px;
+	background: linear-gradient(135deg, #2563eb, #7c3aed);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.3rem;
+	color: #fff;
+	flex-shrink: 0;
+}
+
+.toefl-title-block {
+	flex: 1;
+	min-width: 140px;
+}
+
+.toefl-title {
+	font-family: var(--font-family-heading);
+	font-size: 1.05rem;
+	font-weight: 600;
+	color: #fff;
+	margin: 0;
+}
+
+.toefl-date {
+	font-size: 0.78rem;
+	color: rgba(255, 255, 255, 0.45);
+	margin: 0.15rem 0 0;
+}
+
+.toefl-overall {
+	text-align: center;
+	padding: 0.5rem 1rem;
+	border-radius: 12px;
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.toefl-overall-score {
+	font-family: var(--font-family-heading);
+	font-size: 2rem;
+	font-weight: 700;
+	color: #fff;
+	line-height: 1;
+}
+
+.toefl-overall-max {
+	font-size: 0.85rem;
+	color: rgba(255, 255, 255, 0.45);
+	margin-left: 0.15rem;
+}
+
+.toefl-cefr {
+	display: block;
+	font-size: 0.7rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #7c3aed;
+	margin-top: 0.25rem;
+}
+
+.toefl-sections {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 0.75rem;
+}
+
+.toefl-section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.35rem;
+	padding: 1rem 0.5rem;
+	border-radius: 12px;
+	background: rgba(255, 255, 255, 0.03);
+	border: 1px solid rgba(255, 255, 255, 0.06);
+	transition: background 0.2s ease;
+}
+
+.toefl-section:hover {
+	background: rgba(255, 255, 255, 0.06);
+}
+
+.toefl-section-icon {
+	font-size: 1.1rem;
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.toefl-section-label {
+	font-size: 0.72rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.toefl-section-score {
+	font-family: var(--font-family-heading);
+	font-size: 1.35rem;
+	font-weight: 700;
+	color: #fff;
+}
+
+.toefl-section-score--top {
+	color: #34d399;
+}
+
+.toefl-section-max {
+	font-size: 0.72rem;
+	font-weight: 400;
+	color: rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 575.98px) {
+	.toefl-sections {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.toefl-header {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.toefl-overall {
+		align-self: stretch;
+		display: flex;
+		align-items: baseline;
+		gap: 0.5rem;
+		justify-content: center;
+	}
+	.toefl-cefr {
+		display: inline;
+		margin-top: 0;
+		margin-left: 0.5rem;
+	}
+	.toefl-card {
+		padding: 1.2rem 1rem;
+	}
 }
 
 /* ===== GitHub Section ===== */
@@ -3947,6 +4233,12 @@ a.portfolio-card.portfolio-card--featured:hover {
 	pointer-events: none;
 }
 
+.book-rating--reading {
+	border-color: rgba(52, 211, 153, 0.6);
+	color: #6ee7b7;
+	font-size: 0.6rem;
+}
+
 /* On hover, 5★ books pick up the brass-rim treatment — same as film-card. */
 .book-card--star5:hover .book-cover-wrap {
 	box-shadow:
@@ -4500,6 +4792,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 .cp-stat-card .gh-stat-label i {
 	color: rgba(212, 175, 106, 0.7);
+}
+
+.cp-peak {
+	display: block;
+	margin-top: 0.4rem;
+	font-size: 0.68rem;
+	color: rgba(255, 255, 255, 0.45);
+	letter-spacing: 0.02em;
+}
+
+.cp-peak strong {
+	color: rgba(255, 255, 255, 0.75);
 }
 
 /* End of Midnight Forge layer */

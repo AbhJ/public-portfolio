@@ -5,11 +5,36 @@
    MAL-fed section). meta.avgRating includes manga to match the
    number Goodreads shows on the profile page. */
 window.ABJ_BOOKS_DATA = {
-  "updated": "2026-05-10",
+  "updated": "2026-06-07",
   "meta": {
     "totalRead": 98,
-    "avgRating": 4.35
+    "currentlyReading": 8,
+    "avgRating": 4.35,
+    "planToRead": 32
   },
+  "currentlyReading": [
+    {
+      "id": "3735293",
+      "title": "Clean Code: A Handbook of Agile Software Craftsmanship",
+      "displayTitle": "Clean Code",
+      "author": "Robert C. Martin",
+      "image": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1436202607i/3735293.jpg"
+    },
+    {
+      "id": "54898389",
+      "title": "The Almanack of Naval Ravikant: A Guide to Wealth and Happiness",
+      "displayTitle": "The Almanack of Naval Ravikant",
+      "author": "Eric Jorgenson",
+      "image": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1598011736i/54898389.jpg"
+    },
+    {
+      "id": "6667514",
+      "title": "The Checklist Manifesto: How to Get Things Right",
+      "displayTitle": "The Checklist Manifesto",
+      "author": "Atul Gawande",
+      "image": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1647403235i/6667514.jpg"
+    }
+  ],
   "books": [
     {
       "id": "102868",

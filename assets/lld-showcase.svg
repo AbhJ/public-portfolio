@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" width="880" height="520" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, monospace" role="img" aria-label="Animated demo of LLD Problems website running Java tests in the browser">
+  <title>LLD Problems Website — Tests running in browser</title>
+  <desc>The Run Tests button is clicked, code compiles, and six test cases pass one after another, ending with an all-passed summary.</desc>
+
+  <!-- ============ Theme constants (Navy + Brass) ============ -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"  stop-color="#0a0a23"/>
+      <stop offset="55%" stop-color="#11122d"/>
+      <stop offset="100%" stop-color="#1a1a4d"/>
+    </linearGradient>
+    <linearGradient id="brass" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#d4af6a"/>
+      <stop offset="100%" stop-color="#f0cc92"/>
+    </linearGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- ============ Outer browser frame ============ -->
+  <rect x="0" y="0" width="880" height="520" rx="16" ry="16" fill="url(#bgGrad)"/>
+  <rect x="0.5" y="0.5" width="879" height="519" rx="15.5" ry="15.5" fill="none" stroke="rgba(212,175,106,0.30)" stroke-width="1"/>
+
+  <!-- ============ Browser chrome bar ============ -->
+  <rect x="0" y="0" width="880" height="44" rx="16" ry="16" fill="#06061a"/>
+  <rect x="0" y="28" width="880" height="16" fill="#06061a"/>
+  <line x1="0" y1="44" x2="880" y2="44" stroke="rgba(212,175,106,0.30)" stroke-width="1"/>
+  <!-- traffic lights -->
+  <circle cx="22" cy="22" r="6" fill="#ff5f57"/>
+  <circle cx="42" cy="22" r="6" fill="#febc2e"/>
+  <circle cx="62" cy="22" r="6" fill="#28c840"/>
+  <!-- URL bar -->
+  <rect x="100" y="11" width="680" height="22" rx="11" ry="11" fill="#11122d" stroke="rgba(244,238,222,0.10)"/>
+  <text x="118" y="26" font-size="12" fill="rgba(244,238,222,0.78)">&#x1F512; localhost:8080/#01-parking-lot</text>
+
+  <!-- ============ Title bar inside the app ============ -->
+  <text x="24" y="74" font-size="14" font-family="Inter, sans-serif" fill="#d4af6a" font-weight="700">&#9670; LLD Problems</text>
+  <text x="160" y="74" font-size="12" font-family="Inter, sans-serif" fill="rgba(244,238,222,0.55)">Parking Lot &#8594; naive/Main.java</text>
+
+  <!-- ============ Run / Tests / Edit buttons ============ -->
+  <g font-family="Inter, sans-serif" font-size="11" font-weight="600">
+    <!-- Edit -->
+    <rect x="600" y="60" width="60" height="22" rx="6" fill="transparent" stroke="rgba(212,175,106,0.45)"/>
+    <text x="630" y="75" text-anchor="middle" fill="#d4af6a">Edit</text>
+    <!-- Run -->
+    <rect x="668" y="60" width="60" height="22" rx="6" fill="transparent" stroke="rgba(212,175,106,0.45)"/>
+    <text x="698" y="75" text-anchor="middle" fill="#d4af6a">&#9654; Run</text>
+    <!-- Tests button (target of the click animation) -->
+    <g id="testsBtn">
+      <rect x="736" y="60" width="68" height="22" rx="6" fill="rgba(212,175,106,0.22)" stroke="#d4af6a" stroke-width="1.4">
+        <animate attributeName="fill" values="rgba(212,175,106,0.22);#d4af6a;rgba(212,175,106,0.22)"
+                 keyTimes="0;0.04;0.12" dur="8s" begin="1.2s" repeatCount="indefinite"/>
+      </rect>
+      <text x="770" y="75" text-anchor="middle" fill="#d4af6a">
+        &#10003; Tests
+        <animate attributeName="fill" values="#d4af6a;#0a0a23;#d4af6a"
+                 keyTimes="0;0.04;0.12" dur="8s" begin="1.2s" repeatCount="indefinite"/>
+      </text>
+    </g>
+  </g>
+
+  <!-- ============ Cursor that moves to the Tests button ============ -->
+  <g id="cursor">
+    <path d="M 0 0 L 14 6 L 6 8 L 8 16 L 4 17 L 2 9 L 0 14 Z"
+          fill="#f4eede" stroke="#0a0a23" stroke-width="0.6"
+          transform="translate(220 320)">
+      <animateTransform attributeName="transform" type="translate"
+                        values="220,320; 770,72; 770,72; 220,320"
+                        keyTimes="0;0.13;0.18;0.30"
+                        dur="8s" begin="0s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- ============ Code editor (left half) ============ -->
+  <g>
+    <rect x="20" y="100" width="430" height="400" rx="10" fill="#06061a" stroke="rgba(244,238,222,0.10)"/>
+    <!-- file tab -->
+    <rect x="32" y="112" width="120" height="22" rx="5" fill="rgba(212,175,106,0.22)"/>
+    <text x="92" y="127" font-size="11" font-family="Inter, sans-serif" fill="#d4af6a" text-anchor="middle">Main.java</text>
+
+    <!-- line numbers -->
+    <g font-size="11" fill="rgba(244,238,222,0.35)">
+      <text x="40" y="160">1</text><text x="40" y="178">2</text><text x="40" y="196">3</text>
+      <text x="40" y="214">4</text><text x="40" y="232">5</text><text x="40" y="250">6</text>
+      <text x="40" y="268">7</text><text x="40" y="286">8</text><text x="40" y="304">9</text>
+      <text x="36" y="322">10</text><text x="36" y="340">11</text><text x="36" y="358">12</text>
+      <text x="36" y="376">13</text><text x="36" y="394">14</text><text x="36" y="412">15</text>
+    </g>
+
+    <!-- code (Prism-tomorrow palette: keyword #cc99cd, type #f8c555, string #7ec699, comment #999, fn #f08d49) -->
+    <g font-size="12" font-family="ui-monospace, monospace">
+      <text x="60" y="160" fill="#999"><tspan>// Parking Lot — entry point</tspan></text>
+      <text x="60" y="178"><tspan fill="#cc99cd">public class</tspan><tspan fill="#f8c555"> Main</tspan><tspan fill="#f4eede"> {</tspan></text>
+      <text x="60" y="196"><tspan fill="#cc99cd">    public static void</tspan><tspan fill="#f08d49"> main</tspan><tspan fill="#f4eede">(</tspan><tspan fill="#f8c555">String</tspan><tspan fill="#f4eede">[] args) {</tspan></text>
+      <text x="60" y="214"><tspan fill="#f4eede">        </tspan><tspan fill="#f8c555">ParkingLot</tspan><tspan fill="#f4eede"> lot = </tspan><tspan fill="#f8c555">ParkingLot</tspan><tspan fill="#f4eede">.</tspan><tspan fill="#f08d49">getInstance</tspan><tspan fill="#f4eede">();</tspan></text>
+      <text x="60" y="232"><tspan fill="#f4eede">        lot.</tspan><tspan fill="#f08d49">addLevel</tspan><tspan fill="#f4eede">(</tspan><tspan fill="#f8c555">new</tspan><tspan fill="#f4eede"> </tspan><tspan fill="#f8c555">Level</tspan><tspan fill="#f4eede">(</tspan><tspan fill="#7ec699">1</tspan><tspan fill="#f4eede">, </tspan><tspan fill="#7ec699">10</tspan><tspan fill="#f4eede">));</tspan></text>
+      <text x="60" y="250"><tspan fill="#f4eede">        </tspan><tspan fill="#f8c555">Vehicle</tspan><tspan fill="#f4eede"> car = </tspan><tspan fill="#cc99cd">new</tspan><tspan fill="#f4eede"> </tspan><tspan fill="#f8c555">Car</tspan><tspan fill="#f4eede">(</tspan><tspan fill="#7ec699">"KA-01-AB-1234"</tspan><tspan fill="#f4eede">);</tspan></text>
+      <text x="60" y="268"><tspan fill="#f8c555">        Ticket</tspan><tspan fill="#f4eede"> t = lot.</tspan><tspan fill="#f08d49">park</tspan><tspan fill="#f4eede">(car);</tspan></text>
+      <text x="60" y="286"><tspan fill="#f4eede">        </tspan><tspan fill="#f8c555">System</tspan><tspan fill="#f4eede">.out.</tspan><tspan fill="#f08d49">println</tspan><tspan fill="#f4eede">(t.getId());</tspan></text>
+      <text x="60" y="304"><tspan fill="#f4eede">        lot.</tspan><tspan fill="#f08d49">unpark</tspan><tspan fill="#f4eede">(t);</tspan></text>
+      <text x="60" y="322"><tspan fill="#f4eede">    }</tspan></text>
+      <text x="60" y="340"><tspan fill="#f4eede">}</tspan></text>
+      <text x="60" y="376" fill="#999"><tspan>// O(1) park/unpark — singleton</tspan></text>
+      <text x="60" y="394" fill="#999"><tspan>// uses ConcurrentHashMap for tickets</tspan></text>
+    </g>
+  </g>
+
+  <!-- ============ Tests panel (right half) ============ -->
+  <g>
+    <rect x="465" y="100" width="395" height="400" rx="10" fill="#06061a" stroke="rgba(244,238,222,0.10)"/>
+    <!-- panel header -->
+    <rect x="465" y="100" width="395" height="32" rx="10" fill="rgba(212,175,106,0.22)"/>
+    <rect x="465" y="120" width="395" height="12" fill="rgba(212,175,106,0.22)"/>
+    <text x="482" y="121" font-size="12" font-family="Inter, sans-serif" font-weight="700" fill="#d4af6a">&#9654; Test Output</text>
+    <text x="838" y="121" font-size="14" font-family="Inter, sans-serif" fill="rgba(244,238,222,0.55)" text-anchor="middle">×</text>
+
+    <!-- "Compiling..." message: shown 1.4–2.0s, then hidden -->
+    <g font-size="12" fill="rgba(244,238,222,0.78)" opacity="0">
+      <text x="482" y="158">$ javac -d out **/*.java</text>
+      <text x="482" y="178">Compiling...</text>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.22;0.25"
+               dur="8s" begin="1.3s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- Test 1 — appears at 2.2s -->
+    <g font-size="12" opacity="0">
+      <text x="482" y="158">
+        <tspan fill="#7ec699" font-weight="700">&#10003;</tspan>
+        <tspan fill="#f4eede"> Test 1: park a single car</tspan>
+        <tspan fill="rgba(244,238,222,0.55)">  (12ms)</tspan>
+      </text>
+      <animate attributeName="opacity" values="0;1" keyTimes="0;1" dur="0.25s" begin="2.2s" fill="freeze"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.95;1" dur="5.6s" begin="2.2s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- Test 2 -->
+    <g font-size="12" opacity="0">
+      <text x="482" y="180">
+        <tspan fill="#7ec699" font-weight="700">&#10003;</tspan>
+        <tspan fill="#f4eede"> Test 2: full lot rejects new car</tspan>
+        <tspan fill="rgba(244,238,222,0.55)">  (8ms)</tspan>
+      </text>
+      <animate attributeName="opacity" values="0;1" keyTimes="0;1" dur="0.25s" begin="2.6s" fill="freeze"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.95;1" dur="5.2s" begin="2.6s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- Test 3 -->
+    <g font-size="12" opacity="0">
+      <text x="482" y="202">
+        <tspan fill="#7ec699" font-weight="700">&#10003;</tspan>
+        <tspan fill="#f4eede"> Test 3: hourly pricing strategy</tspan>
+        <tspan fill="rgba(244,238,222,0.55)">  (5ms)</tspan>
+      </text>
+      <animate attributeName="opacity" values="0;1" keyTimes="0;1" dur="0.25s" begin="3.0s" fill="freeze"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.95;1" dur="4.8s" begin="3.0s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- Test 4 -->
+    <g font-size="12" opacity="0">
+      <text x="482" y="224">
+        <tspan fill="#7ec699" font-weight="700">&#10003;</tspan>
+        <tspan fill="#f4eede"> Test 4: motorcycle in small spot</tspan>
+        <tspan fill="rgba(244,238,222,0.55)">  (7ms)</tspan>
+      </text>
+      <animate attributeName="opacity" values="0;1" keyTimes="0;1" dur="0.25s" begin="3.4s" fill="freeze"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.95;1" dur="4.4s" begin="3.4s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- Test 5 -->
+    <g font-size="12" opacity="0">
+      <text x="482" y="246">
+        <tspan fill="#7ec699" font-weight="700">&#10003;</tspan>
+        <tspan fill="#f4eede"> Test 5: truck spans 3 spots</tspan>
+        <tspan fill="rgba(244,238,222,0.55)">  (9ms)</tspan>
+      </text>
+      <animate attributeName="opacity" values="0;1" keyTimes="0;1" dur="0.25s" begin="3.8s" fill="freeze"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.95;1" dur="4.0s" begin="3.8s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- Test 6 -->
+    <g font-size="12" opacity="0">
+      <text x="482" y="268">
+        <tspan fill="#7ec699" font-weight="700">&#10003;</tspan>
+        <tspan fill="#f4eede"> Test 6: concurrent park 100 cars</tspan>
+        <tspan fill="rgba(244,238,222,0.55)">  (38ms)</tspan>
+      </text>
+      <animate attributeName="opacity" values="0;1" keyTimes="0;1" dur="0.25s" begin="4.3s" fill="freeze"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.95;1" dur="3.5s" begin="4.3s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- Summary box -->
+    <g opacity="0">
+      <rect x="482" y="298" width="358" height="74" rx="8"
+            fill="rgba(126, 198, 153, 0.10)" stroke="#7ec699" stroke-width="1.4"/>
+      <text x="496" y="324" font-size="14" font-family="Inter, sans-serif" font-weight="700" fill="#7ec699">
+        &#10003; All 6 tests passed
+      </text>
+      <text x="496" y="346" font-size="12" font-family="Inter, sans-serif" fill="rgba(244,238,222,0.78)">
+        Total: 79ms &#183; 0 failures &#183; exit code 0
+      </text>
+      <text x="496" y="362" font-size="11" font-family="Inter, sans-serif" fill="rgba(244,238,222,0.55)">
+        compile + run executed locally via node server.js
+      </text>
+      <animate attributeName="opacity" values="0;1" keyTimes="0;1" dur="0.4s" begin="4.9s" fill="freeze"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.96;1" dur="2.9s" begin="4.9s" repeatCount="indefinite"/>
+    </g>
+  </g>
+
+  <!-- ============ Footer caption ============ -->
+  <text x="440" y="500" text-anchor="middle"
+        font-size="11" font-family="Inter, sans-serif" fill="rgba(244,238,222,0.55)">
+    Edit code in the browser. Click <tspan fill="#d4af6a" font-weight="700">Tests</tspan>. See results in real time. All local — no signup, no cloud.
+  </text>
+</svg>
