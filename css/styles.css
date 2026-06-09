@@ -531,8 +531,8 @@ a.text-secondary:focus {
 	   web content that opted into edge-to-edge with `viewport-fit=cover`. */
 	padding-top: calc(1rem + env(safe-area-inset-top, 0px));
 	padding-bottom: 1rem;
-	padding-left: env(safe-area-inset-left, 0px);
-	padding-right: env(safe-area-inset-right, 0px);
+	padding-left: calc(0.75rem + env(safe-area-inset-left, 0px));
+	padding-right: calc(0.75rem + env(safe-area-inset-right, 0px));
 	font-family: var(--font-family-heading);
 	font-weight: 700;
 	background-color: rgba(10, 10, 35, 0.55);
@@ -540,6 +540,11 @@ a.text-secondary:focus {
 	-webkit-backdrop-filter: saturate(180%) blur(20px);
 	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05), 0 4px 20px rgba(0, 0, 0, 0.25);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+#mainNav .container {
+	padding-left: max(15px, env(safe-area-inset-left, 15px));
+	padding-right: max(15px, env(safe-area-inset-right, 15px));
 }
 
 /* Failsafe — paint a solid bar across the safe-area region above the
@@ -558,10 +563,8 @@ a.text-secondary:focus {
 	left: 0;
 	right: 0;
 	height: env(safe-area-inset-top, 0px);
-	background-color: rgba(10, 10, 35, 0.95);
-	-webkit-backdrop-filter: saturate(180%) blur(20px);
-	backdrop-filter: saturate(180%) blur(20px);
-	z-index: 1031;       /* one above Bootstrap's .fixed-top (1030) */
+	background-color: #0a0a23;
+	z-index: 1031;
 	pointer-events: none;
 }
 
