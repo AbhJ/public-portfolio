@@ -550,9 +550,9 @@ a.text-secondary:focus {
 	   translucent (no opaque region), preserving the original appearance. */
 	background: linear-gradient(
 		to bottom,
-		#0a0a23 0,
-		#0a0a23 env(safe-area-inset-top, 0px),
-		rgba(10, 10, 35, 0.55) env(safe-area-inset-top, 0px)
+		#08090d 0,
+		#08090d env(safe-area-inset-top, 0px),
+		rgba(8, 9, 13, 0.55) env(safe-area-inset-top, 0px)
 	);
 	backdrop-filter: saturate(180%) blur(20px);
 	-webkit-backdrop-filter: saturate(180%) blur(20px);
@@ -581,7 +581,7 @@ a.text-secondary:focus {
 	left: 0;
 	right: 0;
 	height: env(safe-area-inset-top, 0px);
-	background-color: #0a0a23;
+	background-color: #08090d;
 	z-index: 1031;
 	pointer-events: none;
 }
@@ -598,7 +598,7 @@ html::after {
 	left: 0;
 	right: 0;
 	height: env(safe-area-inset-top, 0px);
-	background: #0a0a23;
+	background: #08090d;
 	z-index: 10001;
 	pointer-events: none;
 }
