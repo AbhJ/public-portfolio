@@ -52,6 +52,13 @@
 </head>
 <body id="page-top">
 
+	<!-- iOS status-bar / notch cap. A dedicated top-level fixed element (as the
+	     FIRST body child, on its own GPU layer) that paints an opaque bar over
+	     the safe-area strip. Unlike a pseudo-element, this gets a stable
+	     compositing layer that iOS Safari keeps painted DURING momentum scroll,
+	     so page content can't flash into the notch region mid-gesture. -->
+	<div class="ios-safe-area-cap" aria-hidden="true"></div>
+
 	<!-- Loading Screen -->
 	<div id="preloader">
 		<div class="preloader-inner">

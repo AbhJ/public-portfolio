@@ -566,6 +566,29 @@ a.text-secondary:focus {
 	padding-right: max(15px, env(safe-area-inset-right, 15px));
 }
 
+/* PRIMARY iOS notch cap — a dedicated top-level fixed element (first child of
+   <body>, see index.html) that paints an opaque bar over the safe-area strip.
+   A real first-child fixed <div> gets a far more STABLE GPU compositing layer
+   than a pseudo-element, so iOS Safari keeps it painted during momentum/flick
+   scroll (when the URL bar collapses and safe-area insets transiently
+   recompute). This is what stops content flashing into the notch strip mid-
+   scroll. translateZ(0) forces the layer; `will-change` is intentionally
+   omitted here — on iOS its async tile updates can LAG a momentum scroll and
+   make the flash worse, which is exactly the bug we're killing.
+   Height collapses to 0 on non-notched devices, so it's invisible there. */
+.ios-safe-area-cap {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: env(safe-area-inset-top, 0px);
+	background-color: #08090d;
+	z-index: 10002;
+	pointer-events: none;
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
+}
+
 /* Failsafe — paint a solid bar across the safe-area region above the
    navbar even on browsers/configurations where `padding-top:
    env(safe-area-inset-top)` doesn't visibly extend the navbar's own
