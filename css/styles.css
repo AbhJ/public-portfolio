@@ -552,7 +552,7 @@ a.text-secondary:focus {
 		to bottom,
 		#08090d 0,
 		#08090d env(safe-area-inset-top, 0px),
-		rgba(8, 9, 13, 0.55) env(safe-area-inset-top, 0px)
+		rgba(8, 9, 13, 0.9) env(safe-area-inset-top, 0px)
 	);
 	backdrop-filter: saturate(180%) blur(20px);
 	-webkit-backdrop-filter: saturate(180%) blur(20px);
