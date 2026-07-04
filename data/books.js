@@ -5,86 +5,89 @@
    MAL-fed section). meta.avgRating includes manga to match the
    number Goodreads shows on the profile page. */
 window.ABJ_BOOKS_DATA = {
-  "updated": "2026-06-07",
+  "updated": "2026-07-04",
   "meta": {
-    "totalRead": 98,
+    "totalRead": 100,
     "currentlyReading": 8,
     "avgRating": 4.35,
-    "planToRead": 32
+    "planToRead": 31
   },
   "currentlyReading": [
-    {
-      "id": "3735293",
-      "title": "Clean Code: A Handbook of Agile Software Craftsmanship",
-      "displayTitle": "Clean Code",
-      "author": "Robert C. Martin",
-      "image": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1436202607i/3735293.jpg"
-    },
     {
       "id": "54898389",
       "title": "The Almanack of Naval Ravikant: A Guide to Wealth and Happiness",
       "displayTitle": "The Almanack of Naval Ravikant",
       "author": "Eric Jorgenson",
-      "image": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1598011736i/54898389.jpg"
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1598011736l/54898389.jpg"
     },
     {
       "id": "6667514",
       "title": "The Checklist Manifesto: How to Get Things Right",
       "displayTitle": "The Checklist Manifesto",
       "author": "Atul Gawande",
-      "image": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1647403235i/6667514.jpg"
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1647403235l/6667514.jpg"
+    },
+    {
+      "id": "40097951",
+      "title": "The Silent Patient",
+      "displayTitle": "The Silent Patient",
+      "author": "Alex Michaelides",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1668782119l/40097951.jpg"
+    },
+    {
+      "id": "66863",
+      "title": "Only the Paranoid Survive: How to Exploit the Crisis Points that Challenge Every Company and Career",
+      "displayTitle": "Only the Paranoid Survive",
+      "author": "Andrew S. Grove",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1757789693l/66863.jpg"
+    },
+    {
+      "id": "34728838",
+      "title": "Fundamental Analysis - Part 1",
+      "displayTitle": "Fundamental Analysis - Part 1",
+      "author": "Zerodha Varsity",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1490792381l/34728838.jpg",
+      "rating": 5
+    },
+    {
+      "id": "13496",
+      "title": "A Game of Thrones (A Song of Ice and Fire, #1)",
+      "displayTitle": "A Game of Thrones (A Song of Ice and Fire, #1)",
+      "author": "George R.R. Martin",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1562726234l/13496.jpg",
+      "rating": 4
+    },
+    {
+      "id": "11084145",
+      "title": "Steve Jobs",
+      "displayTitle": "Steve Jobs",
+      "author": "Walter Isaacson",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1511288482l/11084145.jpg"
     }
   ],
   "books": [
     {
-      "id": "102868",
-      "title": "A Study in Scarlet (Sherlock Holmes, #1)",
-      "displayTitle": "A Study in Scarlet",
-      "author": "Arthur Conan Doyle",
-      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1519031842l/102868.jpg",
+      "id": "128713713",
+      "title": "Building a Non-Anxious Life",
+      "displayTitle": "Building a Non-Anxious Life",
+      "author": "John Delony",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1686017329l/128713713.jpg",
       "rating": 5,
-      "ratedAt": "Sat, 18 Sep 2021 00:00:00 +0000"
+      "ratedAt": "Fri, 3 Jul 2026 00:00:00 +0000"
     },
     {
-      "id": "38242135",
-      "title": "AI Superpowers: China, Silicon Valley, and the New World Order",
-      "displayTitle": "AI Superpowers",
-      "author": "Kai-Fu Lee",
-      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1521228712l/38242135.jpg",
-      "rating": 5,
-      "ratedAt": "Sat, 13 Jan 2024 00:00:00 +0000"
-    },
-    {
-      "id": "49099937",
-      "title": "No Rules Rules: Netflix and the Culture of Reinvention",
-      "displayTitle": "No Rules Rules",
-      "author": "Reed Hastings",
-      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1595815356l/49099937.jpg",
-      "rating": 5,
-      "ratedAt": "Wed, 16 Oct 2024 00:00:00 +0000"
-    },
-    {
-      "id": "39664",
-      "title": "Rita Hayworth and Shawshank Redemption",
-      "displayTitle": "Rita Hayworth and Shawshank Redemption",
-      "author": "Stephen  King",
-      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1315100686l/39664.jpg",
-      "rating": 5,
-      "ratedAt": "Mon, 7 Feb 2022 00:00:00 +0000"
-    },
-    {
-      "id": "23692271",
-      "title": "Sapiens: A Brief History of Humankind",
-      "displayTitle": "Sapiens: A Brief History of Humankind",
-      "author": "Yuval Noah Harari",
-      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1703329310l/23692271.jpg",
-      "rating": 5,
-      "ratedAt": "Thu, 16 Sep 2021 00:00:00 +0000"
+      "id": "3735293",
+      "title": "Clean Code: A Handbook of Agile Software Craftsmanship",
+      "displayTitle": "Clean Code",
+      "author": "Robert C. Martin",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1436202607l/3735293.jpg",
+      "rating": 4,
+      "ratedAt": "Wed, 10 Jun 2026 00:00:00 +0000"
     },
     {
       "id": "54109255",
       "title": "System Design Interview – An insider's guide",
-      "displayTitle": "System Design Interview",
+      "displayTitle": "System Design Interview – An insider's guide",
       "author": "Alex Xu",
       "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1592265780l/54109255.jpg",
       "rating": 5,
@@ -100,6 +103,33 @@ window.ABJ_BOOKS_DATA = {
       "ratedAt": "Tue, 3 Dec 2024 00:00:00 +0000"
     },
     {
+      "id": "49099937",
+      "title": "No Rules Rules: Netflix and the Culture of Reinvention",
+      "displayTitle": "No Rules Rules",
+      "author": "Reed Hastings",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1595815356l/49099937.jpg",
+      "rating": 5,
+      "ratedAt": "Wed, 16 Oct 2024 00:00:00 +0000"
+    },
+    {
+      "id": "38242135",
+      "title": "AI Superpowers: China, Silicon Valley, and the New World Order",
+      "displayTitle": "AI Superpowers",
+      "author": "Kai-Fu Lee",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1521228712l/38242135.jpg",
+      "rating": 5,
+      "ratedAt": "Sat, 13 Jan 2024 00:00:00 +0000"
+    },
+    {
+      "id": "39664",
+      "title": "Rita Hayworth and Shawshank Redemption",
+      "displayTitle": "Rita Hayworth and Shawshank Redemption",
+      "author": "Stephen  King",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1315100686l/39664.jpg",
+      "rating": 5,
+      "ratedAt": "Mon, 7 Feb 2022 00:00:00 +0000"
+    },
+    {
       "id": "69571",
       "title": "Rich Dad Poor Dad: What the Rich Teach Their Kids About Money—That the Poor and Middle Class Do Not!",
       "displayTitle": "Rich Dad Poor Dad",
@@ -107,6 +137,33 @@ window.ABJ_BOOKS_DATA = {
       "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1757619021l/69571.jpg",
       "rating": 4,
       "ratedAt": "Sat, 5 Feb 2022 00:00:00 +0000"
+    },
+    {
+      "id": "18050143",
+      "title": "Zero to One: Notes on Startups, or How to Build the Future",
+      "displayTitle": "Zero to One",
+      "author": "Peter Thiel",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1630663027l/18050143.jpg",
+      "rating": 4,
+      "ratedAt": "Fri, 1 Oct 2021 00:00:00 +0000"
+    },
+    {
+      "id": "102868",
+      "title": "A Study in Scarlet (Sherlock Holmes, #1)",
+      "displayTitle": "A Study in Scarlet (Sherlock Holmes, #1)",
+      "author": "Arthur Conan Doyle",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1519031842l/102868.jpg",
+      "rating": 5,
+      "ratedAt": "Sat, 18 Sep 2021 00:00:00 +0000"
+    },
+    {
+      "id": "23692271",
+      "title": "Sapiens: A Brief History of Humankind",
+      "displayTitle": "Sapiens",
+      "author": "Yuval Noah Harari",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1703329310l/23692271.jpg",
+      "rating": 5,
+      "ratedAt": "Thu, 16 Sep 2021 00:00:00 +0000"
     },
     {
       "id": "106835",
@@ -127,22 +184,12 @@ window.ABJ_BOOKS_DATA = {
       "ratedAt": "Mon, 1 Feb 2021 00:00:00 +0000"
     },
     {
-      "id": "18050143",
-      "title": "Zero to One: Notes on Startups, or How to Build the Future",
-      "displayTitle": "Zero to One",
-      "author": "Peter Thiel",
-      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1630663027l/18050143.jpg",
-      "rating": 4,
-      "ratedAt": "Fri, 1 Oct 2021 00:00:00 +0000"
-    },
-    {
       "id": "33561786",
       "title": "Attitude Is Everything: Change Your Attitude ... Change Your Life!",
       "displayTitle": "Attitude Is Everything",
       "author": "Jeff Keller",
       "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1482649723l/33561786.jpg",
-      "rating": 3,
-      "ratedAt": "Mon, 14 Nov 2022 13:54:31 -0800"
+      "rating": 3
     },
     {
       "id": "6314763",
@@ -150,8 +197,7 @@ window.ABJ_BOOKS_DATA = {
       "displayTitle": "Orange Is the New Black",
       "author": "Piper Kerman",
       "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1320520714l/6314763.jpg",
-      "rating": 3,
-      "ratedAt": "Mon, 30 Aug 2021 00:10:10 -0700"
+      "rating": 3
     },
     {
       "id": "4865",
@@ -159,8 +205,7 @@ window.ABJ_BOOKS_DATA = {
       "displayTitle": "How to Win Friends & Influence People",
       "author": "Dale Carnegie",
       "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1442726934l/4865.jpg",
-      "rating": 2,
-      "ratedAt": "Sun, 12 Sep 2021 23:41:46 -0700"
+      "rating": 2
     },
     {
       "id": "3869",
@@ -168,26 +213,7 @@ window.ABJ_BOOKS_DATA = {
       "displayTitle": "A Brief History of Time",
       "author": "Stephen W. Hawking",
       "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1333578746l/3869.jpg",
-      "rating": 1,
-      "ratedAt": "Tue, 14 Sep 2021 00:40:26 -0700"
-    },
-    {
-      "id": "34388246",
-      "title": "Inside Chanakya's Mind : Aanvikshiki And: Aanvikshiki and the Art of Thinking",
-      "displayTitle": "Inside Chanakya's Mind",
-      "author": "Radhakrishnan Pillai",
-      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1487960699l/34388246.jpg",
-      "rating": 1,
-      "ratedAt": "Mon, 30 Aug 2021 00:06:13 -0700"
-    },
-    {
-      "id": "18144590",
-      "title": "The Alchemist",
-      "displayTitle": "The Alchemist",
-      "author": "Paulo Coelho",
-      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1654371463l/18144590.jpg",
-      "rating": 1,
-      "ratedAt": "Mon, 30 Aug 2021 00:08:35 -0700"
+      "rating": 1
     },
     {
       "id": "1134122",
@@ -195,8 +221,23 @@ window.ABJ_BOOKS_DATA = {
       "displayTitle": "The Power of Positive Thinking",
       "author": "Norman Vincent Peale",
       "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1587724137l/1134122.jpg",
-      "rating": 1,
-      "ratedAt": "Sun, 12 Sep 2021 12:36:54 -0700"
+      "rating": 1
+    },
+    {
+      "id": "18144590",
+      "title": "The Alchemist",
+      "displayTitle": "The Alchemist",
+      "author": "Paulo Coelho",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1654371463l/18144590.jpg",
+      "rating": 1
+    },
+    {
+      "id": "34388246",
+      "title": "Inside Chanakya's Mind : Aanvikshiki And: Aanvikshiki and the Art of Thinking",
+      "displayTitle": "Inside Chanakya's Mind",
+      "author": "Radhakrishnan Pillai",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1487960699l/34388246.jpg",
+      "rating": 1
     }
   ]
 };

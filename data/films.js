@@ -4,7 +4,7 @@
    below and refresh.
    Loaded via a <script> tag so the page works on file:// too. */
 window.ABJ_FILMS = {
-  "updated": "2026-06-07",
+  "updated": "2026-07-04",
   "films": [
     {
       "href": "https://www.imdb.com/title/tt11337862/",
@@ -14,14 +14,14 @@ window.ABJ_FILMS = {
       "rating": 10
     },
     {
-      "href": "https://www.imdb.com/title/tt27911000/",
+      "href": "https://www.imdb.com/title/tt11378946/",
       "img": "https://upload.wikimedia.org/wikipedia/en/3/37/Michael_%282026_film_poster%29.png",
       "title": "Michael",
       "meta": "2026 · Antoine Fuqua",
       "rating": 10
     },
     {
-      "href": "https://www.imdb.com/title/tt5765344/",
+      "href": "https://www.imdb.com/title/tt6908274/",
       "img": "https://upload.wikimedia.org/wikipedia/en/7/73/Mirage_%282018%29_Film_Poster.jpg",
       "title": "Mirage",
       "meta": "2018 · Oriol Paulo",
@@ -217,7 +217,7 @@ window.ABJ_FILMS = {
       "rating": 10
     },
     {
-      "href": "https://www.imdb.com/title/tt0248606/",
+      "href": "https://www.imdb.com/title/tt0185103/",
       "img": "https://m.media-amazon.com/images/M/MV5BMmM3MDgzZmUtMTNiNi00NDkwLWIzOTktMGFhOGNlMzYyYzdmXkEyXkFqcGc@._V1_.jpg",
       "title": "WWE Monday Night RAW",
       "meta": "1993 · Vince McMahon",
@@ -288,9 +288,9 @@ window.ABJ_FILMS = {
     }
   ],
   "meta": {
-    "titlesRated": 263,
+    "titlesRated": 262,
     "currentlyWatching": 4,
-    "avgRating": 7.8,
+    "avgRating": 7.9,
     "planToWatch": 38
   }
 };

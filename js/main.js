@@ -162,6 +162,17 @@ window.ABJ_SERIES = (function () {
 			.trim();
 	}
 
+	// Full-length novel series whose entries each have a distinct standalone
+	// title (e.g. "A Game of Thrones", "A Clash of Kings"). Goodreads tags
+	// them "(A Song of Ice and Fire, #1)", which looks like a manga volume
+	// marker — but clubbing them under one card with an "N vols" badge is
+	// misleading (the count reflects only how many I've logged, not the
+	// series length). These are matched by key prefix and left un-clubbed so
+	// each book shows as its own card. Manga (Berserk, etc.) still clubs.
+	var NO_CLUB_PREFIXES = [
+		"a song of ice"   // A Song of Ice and Fire (Game of Thrones)
+	];
+
 	// Public — return a normalized series key, or null if `title` is a
 	// single (non-series) book.
 	function keyFor(title, author) {
@@ -177,7 +188,13 @@ window.ABJ_SERIES = (function () {
 		// completely different series with a coincidental shared word.
 		var words = key.split(" ").filter(Boolean).slice(0, 4);
 		if (!words.length) return null;
-		return words.join(" ");
+		var joined = words.join(" ");
+		// Don't club novel series (see NO_CLUB_PREFIXES) — render each book
+		// as a standalone card with no volume-count badge.
+		for (var i = 0; i < NO_CLUB_PREFIXES.length; i++) {
+			if (joined.indexOf(NO_CLUB_PREFIXES[i]) === 0) return null;
+		}
+		return joined;
 	}
 
 	// Title-case the stripped name for display ("berserk" → "Berserk").
@@ -1365,8 +1382,9 @@ AOS.init({
 		return "https://www.goodreads.com/review/list_rss/" + USER_ID +
 			"?shelf=read&per_page=200&sort=" + sort + "&order=d";
 	}
-	var FEED_BY_RATING    = buildFeedUrl("rating");
-	var FEED_BY_DATE_READ = buildFeedUrl("date_read");
+	var FEED_BY_RATING      = buildFeedUrl("rating");
+	var FEED_BY_DATE_READ   = buildFeedUrl("date_read");
+	var FEED_BY_DATE_EDITED = buildFeedUrl("date_updated");
 	// v5 = extracted images from description blob, dropped per-author dedupe
 	//      + 16-card cap so every 4★/5★ entry rendered.
 	// v6 = added series-clubbing (one Berserk card with a "× N vols" badge),
@@ -1380,14 +1398,19 @@ AOS.init({
 	//      driven now) and added paintBookStats() so the Books / Avg Rating
 	//      cells render from the same payload as the shelf.
 	// v9 = MIN_RATING dropped from 3 → 1 (every non-manga book renders).
-	//      Bump invalidates v8 caches that were partial 5-or-6-book sets.
-	var CACHE_KEY = "gr_books_v9";
+	//
+	// The trailing version is no longer hand-bumped: it's the `updated` date
+	// from data/books.js. Editing the data file (e.g. a fresh Goodreads sync)
+	// changes that date, which changes the cache key, which auto-invalidates
+	// every visitor's stale localStorage entry — no manual bump required.
+	// Falls back to a fixed suffix if the baked snapshot is somehow absent.
+	var CACHE_VERSION = (window.ABJ_BOOKS_DATA && window.ABJ_BOOKS_DATA.updated) || "v9";
+	var CACHE_KEY = "gr_books_" + CACHE_VERSION;
 	var CACHE_TTL = 60 * 60 * 1000;  // 1 hour
-	// Show every non-manga book on the read shelf, regardless of rating.
-	// (Earlier this was 4 — only highlighted 4★ and 5★ — which made the
-	// shelf feel sparse. We still highlight 5★ visually via a hover-glow
-	// but we no longer hide lower-rated books.)
-	var MIN_RATING = 1;
+	// Show only highly-rated books (4★ and 5★) on the read shelf.
+	// Books rated below this threshold are filtered out from the visible
+	// shelf but remain in the data for record-keeping purposes.
+	var MIN_RATING = 4;
 
 	// Manga authors to exclude from the Books shelf — those entries already
 	// appear in the dedicated Manga section (MyAnimeList-fed), so showing
@@ -1441,8 +1464,8 @@ AOS.init({
 		// Run both calls in parallel; succeed if at least one returns books.
 		// `Promise.allSettled` keeps one failure from killing both.
 		return Promise.allSettled([
+			fetchOneRss2Json(FEED_BY_DATE_EDITED),
 			fetchOneRss2Json(FEED_BY_RATING),
-			fetchOneRss2Json(FEED_BY_DATE_READ),
 		]).then(function (results) {
 			var merged = [];
 			results.forEach(function (r) {
@@ -1476,9 +1499,9 @@ AOS.init({
 	function fetchViaProxies(idx) {
 		idx = idx || 0;
 		if (idx >= PROXIES.length) return Promise.reject(new Error("All proxies failed"));
-		// FEED_BY_RATING returns books sorted highest-to-lowest user rating,
-		// which is exactly the order we render in.
-		return fetchWithTimeout(PROXIES[idx](FEED_BY_RATING), {}, 9000)
+		// FEED_BY_DATE_EDITED returns books sorted by most recently edited on Goodreads,
+		// which matches our new render order.
+		return fetchWithTimeout(PROXIES[idx](FEED_BY_DATE_EDITED), {}, 9000)
 			.then(function (r) {
 				if (!r.ok) throw new Error("Proxy " + idx + " status " + r.status);
 				return r.text();
@@ -1561,10 +1584,19 @@ AOS.init({
 		var bookId = (img.match(/books\/\d+l\/(\d+)/) || [])[1] || "";
 		var title = item.title || "";
 		var displayTitle = compactTitle(title);
+		// Capture pubDate (the Goodreads edit/update timestamp when sort=date_updated)
+		var editedAt = "";
+		try {
+			if (item.pubDate) {
+				var d = new Date(item.pubDate);
+				if (!isNaN(d.getTime())) editedAt = d.toISOString();
+			}
+		} catch (e) {}
 		return {
 			id: bookId, title: title, displayTitle: displayTitle,
 			author: author.trim(), image: img, rating: rating,
 			ratedAt: (readAt || added).replace(/\//g, "-"),  // "2026/03/25" → "2026-03-25" parses cleaner
+			editedAt: editedAt
 		};
 	}
 
@@ -1599,10 +1631,20 @@ AOS.init({
 			var added  = tag(item, "user_date_created") || tag(item, "user_date_added");
 			img = img.replace(/\._S[XY]\d+_/g, "");
 			var displayTitle = compactTitle(title);
+			// Capture pubDate (the Goodreads edit/update timestamp when sort=date_updated)
+			var editedAt = "";
+			try {
+				var pubDateStr = tag(item, "pubDate");
+				if (pubDateStr) {
+					var d = new Date(pubDateStr);
+					if (!isNaN(d.getTime())) editedAt = d.toISOString();
+				}
+			} catch (e) {}
 			out.push({
 				id: bookId, title: title, displayTitle: displayTitle,
 				author: author, image: img, rating: rating,
 				ratedAt: readAt || added,
+				editedAt: editedAt
 			});
 		}
 		return out;
@@ -1624,17 +1666,53 @@ AOS.init({
 	}
 
 	function render(books) {
-		// Keep books at MIN_RATING or above, and skip manga (those have a
-		// dedicated section fed by MyAnimeList).
-		books = books.filter(function (b) {
+		// Keep read books at MIN_RATING or above, and skip manga (those
+		// have a dedicated section fed by MyAnimeList).
+		var readBooks = books.filter(function (b) {
 			return b.rating >= MIN_RATING && !isMangaAuthor(b.author);
 		});
-		// Sort: rating desc, then most recently rated first within each tier
+		// Mix in the currently-reading books (from the baked snapshot — the
+		// live read feed doesn't carry them). They're in-progress so they
+		// skip the rating gate; tagged `_reading` so they render with a
+		// "reading" badge instead of a star. Having no read/edit date, they
+		// naturally sort to the bottom of the shelf rather than being pinned
+		// at the top.
+		var readingBooks = [];
+		if (window.ABJ_BOOKS_DATA && Array.isArray(window.ABJ_BOOKS_DATA.currentlyReading)) {
+			readingBooks = window.ABJ_BOOKS_DATA.currentlyReading
+				.filter(function (b) { return !isMangaAuthor(b.author); })
+				.map(function (b) {
+					var c = {};
+					for (var k in b) { if (b.hasOwnProperty(k)) c[k] = b[k]; }
+					c._reading = true;
+					return c;
+				});
+		}
+		books = readBooks.concat(readingBooks);
+		// Sort: most recently edited first (primary), fall back to ratedAt, then title
 		books.sort(function (a, b) {
-			if (b.rating !== a.rating) return b.rating - a.rating;
-			var ta = new Date(a.ratedAt || 0).getTime();
-			var tb = new Date(b.ratedAt || 0).getTime();
-			return tb - ta;
+			// Parse editedAt timestamps (ISO string or empty)
+			var getTime = function (book) {
+				try {
+					if (book.editedAt) {
+						var d = new Date(book.editedAt);
+						if (!isNaN(d.getTime())) return d.getTime();
+					}
+				} catch (e) {}
+				// Fall back to ratedAt if editedAt missing
+				try {
+					if (book.ratedAt) {
+						var d2 = new Date(book.ratedAt);
+						if (!isNaN(d2.getTime())) return d2.getTime();
+					}
+				} catch (e) {}
+				return 0;
+			};
+			var ta = getTime(a);
+			var tb = getTime(b);
+			if (tb !== ta) return tb - ta;  // Most recent first
+			// Tie-break by title
+			return (a.title || "").localeCompare(b.title || "");
 		});
 		// Dedupe by book id (some feeds repeat).
 		var seenById = {};
@@ -1683,15 +1761,23 @@ AOS.init({
 			} else {
 				b = entry; count = 1;
 			}
-			var fivestar = b.rating === 5 ? " book-card--star5" : "";
+			var reading = b._reading === true;
+			var fivestar = (!reading && b.rating === 5) ? " book-card--star5" : "";
 			var clubbed = count > 1 ? " book-card--series" : "";
-			var titleText = count > 1 ? seriesName : b.displayTitle;
+			var titleText = count > 1 ? seriesName : (b.displayTitle || b.title);
 			var seriesBadge = count > 1
 				? '<span class="book-series-count" aria-label="' + count + ' volumes in this series">' + count + ' vols</span>'
 				: '';
-			var ariaLabel = count > 1
-				? seriesName + " — " + count + " volumes, all rated " + b.rating + " of 5 on Goodreads"
-				: b.title + " — rated " + b.rating + " of 5 on Goodreads";
+			// Currently-reading books show an open-book badge instead of a
+			// star rating (they haven't been rated yet).
+			var ratingBadge = reading
+				? '<span class="book-rating book-rating--reading" aria-label="Currently reading"><i class="fas fa-book-open"></i></span>'
+				: '<span class="book-rating" aria-label="Rated ' + b.rating + ' of 5">' + b.rating + '★</span>';
+			var ariaLabel = reading
+				? (b.title + " — currently reading")
+				: (count > 1
+					? seriesName + " — " + count + " volumes, all rated " + b.rating + " of 5 on Goodreads"
+					: b.title + " — rated " + b.rating + " of 5 on Goodreads");
 			return (
 				'<a class="book-card' + fivestar + clubbed + '" ' +
 				'href="https://www.goodreads.com/book/show/' + escapeHTML(b.id) + '" ' +
@@ -1699,7 +1785,7 @@ AOS.init({
 				'aria-label="' + escapeHTML(ariaLabel) + '">' +
 					'<div class="book-cover-wrap">' +
 						'<img src="' + escapeHTML(b.image) + '" alt="' + escapeHTML(b.title) + '" loading="lazy" decoding="async">' +
-						'<span class="book-rating" aria-label="Rated ' + b.rating + ' of 5">' + b.rating + '★</span>' +
+						ratingBadge +
 						seriesBadge +
 					'</div>' +
 					'<div class="book-title">' + escapeHTML(titleText) + '</div>' +
@@ -1761,25 +1847,10 @@ AOS.init({
 		if (elReading && baked.meta && baked.meta.currentlyReading) elReading.textContent = baked.meta.currentlyReading;
 		var elToRead = document.getElementById("books-toread");
 		if (elToRead && baked.meta && baked.meta.planToRead) elToRead.textContent = baked.meta.planToRead;
-		// Prepend currently-reading books to the main bookshelf grid
-		if (baked.currentlyReading && baked.currentlyReading.length) {
-			var shelfGrid = document.getElementById("bookshelf-grid");
-			if (shelfGrid) {
-				var readingHtml = baked.currentlyReading.map(function (b) {
-					var href = "https://www.goodreads.com/book/show/" + b.id;
-					var display = b.displayTitle || b.title;
-					return '<a class="book-card" href="' + href + '" target="_blank" rel="noopener" aria-label="' + display + ' — currently reading">' +
-						'<div class="book-cover-wrap">' +
-						'<img src="' + b.image + '" alt="' + display + '" loading="lazy" decoding="async">' +
-						'<span class="book-rating book-rating--reading" aria-label="Currently reading"><i class="fas fa-book-open"></i></span>' +
-						'</div>' +
-						'<div class="book-title">' + display + '</div>' +
-						'<div class="book-author">' + b.author + '</div>' +
-						'</a>';
-				}).join("");
-				shelfGrid.insertAdjacentHTML("afterbegin", readingHtml);
-			}
-		}
+		// Currently-reading books are now mixed into the shelf by render()
+		// itself (sorted by date, so they land at the bottom), rather than
+		// being pinned at the top here — that older prepend was also wiped
+		// by render()'s atomic innerHTML swap when live data landed.
 		floor = countRenderable(baked.books);
 	}
 
@@ -1833,9 +1904,13 @@ AOS.init({
 (function () {
 	var USER_ID = "139705685";
 	var CACHE_TTL = 60 * 60 * 1000;
+	// Cache keys carry the data snapshot's `updated` date so a fresh sync
+	// (which bumps that date) auto-invalidates stale counts — same scheme as
+	// the main bookshelf loader above.
+	var DATA_VERSION = (window.ABJ_BOOKS_DATA && window.ABJ_BOOKS_DATA.updated) || "v1";
 	var SHELVES = [
-		{ shelf: "to-read",           cellId: "books-toread",   cacheKey: "gr_toread_v2"  },
-		{ shelf: "currently-reading", cellId: "books-reading",  cacheKey: "gr_reading_v1" }
+		{ shelf: "to-read",           cellId: "books-toread",   cacheKey: "gr_toread_" + DATA_VERSION  },
+		{ shelf: "currently-reading", cellId: "books-reading",  cacheKey: "gr_reading_" + DATA_VERSION }
 	];
 	var PROXIES = [
 		function (u) { return "https://corsproxy.io/?" + encodeURIComponent(u); },
@@ -2924,6 +2999,43 @@ AOS.init({
 	var style = document.createElement("style");
 	style.textContent = "#openResume{pointer-events:auto !important;position:relative;z-index:2}";
 	document.head.appendChild(style);
+})();
+
+// ===== Certifications Modal — grid of credential cards =====
+// Mirrors the resume-modal pattern: delegated open click, backdrop + close
+// button + Escape to dismiss. The modal markup lives at the end of <main>
+// so its fixed layer isn't clipped by the AOS transform on the trigger tile.
+(function () {
+	var modal = document.getElementById("certsModal");
+	if (!modal) return;
+	var closeBtn = modal.querySelector(".certs-modal-close");
+
+	function open() {
+		modal.classList.add("open");
+		modal.setAttribute("aria-hidden", "false");
+		document.body.classList.add("certs-open");
+	}
+	function close() {
+		modal.classList.remove("open");
+		modal.setAttribute("aria-hidden", "true");
+		document.body.classList.remove("certs-open");
+	}
+
+	document.addEventListener("click", function (e) {
+		var trigger = e.target.closest("#openCerts");
+		if (trigger) {
+			e.preventDefault();
+			open();
+		}
+	}, true);
+
+	if (closeBtn) closeBtn.addEventListener("click", close);
+	modal.addEventListener("click", function (e) {
+		if (e.target === modal) close();
+	});
+	document.addEventListener("keydown", function (e) {
+		if (e.key === "Escape" && modal.classList.contains("open")) close();
+	});
 })();
 
 // ===== WakaTime image error fallback =====

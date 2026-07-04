@@ -86,11 +86,14 @@
 		<!-- Hero / Masthead -->
 		<section class="masthead text-white text-center">
 			<div class="container d-flex align-items-center flex-column masthead-content">
-				<img alt="Abhijay Mitra" class="masthead-avatar mb-5 zoomable" src="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/assets/abj_new_dp.jpg" data-lightbox-src="https://raw.githubusercontent.com/AbhJ/public-portfolio/master/assets/abj_new_dp.jpg" data-lightbox-alt="Abhijay Mitra (AbJ)">
+				<picture>
+					<source srcset="assets/abj-hero.webp" type="image/webp">
+					<img alt="Abhijay Mitra" class="masthead-avatar mb-5 zoomable" src="assets/abj-hero.jpg" data-lightbox-src="assets/abj-hero.jpg" data-lightbox-alt="Abhijay Mitra (AbJ)">
+				</picture>
 				<h1 class="masthead-heading text-uppercase mb-0">Abhijay Mitra (AbJ)</h1>
 				<div class="divider-custom divider-light">
 					<div class="divider-custom-line"></div>
-					<div class="divider-custom-icon"><i class="fas fa-rocket"></i></div>
+					<div class="divider-custom-icon"><i class="fas fa-terminal"></i></div>
 					<div class="divider-custom-line"></div>
 				</div>
 				<p class="masthead-subheading font-weight-light mb-0 hero-rotating" id="hero-rotate">Full Stack Software Engineer</p>
@@ -246,10 +249,7 @@
 									<p class="edu-detail"><strong>Minor CGPA:</strong> 8.84 / 10</p>
 									<p class="edu-date">2018 — 2022</p>
 									<div class="edu-extras">
-										<span class="edu-extra-tag">NCC Air Squadron</span>
-										<span class="edu-extra-tag">Tech Transfer Group</span>
-										<span class="edu-extra-tag">Kshitij</span>
-										<span class="edu-extra-tag">Chess Team</span>
+										<span class="edu-extra-tag">National Cadet Corps (Air Wing)</span>
 									</div>
 								</div>
 							</div>
@@ -356,7 +356,7 @@
 				<h2 class="page-section-heading masthead-heading text-center text-uppercase text-white mb-0" data-aos="zoom-in-down">Highlights</h2>
 				<div class="divider-custom divider-light">
 					<div class="divider-custom-line"></div>
-					<div class="divider-custom-icon"><i class="fas fa-rocket"></i></div>
+					<div class="divider-custom-icon"><i class="fas fa-star"></i></div>
 					<div class="divider-custom-line"></div>
 				</div>
 				<div class="row">
@@ -422,6 +422,18 @@
 								<p>Held the #1 position on the IIT Kharagpur leaderboard for over two years, aggregated across major CP platforms.</p>
 							</div>
 						</a>
+					</div>
+					<div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up" data-aos-delay="400" data-aos-easing="ease-in-sine">
+						<button type="button" class="portfolio-card portfolio-card--button" id="openCerts" aria-haspopup="dialog" aria-controls="certsModal">
+							<div class="portfolio-card-img portfolio-card-img--icon">
+								<i class="fas fa-scroll portfolio-card-icon"></i>
+								<div class="portfolio-card-overlay"><i class="fas fa-th-large fa-lg"></i></div>
+							</div>
+							<div class="portfolio-card-body">
+								<h5>Certifications</h5>
+								<p>Coursera coursework from Stanford, UC San Diego, and other universities.</p>
+							</div>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -1103,6 +1115,7 @@
 						<i class="fab fa-youtube mr-2"></i> View Channel
 					</a>
 				</div>
+
 			</div>
 		</section>
 
@@ -1154,6 +1167,85 @@
 			</div>
 			<div class="resume-modal-body">
 				<iframe id="resumeFrame" title="Resume" src="about:blank"></iframe>
+			</div>
+		</div>
+
+
+		<!-- Certifications Modal — grid of credential cards -->
+		<div class="certs-modal" id="certsModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Certifications">
+			<div class="certs-modal-panel">
+				<div class="certs-modal-toolbar">
+					<span class="certs-modal-title"><i class="fas fa-certificate mr-2"></i> Certifications</span>
+					<button type="button" class="certs-modal-close" aria-label="Close certifications">
+						<i class="fas fa-times"></i>
+					</button>
+				</div>
+				<div class="certs-modal-body">
+					<div class="certs-modal-grid">
+						<a class="cert-tile-card" href="https://www.coursera.org/account/accomplishments/certificate/5U96YF24V3LC" target="_blank" rel="noopener">
+							<div class="cert-tile-card-header">
+								<h6 class="cert-tile-card-title">Competitive Programmer's Core Skills</h6>
+							<i class="fas fa-check-circle cert-tile-verified" aria-label="Verified credential"></i>
+							</div>
+							<p class="cert-tile-card-issuer">Saint Petersburg State University</p>
+						</a>
+						<a class="cert-tile-card" href="https://www.coursera.org/account/accomplishments/certificate/K2EG3N85YP95" target="_blank" rel="noopener">
+							<div class="cert-tile-card-header">
+								<h6 class="cert-tile-card-title">Software Development Processes and Methodologies</h6>
+							<i class="fas fa-check-circle cert-tile-verified" aria-label="Verified credential"></i>
+							</div>
+							<p class="cert-tile-card-issuer">University of Minnesota</p>
+						</a>
+						<a class="cert-tile-card" href="https://www.coursera.org/account/accomplishments/certificate/CC88ZLTQAKS8" target="_blank" rel="noopener">
+							<div class="cert-tile-card-header">
+								<h6 class="cert-tile-card-title">Computer Vision Basics</h6>
+							<i class="fas fa-check-circle cert-tile-verified" aria-label="Verified credential"></i>
+							</div>
+							<p class="cert-tile-card-issuer">University at Buffalo</p>
+						</a>
+						<a class="cert-tile-card" href="https://www.coursera.org/account/accomplishments/certificate/WRDZ3UPQUT2J" target="_blank" rel="noopener">
+							<div class="cert-tile-card-header">
+								<h6 class="cert-tile-card-title">Game-Theoretic Solution Concept with Spreadsheets</h6>
+							<i class="fas fa-check-circle cert-tile-verified" aria-label="Verified credential"></i>
+							</div>
+							<p class="cert-tile-card-issuer">Coursera</p>
+						</a>
+						<a class="cert-tile-card" href="https://www.linkedin.com/in/abhj/details/certifications" target="_blank" rel="noopener">
+							<div class="cert-tile-card-header">
+								<h6 class="cert-tile-card-title">Software Engineering Virtual Experience</h6>
+							</div>
+							<p class="cert-tile-card-issuer">JPMorgan Chase & Co.</p>
+						</a>
+						<a class="cert-tile-card" href="https://www.coursera.org/account/accomplishments/certificate/THEN6AQCRHW9" target="_blank" rel="noopener">
+							<div class="cert-tile-card-header">
+								<h6 class="cert-tile-card-title">Number Theory and Cryptography</h6>
+							<i class="fas fa-check-circle cert-tile-verified" aria-label="Verified credential"></i>
+							</div>
+							<p class="cert-tile-card-issuer">UC San Diego</p>
+						</a>
+						<a class="cert-tile-card" href="https://www.coursera.org/account/accomplishments/certificate/PBH2SZW7TMC8" target="_blank" rel="noopener">
+							<div class="cert-tile-card-header">
+								<h6 class="cert-tile-card-title">Graph Search, Shortest Paths, and Data Structures</h6>
+							<i class="fas fa-check-circle cert-tile-verified" aria-label="Verified credential"></i>
+							</div>
+							<p class="cert-tile-card-issuer">Stanford Online</p>
+						</a>
+						<a class="cert-tile-card" href="https://www.coursera.org/account/accomplishments/certificate/WMHZMSQ7FNFG" target="_blank" rel="noopener">
+							<div class="cert-tile-card-header">
+								<h6 class="cert-tile-card-title">Divide and Conquer, Sorting and Searching, and Randomized Algorithms</h6>
+							<i class="fas fa-check-circle cert-tile-verified" aria-label="Verified credential"></i>
+							</div>
+							<p class="cert-tile-card-issuer">Stanford Online</p>
+						</a>
+						<a class="cert-tile-card" href="https://www.coursera.org/account/accomplishments/certificate/U5W45TG2ZCT9" target="_blank" rel="noopener">
+							<div class="cert-tile-card-header">
+								<h6 class="cert-tile-card-title">Machine Learning</h6>
+							<i class="fas fa-check-circle cert-tile-verified" aria-label="Verified credential"></i>
+							</div>
+							<p class="cert-tile-card-issuer">Stanford Online</p>
+						</a>
+					</div>
+				</div>
 			</div>
 		</div>
 
