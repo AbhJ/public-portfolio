@@ -525,39 +525,40 @@ a.text-secondary:focus {
 /* ===== Navbar ===== */
 
 #mainNav {
-	/* iOS notch/Dynamic-Island handling: pull the navbar UP so its top edge
-	   sits at the absolute top of the screen (covering the status-bar safe
-	   area), then push the inner content back down with padding equal to
-	   the safe-area inset. Negative `top` is required because Bootstrap's
-	   `.fixed-top` sets `top: 0` which (in `viewport-fit=cover` rendering
-	   on iOS) actually positions the navbar at the top of the page area,
-	   leaving the safe area exposed above it.
-
-	   Doing both — `top: 0` AND `padding-top: env(safe-area-inset-top)` —
-	   is the combination Apple's HIG recommends for fixed headers in
-	   web content that opted into edge-to-edge with `viewport-fit=cover`. */
+	/* iOS notch/Dynamic-Island handling: the navbar sits at the absolute top
+	   of the screen (top: 0, covering the status-bar safe area), and its inner
+	   content is pushed back down below the notch with padding equal to the
+	   safe-area inset. Pinning `top: 0` AND `padding-top: env(safe-area-inset-top)`
+	   is the combination Apple's HIG recommends for fixed headers in web
+	   content that opted into edge-to-edge with `viewport-fit=cover`. */
 	padding-top: calc(0.35rem + env(safe-area-inset-top, 0px));
 	padding-bottom: 0.85rem;
 	padding-left: calc(0.75rem + env(safe-area-inset-left, 0px));
 	padding-right: calc(0.75rem + env(safe-area-inset-right, 0px));
 	font-family: var(--font-family-heading);
 	font-weight: 700;
-	/* CRITICAL iOS notch fix: gradient background that is SOLID OPAQUE in
-	   the safe-area zone (top env(safe-area-inset-top) pixels) to block
-	   any page content from showing through the translucent navbar/blur,
-	   then transitions to translucent below. On non-notched devices
-	   env(safe-area-inset-top) resolves to 0px so the gradient is purely
-	   translucent (no opaque region), preserving the original appearance. */
-	background: linear-gradient(
-		to bottom,
-		#08090d 0,
-		#08090d env(safe-area-inset-top, 0px),
-		rgba(8, 9, 13, 0.9) env(safe-area-inset-top, 0px)
-	);
-	backdrop-filter: saturate(180%) blur(20px);
-	-webkit-backdrop-filter: saturate(180%) blur(20px);
+	/* CRITICAL iOS notch fix: fully SOLID background across the whole navbar,
+	   including the safe-area zone at top. A translucent bg + backdrop-filter
+	   let scrolled page content read through on iOS Safari (a known
+	   viewport-fit=cover / backdrop-filter compositing regression), so the
+	   blur is intentionally removed — an opaque bar cannot bleed by design. */
+	background: #08090d;
 	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05), 0 4px 20px rgba(0, 0, 0, 0.25);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+	/* Pin the fixed navbar explicitly (don't rely solely on Bootstrap's
+	   .fixed-top) and force it onto its own GPU compositing layer. On iOS
+	   Safari, fixed elements without a dedicated layer are NOT repainted over
+	   content during momentum/normal scroll — so page text shows through even
+	   an opaque bar. translateZ(0) + will-change promotes the navbar to a
+	   compositor layer that always paints on top of scrolled content. */
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1030;
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
+	will-change: transform;
 }
 
 #mainNav .container {
@@ -601,6 +602,11 @@ html::after {
 	background: #08090d;
 	z-index: 10001;
 	pointer-events: none;
+	/* Own GPU layer so this cap repaints over scrolled content on iOS Safari
+	   (same fixed-element repaint bug the navbar guards against above). */
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
+	will-change: transform;
 }
 
 #mainNav .navbar-brand {
