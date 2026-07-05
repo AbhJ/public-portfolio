@@ -3038,6 +3038,92 @@ AOS.init({
 	});
 })();
 
+// ===== Experience timeline — click-to-expand accordion =====
+// Progressive enhancement: the HTML ships with every card fully expanded, so
+// with JS disabled the section reads normally. Here we collapse each card to
+// just its heading (job title + company·date) and let a click on the heading
+// toggle the body (bullets + tech stack) open.
+//
+// The animation uses the grid-template-rows 0fr→1fr trick (see styles.css):
+// the body's content is wrapped in a single inner div so the grid row can
+// animate to the content's TRUE height — no magic max-height constant that
+// would clip long cards or over-reserve space on short ones.
+//
+// AOS animates `.timeline-item` (transform/opacity, once:true) — untouched
+// here since we only animate the body's grid row. After a toggle we ping
+// AOS.refresh() so items further down re-measure their trigger offsets.
+(function () {
+	var items = document.querySelectorAll("#experience .timeline-item");
+	if (!items.length) return;
+
+	var reduceMotion = window.matchMedia &&
+		window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	var uid = 0;
+
+	items.forEach(function (item) {
+		var panel = item.querySelector(".timeline-panel");
+		var heading = item.querySelector(".timeline-heading");
+		var body = item.querySelector(".timeline-body");
+		if (!panel || !heading || !body) return;
+
+		// Wrap the body's children in an inner element the grid row can size.
+		var inner = document.createElement("div");
+		inner.className = "timeline-body-inner";
+		while (body.firstChild) inner.appendChild(body.firstChild);
+		body.appendChild(inner);
+
+		// Give the body an id so the heading can point aria-controls at it.
+		uid++;
+		var bodyId = body.id || ("timeline-body-" + uid);
+		body.id = bodyId;
+
+		// Turn the heading into a disclosure button (collapsed by default).
+		heading.classList.add("timeline-heading--toggle");
+		heading.setAttribute("role", "button");
+		heading.setAttribute("tabindex", "0");
+		heading.setAttribute("aria-controls", bodyId);
+		heading.setAttribute("aria-expanded", "false");
+		item.classList.add("timeline-item--collapsible");
+		body.setAttribute("aria-hidden", "true");
+
+		function setExpanded(expanded) {
+			item.classList.toggle("is-expanded", expanded);
+			heading.setAttribute("aria-expanded", expanded ? "true" : "false");
+			body.setAttribute("aria-hidden", expanded ? "false" : "true");
+			// Let the CSS row transition run, then re-measure AOS offsets.
+			if (typeof AOS !== "undefined" && AOS.refresh) {
+				if (reduceMotion) {
+					AOS.refresh();
+				} else {
+					window.setTimeout(function () { AOS.refresh(); }, 460);
+				}
+			}
+		}
+
+		function toggle() {
+			setExpanded(!item.classList.contains("is-expanded"));
+		}
+
+		// The whole card is the click target — clicking anywhere on the panel
+		// toggles it. Guard against (a) clicks on links/buttons inside the card
+		// and (b) a click that ends a text selection (so selecting body text to
+		// copy it doesn't snap the card shut).
+		panel.addEventListener("click", function (e) {
+			if (e.target.closest("a, button")) return;
+			var sel = window.getSelection && window.getSelection();
+			if (sel && sel.type === "Range" && !sel.isCollapsed) return;
+			toggle();
+		});
+		// Keyboard: the heading is the focusable disclosure control.
+		heading.addEventListener("keydown", function (e) {
+			if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+				e.preventDefault();
+				toggle();
+			}
+		});
+	});
+})();
+
 // ===== WakaTime image error fallback =====
 // wakatime.com occasionally returns 502/timeouts on its share-SVG endpoints.
 // When the image fails to load, mark the card so CSS shows a friendly hint

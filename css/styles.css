@@ -4977,3 +4977,124 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* End of Midnight Forge layer */
+
+/* =============================================================================
+   Experience timeline — click-to-expand accordion
+   -----------------------------------------------------------------------------
+   The Experience cards collapse to just their heading (job title + company ·
+   date); clicking the heading reveals the body (bullets + tech stack). All of
+   the toggling structure is added at runtime by main.js
+   (initExperienceAccordion), so with JS off the markup stays fully expanded
+   and readable — these rules only take effect once `.timeline-item--collapsible`
+   is present.
+
+   Body reveal uses the grid-template-rows 0fr → 1fr technique: the row animates
+   to the wrapped content's TRUE height, so long and short cards both collapse
+   cleanly with no magic max-height. `.timeline-panel` already transitions
+   transform/box-shadow for its hover lift (styles.css:961) — we only touch the
+   body's grid row, so the hover lift keeps working.
+   ============================================================================= */
+
+/* Heading becomes a disclosure control. */
+.timeline-heading--toggle {
+	cursor: pointer;
+	position: relative;
+	padding-right: 2rem;                 /* room for the caret */
+	margin-bottom: 0;                    /* collapsed: hug the body edge */
+	transition: margin-bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+	outline: none;
+}
+
+.timeline-item--collapsible.is-expanded .timeline-heading--toggle {
+	margin-bottom: 1.1rem;               /* restore base .timeline-heading gap */
+}
+
+/* Whole card is the click target (main.js binds the toggle to the panel), so
+   the pointer cursor covers the entire panel, not just the heading. */
+.timeline-item--collapsible .timeline-panel {
+	cursor: pointer;
+}
+
+/* Tighten the collapsed card's trailing space. Two sources of dead space sit
+   below the company·date line: the Bootstrap <p> default 1rem bottom margin,
+   and the panel's 1.75rem bottom padding. Drop the <p> margin (the heading's
+   own margin-bottom is the single spacing control) and trim the collapsed
+   padding so the card hugs the heading instead of leaving a big empty band. */
+.timeline-item--collapsible .timeline-heading > p:last-child {
+	margin-bottom: 0;
+}
+.timeline-item--collapsible:not(.is-expanded) .timeline-panel {
+	padding-bottom: 1.35rem;
+}
+
+/* Keyboard focus ring — visible only for keyboard users. */
+.timeline-heading--toggle:focus-visible {
+	box-shadow: 0 0 0 2px rgba(90, 120, 145, 0.65);
+	border-radius: 8px;
+}
+
+/* Caret — drawn from borders so it renders regardless of the icon font
+   (this site loads Font Awesome's SVG/JS build, where ::after content glyphs
+   don't paint). Points down when collapsed, flips up when expanded. */
+.timeline-heading--toggle::after {
+	content: "";
+	position: absolute;
+	top: 0.5rem;
+	right: 0.35rem;
+	width: 0.5rem;
+	height: 0.5rem;
+	border-right: 2px solid rgba(255, 255, 255, 0.55);
+	border-bottom: 2px solid rgba(255, 255, 255, 0.55);
+	transform: rotate(45deg);            /* chevron pointing down */
+	transform-origin: 60% 60%;
+	transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+	            border-color 0.3s ease;
+	pointer-events: none;
+}
+
+.timeline-heading--toggle:hover::after {
+	border-color: #b59760;               /* brass, matching link hover */
+}
+
+.timeline-item--collapsible.is-expanded .timeline-heading--toggle::after {
+	transform: rotate(-135deg);          /* chevron pointing up */
+}
+
+/* Collapsible body — grid row animates 0fr → 1fr. */
+.timeline-item--collapsible .timeline-body {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-item--collapsible.is-expanded .timeline-body {
+	grid-template-rows: 1fr;
+}
+
+/* The single wrapper main.js inserts — must be overflow:hidden so the
+   collapsed (0fr) row clips its content. min-height:0 lets the grid child
+   actually shrink below its content size. */
+.timeline-body-inner {
+	overflow: hidden;
+	min-height: 0;
+}
+
+/* Fade the body content in/out alongside the height so it doesn't pop. */
+.timeline-item--collapsible .timeline-body-inner {
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+.timeline-item--collapsible.is-expanded .timeline-body-inner {
+	opacity: 1;
+	transition: opacity 0.35s ease 0.1s; /* slight delay so it fades as it opens */
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.timeline-heading--toggle,
+	.timeline-heading--toggle::after,
+	.timeline-item--collapsible .timeline-body,
+	.timeline-item--collapsible .timeline-body-inner {
+		transition: none;
+	}
+}
