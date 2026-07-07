@@ -2703,15 +2703,16 @@ AOS.init({
 			});
 		if (!picks.length) { grid.style.display = "none"; return; }
 		grid.innerHTML = picks.map(function (it) {
-			// Convert MAL 8-10 to a Goodreads-style 4-5★ for visual rhyme
-			// with the books shelf — anything 8+ shows as 5★, anything 6-7
-			// shows as 4★, lower or unrated shows no badge.
-			var stars = 0;
-			if (it.score >= 8) stars = 5;
-			else if (it.score >= 6) stars = 4;
-			var fivestar = stars === 5 ? " book-card--star5" : "";
-			var ratingBadge = stars
-				? '<span class="book-rating" aria-label="Rated ' + stars + ' of 5">' + stars + '★</span>'
+			// Show the real MAL score OUT OF 10 in the badge — exactly like the
+			// anime + IMDb film cards. (Previously this converted the score to
+			// a Goodreads-style 5★, which misrepresented a /10 rating as /5:
+			// a manga rated 8 and one rated 10 both showed "5★".) Score 8+
+			// still gets the brass "top pick" treatment (hover rim + author
+			// clamp) via .book-card--star5; unrated entries show no badge.
+			var score = parseInt(it.score, 10) || 0;
+			var fivestar = score >= 8 ? " book-card--star5" : "";
+			var ratingBadge = score
+				? '<span class="book-rating" aria-label="Rated ' + score + ' of 10 on MyAnimeList">' + score + '</span>'
 				: '';
 			// Sub-line: for plan-to-read entries, show the status label
 			// ("Plan to Read") rather than the manga's full volume count,
@@ -2829,6 +2830,14 @@ AOS.init({
 				};
 			});
 			render(grid, kind, baked);
+			// Paint the four stat cards from the baked snapshot too. MAL is
+			// bot-gated/CORS-blocked, so the live fetch below usually fails and
+			// this baked path is what the live site actually shows. Without
+			// this, the cards keep their hardcoded HTML values (a bare "9.2" /
+			// "8.5") and lose the "/ 10" suffix that makes the scale explicit —
+			// unlike the Books (/ 5) and IMDb (/ 10) shelves. paintStats reads
+			// only .status/.score, both present on the baked entries.
+			paintStats(kind, window.ABJ_MAL[kind].entries);
 		}
 
 		// 1. Cache hit — render immediately, then refresh in background.

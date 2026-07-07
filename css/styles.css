@@ -2714,7 +2714,7 @@ a.gh-repo-card:focus {
 
 .bookshelf-scroll {
 	display: flex;
-	gap: 1.2rem;
+	gap: 2rem;
 	overflow-x: auto;
 	overflow-y: hidden;
 	padding: 1rem 0.5rem 1.5rem;
@@ -2801,7 +2801,12 @@ a.gh-repo-card:focus {
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
-	margin-bottom: 0.15rem;
+	/* Keep the title narrower than the 120px cover so it reads as a tidy,
+	   centred label rather than text stretched edge-to-edge. */
+	max-width: 100px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 0.3rem;
 }
 
 .book-author {
@@ -2812,6 +2817,10 @@ a.gh-repo-card:focus {
 	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
+	max-width: 100px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 0.6rem;
 }
 
 /* Date a book was rated — sits below the author in a brass-tinted micro-line.
@@ -5097,4 +5106,10 @@ h1, h2, h3, h4, h5, h6 {
 	.timeline-item--collapsible .timeline-body-inner {
 		transition: none;
 	}
+}
+
+/* Keep the rating / series badges above any cover decoration. */
+.book-rating,
+.book-series-count {
+	z-index: 3;
 }
